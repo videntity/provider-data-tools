@@ -3,7 +3,10 @@ Provider Data Tools - Dissecting Public Provider Data
 
 By Alan Viars
 
-This simple utility create several "flattened" CSV files from the origional NPPES public data dissemination file.  The only requirements to use the tool is for you to obtain the public "NPPES Data Dissemination" CSV file  and to have Python installed on your computer.  If you ae usung Mac or Linux, Python is already installed).
+This simple utility creates several "flattened" CSV files from the origional NPPES public data dissemination file.  The only requirements to use the tool are
+
+1. obtain the public "NPPES Data Dissemination" CSV file
+2. Have Python installed on your computer.  If you ae usung Mac or Linux, Python is already installed).
 
 You can install the tool using `pip` or download it from GitHub (https://github.com/hhsidealab/provider-data-tools)
 
