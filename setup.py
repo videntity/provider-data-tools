@@ -17,10 +17,10 @@ class osx_install_data(install_data):
         self.set_undefined_options('install', ('install_lib', 'install_dir'))
         install_data.finalize_options(self)
 
-if sys.platform == "darwin": 
-    cmdclasses = {'install_data': osx_install_data} 
-else: 
-    cmdclasses = {'install_data': install_data} 
+if sys.platform == "darwin":
+    cmdclasses = {'install_data': osx_install_data}
+else:
+    cmdclasses = {'install_data': install_data}
 
 def fullsplit(path, result=None):
     """
@@ -67,7 +67,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
 
 
 setup(name="pdt",
-      version="0.0.1",
+      version="0.0.2",
       description="Provider Data Tools - NPPES Parsing",
       long_description="""\
 The pdt tool runs against CMS NPPES Public Data dissemination to create flattened CSV output..
@@ -78,6 +78,6 @@ The pdt tool runs against CMS NPPES Public Data dissemination to create flattene
       download_url="https://gitbub.com/hhsidealab/provider-data-tools/tarball/master",
       packages=packages,
       package_data={},
-      scripts=['pdt/chop-nppes',
+      scripts=['pdt/chop-nppes', 'pdt/chop-nppes-public',
                ]
       )
