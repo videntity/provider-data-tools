@@ -23,17 +23,17 @@ def json2mongo(jsonfile, database_name         = "database1",
     print "Start the import of", jsonfile, "into the collection", collection_name, "within the database", database_name, "."
 
     response_dict = OrderedDict()
-    fileindex = 0
+    fileindex =  0
     mongoindex = 0
-    error_list =[]
+    error_list = []
 
     mconnection = Connection(MONGO_HOST, MONGO_PORT)
     db          = mconnection[database_name]
     collection  = db[collection_name]
 
     if delete_collection_before_import:
-        print "Clearing the collection prior to import."
         myobjectid=collection.remove({})
+        response_dict['info'] = ["The collection was cleared prior to import.", ]
 
     fh = open(jsonfile, 'rU')
 
@@ -47,8 +47,6 @@ def json2mongo(jsonfile, database_name         = "database1",
             error_list.append(error_message)
     
     except:
-        print jsonfile
-        print "here"
         error_message = "File " + str(jsonfile) +  " did not contain valid JSON."
         error_list.append(error_message)
         
@@ -91,7 +89,7 @@ if __name__ == "__main__":
     
     if len(sys.argv)!=5:
         print "Usage:"
-        print "python json2mongo.py [JSONFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]"
+        print "json2mongo [JSONFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]"
         sys.exit(1)
 
     json_file                       = sys.argv[1]
