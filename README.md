@@ -1,9 +1,9 @@
-Provider Data Tools - Dissect Your Data
-========================================
-Alan Viars
+Provider Data Tools
+===================
+By: Alan Viars
 
 This reposiory contains a number of command-line utilities and 
-related code libraries for parsing data.  they Are
+related code libraries for parsing data.  They are:
 
 * chop-nppes-public - parse the npi public data dissemination into flattened files
 * csv2mongo         - Converting a CSV into documents directly into a MongoDB datbase/collection
@@ -51,22 +51,19 @@ The script make take a few minutes to complete. When it completes you will have 
 in your current directory. Everything is still indexed by NPI. These files are described below.
 
 
-     _basic.csv     - Contains basic demographic info
+     _basic.csv            - Contains basic demographic info
     _addresses_flat.csv    - one address per line identifier as practice or mailing
-    _identifiers_flat.csv    -one identifer per line
-    _licenses_flat.csv 		- one license per line
-    _taxonomy_flat.csv      - one taxonomy code per line and identified as primary or not.
-
-
-I hope this utility saves you time in processing NPPES Public Data Dissemination.
+    _identifiers_flat.csv  - one identifer per line
+    _licenses_flat.csv 	   - one license per line
+    _taxonomy_flat.csv     - one taxonomy code per line and identified as primary or not.
 
 
 csv2mongo
 ---------
 
-`csv2mongo` convert a CSV to a MongoDB collection.  The script expects the first row of 
-data to contain header information. Any whitespace and other funky characters in the 
-header row are auto-fixed by converting to ` `, `_`, or `-`.  Here is a usage exaple
+`csv2mongo` convert a CSV into a MongoDB collection.  The script expects the first row of
+data to contain header information. Any whitespace and other funky characters in the
+header row are auto-fixed by converting to ` `, `_`, or `-`.
 
 Usage:
 
@@ -83,7 +80,7 @@ Example:
 json2mongo
 ----------
 
-`json2mongo` imports a JSON object file to a MongoDB document. The file is checked
+`json2mongo` imports a JSON object file into a MongoDB document. The file is checked
 for validity (i.e. {}) before attempting to import it into MongoDB.
 
 
@@ -141,5 +138,5 @@ Start the import of the directory data into the collection test within the datab
         }
 
 
-In the above sample files `1.json` and `2.json` were processed while 
-`3.json` and `4.json` were not imported.
+In the above example, the files `1.json` and `2.json` were processed while `3.json` and
+`4.json` were not imported.
