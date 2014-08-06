@@ -17,19 +17,17 @@ MONGO_PORT=27017
 
 def csv2mongo( csvfile, database_name="database1",
                collection_name="collection1",
-               delete_collection_before_import=True):
+               delete_collection_before_import=False):
 
     """return a response_dict  with a list of search results"""
     """method can be insert or update"""
 
-    l=[]
-    response_dict={}
+    response_dict = OrderedDict()
     print "Start the import of", csvfile, "into the collection", collection_name, "within the database", database_name, "."
-
 
     try:
 
-        mconnection = Connection("127.0.0.1")
+        mconnection = Connection(MONGO_HOST, MONGO_PORT)
         db          = mconnection[database_name]
         collection  = db[collection_name]
 
@@ -40,11 +38,11 @@ def csv2mongo( csvfile, database_name="database1",
         #open the csv file.
         csvhandle = csv.reader(open(csvfile, 'rb'), delimiter=',')
 
-        rowindex = 0
-        mongoindex = 0
-        errors=0
-        error_list =[]
-        success =0
+        rowindex    = 0
+        mongoindex  = 0
+        error_list  = []
+
+        
         for row in csvhandle :
 
             if rowindex==0:
@@ -68,15 +66,12 @@ def csv2mongo( csvfile, database_name="database1",
                     myobjectid=collection.insert(record)
                     mongoindex+=1
 
-
-
                 except:
                     error_message = "Error on row " + str(rowindex) +  ". " + str(sys.exc_info())
                     error_list.append(error_message)
-                    print error_message
-                    sys.exit()
 
-            rowindex+=1
+
+            rowindex += 1
 
 
         if error_list:
@@ -86,8 +81,6 @@ def csv2mongo( csvfile, database_name="database1",
                 response_dict['errors']=error_list
                 response_dict['code']=400
                 response_dict['message']="Completed with errors"
-                print response_dict
-                sys.exit()
         else:
 
                 response_dict ={}
@@ -97,15 +90,9 @@ def csv2mongo( csvfile, database_name="database1",
                 response_dict['message']="Completed."
 
     except:
-        print "Error writing to  Mongo"
-        #print str(sys.exc_info())
-        response_dict['num_results']=0
-        response_dict['code']=400
-        response_dict['type']="Error"
-        response_dict['results']=[]
-        response_dict['message']=str(sys.exc_info())
-        return response_dict
-
+        response_dict['code']    = 500
+        response_dict['errors']  = [str(sys.exc_info()), ]
+        
 
     return response_dict
 
@@ -127,4 +114,7 @@ if __name__ == "__main__":
     else:
         delete_collection_before_import = False
     result = csv2mongo(csv_file, database, collection, delete_collection_before_import)
+    
+    
+    #output the JSON transaction summary
     print json.dumps(result, indent =4)

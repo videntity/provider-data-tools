@@ -18,14 +18,15 @@ MONGO_PORT=27017
 def jsondir2mongo( json_dir, database_name="database1",
                collection_name="collection1",
                delete_collection_before_import=False):
+    """return a response_dict with a summary of jsondir2mongo transaction."""
 
-    """return a response_dict  with a list of search results"""
-    """method can be insert or update"""
-
-    l=[]
-    response_dict={}
+    
+    
     print "Start the import of the directory", json_dir, "into the collection", collection_name, "within the database", database_name, "."
-
+    fileindex = 0
+    mongoindex = 0
+    error_list =[]
+    response_dict = OrderedDict()
 
     try:
 
@@ -33,11 +34,7 @@ def jsondir2mongo( json_dir, database_name="database1",
         db          = mconnection[database_name]
         collection  = db[collection_name]
         
-        fileindex = 0
-        mongoindex = 0
-        errors=0
-        error_list =[]
-        success =0
+
         
         
         
@@ -83,7 +80,7 @@ def jsondir2mongo( json_dir, database_name="database1",
                     error_list.append(error_message)
 
         if error_list:
-                response_dict ={}
+                response_dict['num_files_attempted']=fileindex
                 response_dict['num_files_imported']=mongoindex
                 response_dict['num_file_errors']=len(error_list)
                 response_dict['errors']=error_list
@@ -91,20 +88,20 @@ def jsondir2mongo( json_dir, database_name="database1",
                 response_dict['message']="Completed with errors."
         else:
 
-                response_dict ={}
+                response_dict['num_files_attempted']=fileindex
                 response_dict['num_files_imported']=mongoindex
                 response_dict['num_file_errors']=len(error_list)
                 response_dict['code']=200
-                response_dict['message']="Completed."
+                response_dict['message']="Completed without errors."
 
     
     except:
-        response_dict['num_results']=0
-        response_dict['code']=400
-        response_dict['type']="Error"
-        response_dict['results']=[]
-        response_dict['message']=str(sys.exc_info())
-        return response_dict
+        response_dict = {}
+        response_dict['num_files_attempted']=fileindex
+        response_dict['num_files_imported']=mongoindex
+        response_dict['code'] = 500
+        response_dict['errors']=[str(sys.exc_info()), ]
+        response_dict['message'] = str(sys.exc_info())
 
 
     return response_dict
