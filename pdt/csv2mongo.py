@@ -111,7 +111,7 @@ def csv2mongo( csvfile, database_name="database1",
 
 if __name__ == "__main__":
 
-    print len(sys.argv)
+    
     if len(sys.argv)!=5:
         print "Usage:"
         print "python csv2mongo.py [CSVFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]"
