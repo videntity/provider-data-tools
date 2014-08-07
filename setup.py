@@ -67,10 +67,10 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
 
 
 setup(name="pdt",
-      version="0.0.3",
-      description="Provider Data Tools - NPPES Parsing",
+      version="0.0.5",
+      description="Provider Data Tools",
       long_description="""\
-The pdt tool runs against CMS NPPES Public Data dissemination to create flattened CSV output..
+Data processing utilities for providers.  Many tools are generic utilities.
 """,
       author="Alan Viars",
       author_email="alan.viars@cms.hhs.gov",
@@ -79,5 +79,9 @@ The pdt tool runs against CMS NPPES Public Data dissemination to create flattene
       packages=packages,
       package_data={},
       scripts=['pdt/chop-nppes', 'pdt/chop-nppes-public',
+
+               'pdt/csv2mongo','pdt/json2mongo',
+               'pdt/jsondir2mongo',
+               
                ]
       )
