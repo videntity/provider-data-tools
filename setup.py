@@ -67,7 +67,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
 
 
 setup(name="pdt",
-      version="0.0.3",
+      version="0.0.4",
       description="Provider Data Tools - NPPES Parsing",
       long_description="""\
 The pdt tool runs against CMS NPPES Public Data dissemination to create flattened CSV output..
