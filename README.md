@@ -1,5 +1,8 @@
 Provider Data Tools
 ===================
+
+Version: 0.0.9
+
 By: Alan Viars
 
 This reposiory contains a number of command-line utilities and 
@@ -9,7 +12,7 @@ related code libraries for parsing data.  They are:
 * csv2mongo         - Converting a CSV into documents directly into a MongoDB datbase/collection
 * json2mongo        - Convert a JSON file object into a record in a MongoDB datbase/collection.
 * jsondir2mongo     - Convert a directory of files containing JSON objects into documents in a MongoDB datbase/collection.
-
+* csv2pjson-public  - parse the npi public data dissemination into ProviderJSON files
 
 
 Installation

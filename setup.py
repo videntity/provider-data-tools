@@ -67,7 +67,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
 
 
 setup(name="pdt",
-      version="0.0.8",
+      version="0.0.9",
       description="Provider Data Tools",
       long_description="""\
 Data processing utilities for providers.  Many tools are generic utilities.
@@ -78,11 +78,14 @@ Data processing utilities for providers.  Many tools are generic utilities.
       download_url="https://gitbub.com/hhsidealab/provider-data-tools/tarball/master",
       packages=packages,
       package_data={},
-      scripts=['pdt/chop-nppes', 'pdt/chop-nppes-public',
-
+      scripts=['pdt/chop-nppes', 
+                'pdt/chop-nppes-public',
                'pdt/csv2mongo','pdt/json2mongo',
                'pdt/jsondir2mongo',
                'pdt/csv2mlvs',
+               'pdt/csv2pjson-public',
+
+
                ]
       )
 
