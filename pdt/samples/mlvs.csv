@@ -1,0 +1,4 @@
+number,npi,last_name,first_name,state,license_type,credential,status,created_at,updated_at
+12345,123456789,Flinstone,Fred,WV,MDR,Medical Doctor,ACTIVE,2012-04-20,2014-08-14
+23456,,Rubble,Betty,ND,DOS,Osteopath,REVOKED,2012-04-21,2014-08-15
+12345,,Simpson,Homer,WV,DEN,Dentist,ACTIVE,2012-04-22,2014-08-16
