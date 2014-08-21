@@ -21,6 +21,7 @@ def new_pjson_stub():
     ps['number'] =""
     ps['classification']="N"
     ps["basic"] = OrderedDict()
+    ps["basic"]["status"]= ""
     ps["basic"]["name_prefix"]= ""
     ps["basic"]["first_name"]= ""
     ps["basic"]["last_name"]= ""
@@ -60,7 +61,6 @@ def new_pjson_stub():
     ps["basic"]["last_updated"]= ""
     ps["basic"]["date_of_death"]= ""
     ps["basic"]["reactivation_date"]= ""
-    ps["basic"]["status"]= "A"
     ps["basic"]["contact_method"]= "E"
     ps["basic"]["deactivated_details"]= ""
     ps["basic"]["deactivation_date"]= "None"
@@ -164,10 +164,34 @@ def gao_csv2pjson(csvfile, output_dir):
                 if row[1] == "2":
                     p["enumeration_type"] = "NPI-2"
 
+                #determine the status
+                
+                
+
+
 
                 p["number"]             = row[0]
                 p["classification"]             = "N"
                 #Load basic ----------------------------------------
+
+                #if deactivated date and no reactivation date
+                if row[43] and not row[44]:
+                    p["basic"]["status"]= "D"
+                    month  = row[43][0:2]
+                    day    = row[43][3:5]
+                    year   = row[43][6:10]
+                    #deactivation date
+                    p["basic"]["deactivation_date"] = "%s-%s-%s" % (year, month, day)
+                else:
+                    p["basic"]["status"]= "A"
+                
+                #reactivation date
+                if row[44]:
+                    month  = row[44][0:2]
+                    day    = row[44][3:5]
+                    year   = row[44][6:10]
+                    p["basic"]["reactivation_date"] = "%s-%s-%s" % (year, month, day)
+                
 
                 #PII
                 p["basic"]["ssn"] =  row[3]
