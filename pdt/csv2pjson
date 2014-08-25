@@ -144,7 +144,7 @@ def gao_csv2pjson(csvfile, output_dir):
                 cleaned_headers.append(c)
         else:
 
-            #If the records is not redacted because its inactive
+            #If the records is not redacted
             if row[1]:
                 zip_record = zip(cleaned_headers, row)
                 record = dict(zip(cleaned_headers, row))
@@ -165,10 +165,6 @@ def gao_csv2pjson(csvfile, output_dir):
                     p["enumeration_type"] = "NPI-2"
 
                 #determine the status
-                
-                
-
-
 
                 p["number"]             = row[0]
                 p["classification"]             = "N"
@@ -449,7 +445,7 @@ def gao_csv2pjson(csvfile, output_dir):
 
                 fn = "%s.json" % (p["number"])
 
-                subdir = os.path.join(output_dir, str(pdir))
+                subdir = os.path.join(output_dir, p["number"][0:4])
 
                 try:
                     os.mkdir(subdir)
