@@ -19,7 +19,7 @@ def new_pjson_stub():
     #ProviderJSON stub
     ps['enumeration_type']=""
     ps['number'] =""
-    ps['classification']="N"
+    ps['classification']=""
     ps["basic"] = OrderedDict()
     ps["basic"]["name_prefix"]= "" 
     ps["basic"]["first_name"]= "" 
@@ -396,7 +396,7 @@ def publiccsv2pjson(csvfile, output_dir):
             
                 fn = "%s.json" % (p["number"])
                 
-                subdir = os.path.join(output_dir, str(pdir))
+                subdir = os.path.join(output_dir, p["number"][0:4])
                 
                 try:
                     os.mkdir(subdir)
