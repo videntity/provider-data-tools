@@ -27,7 +27,7 @@ def jsondir2mongo( json_dir, database_name="database1",
     mongoindex = 0
     error_list =[]
     response_dict = OrderedDict()
-
+    onlyfiles = []
     try:
 
         mconnection = Connection("127.0.0.1")
@@ -44,10 +44,13 @@ def jsondir2mongo( json_dir, database_name="database1",
             
         
         #get the files in the specified directory
-        onlyfiles = [ f for f in os.listdir(json_dir) if os.path.isfile(os.path.join(json_dir,f)) ]
+        print "Getting a list of all files for importing from", json_dir
+        for root, dirs, files in os.walk(json_dir):
+            for file in files:
+                if file.endswith(".json"):
+                    onlyfiles.append(os.path.join(root, file))
         
-        
-        
+            
         for f in onlyfiles:
             j = None
             error_message = ""
