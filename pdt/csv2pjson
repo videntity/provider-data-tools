@@ -6,6 +6,7 @@
 from pymongo import Connection
 import os, sys, string, json, csv, time
 from collections import OrderedDict
+from datetime import datetime
 
 
 
@@ -19,7 +20,8 @@ def new_pjson_stub():
     #ProviderJSON stub
     ps['enumeration_type']=""
     ps['number'] =""
-    ps['classification']="N"
+    ps['last_updated_epoch'] =""
+    ps['created_epoch'] =""
     ps["basic"] = OrderedDict()
     ps["basic"]["status"]= ""
     ps["basic"]["name_prefix"]= ""
@@ -167,7 +169,7 @@ def gao_csv2pjson(csvfile, output_dir):
                 #determine the status
 
                 p["number"]             = row[0]
-                p["classification"]             = "N"
+
                 #Load basic ----------------------------------------
 
                 #if deactivated date and no reactivation date
@@ -230,16 +232,31 @@ def gao_csv2pjson(csvfile, output_dir):
                 p["basic"]["other_organization_code"]   = row[14]
 
 
-                p["basic"]["other_last_name_1"] = row[15].capitalize()
-                p["basic"]["other_first_name_1"] = row[16].capitalize()
-                p["basic"]["other_middle_name_1"] = row[17].capitalize()
-                p["basic"]["other_name_prefix_1"] = row[18].capitalize()
-                p["basic"]["other_name_suffix_1"] = row[19].capitalize()
+                p["basic"]["other_last_name_1"]     = row[15].capitalize()
+                p["basic"]["other_first_name_1"]    = row[16].capitalize()
+                p["basic"]["other_middle_name_1"]   = row[17].capitalize()
+                p["basic"]["other_name_prefix_1"]   = row[18].capitalize()
+                p["basic"]["other_name_suffix_1"]   = row[19].capitalize()
                 p["basic"]["other_name_credential_1"] = row[20]
                 p["basic"]["other_name_code_1"]       = row[21]
 
                 p["basic"]["enumeration_date"]          = row[40]
+                
+                if p["basic"]["enumeration_date"]:
+                    p['created_epoch'] = int(datetime(int(p["basic"]["enumeration_date"][6:10]),
+                                                           int(p["basic"]["enumeration_date"][0:2]),
+                                                           int(p["basic"]["enumeration_date"][3:5]),
+                                                           0, 0).strftime('%s'))
+                
+                
                 p["basic"]["last_updated"]              = row[41]
+                if p["basic"]["last_updated"]:
+                    p['last_updated_epoch'] = int(datetime(int(p["basic"]["last_updated"][6:10]),
+                                                           int(p["basic"]["last_updated"][0:2]),
+                                                           int(p["basic"]["last_updated"][3:5]),
+                                                           0, 0).strftime('%s'))
+                
+                
                 p["basic"]["deactivation_date"]         = row[43]
                 p["basic"]["reactivation_date"]         = row[44]
                 p["basic"]["deactivation_reason_code"]  = row[42]
