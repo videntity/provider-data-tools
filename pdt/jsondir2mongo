@@ -41,23 +41,21 @@ def jsondir2mongo( json_dir, database_name="database1",
         if delete_collection_before_import:
             myobjectid=collection.remove({})
             response_dict['info'] = ["The collection was cleared prior to import.", ]
-            
+            print "The collection was cleared prior to import."
         
         #get the files in the specified directory
         print "Getting a list of all files for importing from", json_dir
         for root, dirs, files in os.walk(json_dir):
             for file in files:
-                if file.endswith(".json"):
+                if file.endswith(".json") or file.endswith(".js"):
                     onlyfiles.append(os.path.join(root, file))
         
             
         for f in onlyfiles:
             j = None
-            error_message = ""
-            fp = os.path.join(json_dir, f)
+            error_message = ""    
             
-            
-            fh = open(fp, 'rU')
+            fh = open(f, 'rU')
             
             
             fileindex += 1
@@ -115,7 +113,7 @@ if __name__ == "__main__":
     
     if len(sys.argv)!=5:
         print "Usage:"
-        print "python json2mongo.py [JSON_DIR] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]"
+        print "json2dirmongo [JSON_DIR] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]"
         sys.exit(1)
 
     json_dir = sys.argv[1]
