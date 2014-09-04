@@ -67,7 +67,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
 
 
 setup(name="pdt",
-      version="0.0.17",
+      version="0.0.19",
       description="Provider Data Tools",
       long_description="""\
 Data processing utilities for providers.  Many tools are generic utilities.
