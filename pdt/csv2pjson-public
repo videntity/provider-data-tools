@@ -19,7 +19,8 @@ def new_pjson_stub():
     #ProviderJSON stub
     ps['enumeration_type']=""
     ps['number'] =""
-    ps['classification']=""
+    ps['last_updated_epoch'] =""
+    ps['created_epoch'] =""
     ps["basic"] = OrderedDict()
     ps["basic"]["name_prefix"]= "" 
     ps["basic"]["first_name"]= "" 
@@ -207,7 +208,23 @@ def publiccsv2pjson(csvfile, output_dir):
                 p["basic"]["other_name_code_1"] = row[19]
                 
                 p["basic"]["enumeration_date"]      = row[36]
+                if p["basic"]["enumeration_date"]:
+                    p['created_epoch'] = int(datetime(int(p["basic"]["enumeration_date"][6:10]),
+                                                           int(p["basic"]["enumeration_date"][0:2]),
+                                                           int(p["basic"]["enumeration_date"][3:5]),
+                                                           0, 0).strftime('%s'))
+                
+                
                 p["basic"]["last_updated"]              = row[37]
+                if p["basic"]["last_updated"]:
+                    p['last_updated_epoch'] = int(datetime(int(p["basic"]["last_updated"][6:10]),
+                                                           int(p["basic"]["last_updated"][0:2]),
+                                                           int(p["basic"]["last_updated"][3:5]),
+                                                           0, 0).strftime('%s'))
+                
+                
+                
+                
                 p["basic"]["deactivation_date"]         = row[39]
                 p["basic"]["reactivation_date"]         = row[40]
                 p["basic"]["deactivation_reason_code"] = row[38]
