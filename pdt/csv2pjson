@@ -168,7 +168,7 @@ def gao_csv2pjson(csvfile, output_dir):
 
                 #determine the status
 
-                p["number"]             = row[0]
+                p["number"]             = int(row[0])
 
                 #Load basic ----------------------------------------
 
@@ -320,7 +320,11 @@ def gao_csv2pjson(csvfile, output_dir):
                 clean_basic = OrderedDict()
                 for k,v in p["basic"].items():
                     if v:
-                        clean_basic[k] = v
+                        if v.isdigit():
+                            clean_basic[k] = int(v)
+                        else:
+                            clean_basic[k] = v
+                    
                 p["basic"] = clean_basic
 
                 #Addresses
@@ -336,6 +340,10 @@ def gao_csv2pjson(csvfile, output_dir):
                     a["city"]                            =  row[33]
                     a["state"]                           =  row[34]
                     a["zip"]                             =  row[35]
+                    
+                    if a["zip"].isdigit():
+                        a["zip"] = int(a["zip"])
+                    
                     a["telephone_number_extension"]      =  row[38]
 
                     if row[34]:
@@ -352,6 +360,10 @@ def gao_csv2pjson(csvfile, output_dir):
                     a["city"]                            =  row[33]
                     a["foreign_state"]                   =  row[34]
                     a["foreign_postal"]                  =  row[35]
+                    
+                    if a["foreign_postal"].isdigit():
+                        a["foreign_postal"] = int(a["foreign_postal"])
+                        
                     a["foreign_telephone_number"]        =  row[34]
                     a["foreign_fax_number"]              =  row[35]
                     a["telephone_number_extension"]      =  row[38]
@@ -371,6 +383,11 @@ def gao_csv2pjson(csvfile, output_dir):
                     a["city"]                            =  row[24]
                     a["state"]                           =  row[25]
                     a["zip"]                             =  row[26]
+                    
+                    if a["zip"].isdigit():
+                        a["zip"] = int(a["zip"])
+                    
+                    
                     a["telephone_number_extension"]      =  row[29]
                     if row[26]:
                         a["us_telephone_number"] =  "%s-%s-%s" % (row[28][0:3], row[28][3:6], row[28][6:12])
@@ -386,6 +403,10 @@ def gao_csv2pjson(csvfile, output_dir):
                     a["city"]                            =  row[24]
                     a["foreign_state"]                   =  row[25]
                     a["foreign_postal"]                  =  row[26]
+                    
+                    if a["foreign_postal"].isdigit():
+                        a["foreign_postal"] = int(a["foreign_postal"])
+                    
                     a["foreign_telephone_number"]        =  row[28]
                     a["foreign_fax_number"]              =  row[30]
 
@@ -445,6 +466,11 @@ def gao_csv2pjson(csvfile, output_dir):
                     if row[identifier_position]:
                         identifier = OrderedDict()
                         identifier['identifier'] = row[identifier_position]
+                        
+                        if identifier["identifier"].isdigit():
+                            identifier["identifier"] = int(identifier["identifier"])
+                        
+                        
                         identifier['code'] = row[identifier_code_position]
                         identifier['state'] = row[identifier_state_position]
                         identifier['issuer'] = row[identifier_issuer_position]
@@ -462,7 +488,7 @@ def gao_csv2pjson(csvfile, output_dir):
 
                 fn = "%s.json" % (p["number"])
 
-                subdir = os.path.join(output_dir, p["number"][0:4])
+                subdir = os.path.join(output_dir, str(p["number"])[0:4])
 
                 try:
                     os.mkdir(subdir)
