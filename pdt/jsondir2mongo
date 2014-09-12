@@ -65,12 +65,12 @@ def jsondir2mongo( json_dir, database_name="database1",
             try:
                 j = json.loads(j)
                 if type(j) != type({}):
-                    error_message = "File " + fp +  " did not contain a json object, i.e. {}."
+                    error_message = "File " + f +  " did not contain a json object, i.e. {}."
                     error_list.append(error_message)
             
             except :
             
-                error_message = "File " + fp +  " did not contain valid JSON."
+                error_message = "File " + f +  " did not contain valid JSON."
                 error_list.append(error_message)
                     
             if not error_message:
@@ -78,7 +78,7 @@ def jsondir2mongo( json_dir, database_name="database1",
                     myobjectid=collection.insert(j)
                     mongoindex += 1
                 except:
-                    error_message = "Error writing " + fp +  " to Mongo. " + str(sys.exc_info())
+                    error_message = "Error writing " + f +  " to Mongo. " + str(sys.exc_info())
                     error_list.append(error_message)
 
         if error_list:
