@@ -3,7 +3,6 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Alan Viars
 
-from pymongo import Connection
 import os, sys, string, json, csv, time
 from collections import OrderedDict
 from datetime import datetime
@@ -106,7 +105,7 @@ def new_pjson_stub():
 
 
 def gao_csv2pjson(csvfile, output_dir):
-
+    
     """Return a response_dict with summary of gao_csv2pjson transaction."""
 
 
@@ -167,8 +166,8 @@ def gao_csv2pjson(csvfile, output_dir):
                     p["enumeration_type"] = "NPI-2"
 
                 #determine the status
-
-                p["number"]             = int(row[0])
+                if row[0]:
+                    p["number"]             = int(row[0])
 
                 #Load basic ----------------------------------------
 

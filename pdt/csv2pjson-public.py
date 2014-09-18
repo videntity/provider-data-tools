@@ -3,7 +3,6 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Alan Viars
 
-from pymongo import Connection
 import os, sys, string, json, csv, time
 from collections import OrderedDict
 from datetime import datetime
