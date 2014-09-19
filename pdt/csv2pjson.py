@@ -3,7 +3,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Alan Viars
 
-import os, sys, string, json, csv, time
+import os, sys, string, json, csv, time, uuid
 from collections import OrderedDict
 from datetime import datetime
 
@@ -482,12 +482,19 @@ def gao_csv2pjson(csvfile, output_dir):
                     identifier_issuer_position  += 4
 
 
-
-
-
-                fn = "%s.json" % (p["number"])
-
-                subdir = os.path.join(output_dir, str(p["number"])[0:4])
+                if p["number"]:
+                    fn = "%s.json" % (p["number"])
+                    subdir = os.path.join(output_dir, str(p["number"])[0:4])
+                else:
+                    guid = str(uuid.uuid4())
+                    if p["enumeration_type"]=="NPI-1" and  p["basic"]["first_name"] and p["basic"]["last_name"]:
+                        fn = "%s-%s-%s.json" % (p["basic"]["first_name"], p["basic"]["last_name"], guid[0:8])
+                    elif  p["enumeration_type"]=="NPI-2" and p["basic"]["organization_name"]:
+                        fn = "%s-%s.json" % (p["basic"]["organization_name"], guid[0:8])
+                    else:
+                        fn = "%s.json" % (guid)
+                    
+                    subdir = os.path.join(output_dir, "no-id")
 
                 try:
                     os.mkdir(subdir)
