@@ -9,8 +9,17 @@ from datetime import datetime
 
 
 
-
-
+def new_pjson_deactive_stub():
+    ps = OrderedDict()
+    
+    #ProviderJSON stub
+    ps['enumeration_type']=""
+    ps['number'] =""
+    ps["basic"] = OrderedDict()
+    ps["basic"]["status"]= "D" 
+    ps["basic"]["deactivation_date"]= ""
+    return ps
+    
 def new_pjson_stub():
     
     ps = OrderedDict()
@@ -134,24 +143,30 @@ def publiccsv2pjson(csvfile, output_dir):
         else:
 
             #If the records is not redacted (because its inactive)
+            
+            zip_record = zip(cleaned_headers, row)
+            record = dict(zip(cleaned_headers, row))
+            
+            #get rid of blanks 
+            no_blank_zip = []
+            for i in zip_record:
+                if i[1]:
+                    no_blank_zip.append(i)
+                        
+            #start our object off with a stub.
+            
             if row[1]:
-                zip_record = zip(cleaned_headers, row)
-                record = dict(zip(cleaned_headers, row))
-                
-                #get rid of blanks 
-                no_blank_zip = []
-                for i in zip_record:
-                    if i[1]:
-                        no_blank_zip.append(i)
-                            
-                #start our object off with a stub.
                 p = new_pjson_stub()
-
+                
                 
                 if row[1] == "1":
                     p["enumeration_type"] = "NPI-1"
                 if row[1] == "2":
                     p["enumeration_type"] = "NPI-2"
+                else:
+                    #The record is deactivated
+                    p['basic']['status'] ="D"
+                
                 
                 p["number"]             = int(row[0]) 
                 #Load basic                
@@ -182,14 +197,7 @@ def publiccsv2pjson(csvfile, output_dir):
                 p["basic"]["parent_organization_ein"] = row[310]
                 p["basic"]["parent_organization_legal_business_name"] = row[309]
                 
-                #other name
-                p["basic"]["other_last_name_1"] = row[13].capitalize()
-                p["basic"]["other_first_name_1"] = row[14].capitalize()
-                p["basic"]["other_middle_name_1"] = row[15].capitalize()
-                p["basic"]["other_name_prefix_1"] = row[16].capitalize()
-                p["basic"]["other_name_suffix_1"] = row[17].capitalize()
-                p["basic"]["other_name_credential_1"] = row[18]
-                p["basic"]["other_name_code_1"] = row[19]
+                
                 
                 p["basic"]["enumeration_date"]      = row[36]
                 if p["basic"]["enumeration_date"]:
@@ -312,7 +320,7 @@ def publiccsv2pjson(csvfile, output_dir):
                     
                     if  row[35]:    
                         a["us_fax_number"]                   =  "%s-%s-%s" % (row[35][0:3], row[35][3:6], row[35][6:12])
-
+    
                     
                 else:
                     a["address_type"]                    = "FGN"
@@ -327,8 +335,8 @@ def publiccsv2pjson(csvfile, output_dir):
                     
                     a["foreign_telephone_number"]        =  row[34]
                     a["foreign_fax_number"]              =  row[35]
-
-
+    
+    
                 p['addresses'].append(a)
                 
                 #Maiing address ---
@@ -371,8 +379,8 @@ def publiccsv2pjson(csvfile, output_dir):
                     
                     a["foreign_telephone_number"]        =  row[26]
                     a["foreign_fax_number"]              =  row[27]
-
-
+    
+    
                 p['addresses'].append(a)
                 
                 #licenses and taxonomies----------------------------------------
@@ -443,36 +451,45 @@ def publiccsv2pjson(csvfile, output_dir):
                     identifier_code_position  += 4
                     identifier_state_position  += 4
                     identifier_issuer_position  += 4
+            
+            else:
                 
+                p = new_pjson_deactive_stub()
+                p["number"] = row[0]
+                if row[39]:
+                    month = row[39][0:2]
+                    day =  row[39][3:5]
+                    year = row[39][6:10]
+                    p["basic"]["deactivation_date"] = "%s-%s-%s" % (year, month, day)
                 
                 
                 
             
-                fn = "%s.json" % (p["number"])
-                
-                subdir = os.path.join(output_dir, str(p["number"])[0:4])
-                
-                try:
-                    os.mkdir(subdir)
-                except:
-                    pass
-                       
-                    
-                fp = os.path.join(subdir, fn)
-                ofile =  open(fp, 'w')
-                ofile.writelines(json.dumps(p, indent =4))
-                ofile.close()
-                po_count += 1
-                if po_count % 100 == 0:
-                   out  = "%s files created. Total time: %s seconds." % (po_count ,(time.time() - process_start_time) )
-                   print out
-                
-                if po_count % 1000 == 0:
-                   pdir += 1
+            fn = "%s.json" % (p["number"])
+            
+            subdir = os.path.join(output_dir, str(p["number"])[0:4])
+            
+            try:
+                os.mkdir(subdir)
+            except:
+                pass
                    
-                   out  = "%s files created. Total time: %s seconds." % (po_count ,(time.time() - process_start_time) )
-                   print out   
-                   
+                
+            fp = os.path.join(subdir, fn)
+            ofile =  open(fp, 'w')
+            ofile.writelines(json.dumps(p, indent =4))
+            ofile.close()
+            po_count += 1
+            if po_count % 100 == 0:
+               out  = "%s files created. Total time: %s seconds." % (po_count ,(time.time() - process_start_time) )
+               print out
+            
+            if po_count % 1000 == 0:
+               pdir += 1
+               
+               out  = "%s files created. Total time: %s seconds." % (po_count ,(time.time() - process_start_time) )
+               print out   
+               
         
             rowindex += 1
 
