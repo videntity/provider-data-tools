@@ -1,7 +1,7 @@
 Provider Data Tools
 ===================
 
-Version: 0.0.24
+Version: 0.0.25
 
 By: Alan Viars
 
@@ -40,7 +40,7 @@ chop-nppes-public
 
 To make use of this script you need first fecth the "NPPES Data Dissemination" file.
 
-To obtain the "NPPES Data Dissemination", go to  http://nppes.viva-it.com/NPI_Files.html. 
+To obtain the "NPPES Data Dissemination", go to  http://nppes.viva-it.com/NPI_Files.html.
 Get the "Full Replacement Monthly" zip file.  Unzip the file with the unzip tool of your choice.
 
 
@@ -144,3 +144,44 @@ Start the import of the directory data into the collection test within the datab
 
 In the above example, the files `1.json` and `2.json` were processed while `3.json` and
 `4.json` were not imported.
+
+csv2pjson.py
+------------
+
+Convert the GAO CSV file format to a directory of files in ProviderJSON format.
+
+Usage:
+
+    csv2pjson.py [CSV_FILE] [OUTPUT_DIR]
+
+
+Example:
+
+
+    csv2pjson.py gao-csvfile.csv output
+
+Output:
+
+  One file is created per line in the CSV file file inside the directory `output`. files are fanned out into a directory structure so as not to create millions of files in one directory.
+
+
+
+
+csv2pjson-public.py
+------------
+
+Convert the NPPES Public Data Dissemination  CSV file format to a directory og files in ProviderJSON format.
+
+Usage:
+
+    csv2pjson.py [CSV_FILE] [OUTPUT_DIR]
+
+
+Example:
+
+
+    csv2pjson.py public-csvfile.csv output
+
+Output:
+
+  One file is created per line in the CSV file file inside  the directory`output`. files are fanned out into a directory structure so as not to create millions of files in one directory.
