@@ -55,7 +55,6 @@ def new_pjson_stub():
     ps["basic"]["date_of_death"]= "" 
     ps["basic"]["reactivation_date"]= "" 
     ps["basic"]["status"]= "A" 
-    ps["basic"]["contact_method"]= "E" 
     ps["basic"]["deactivated_details"]= "" 
     ps["basic"]["deactivation_date"]= "None" 
     ps["basic"]["deactivation_reason_code"]= "" 
@@ -256,7 +255,6 @@ def publiccsv2pjson(csvfile, output_dir):
                 p["basic"]["authorized_official_middle_name"] = row[44]
                 p["basic"]["authorized_official_telephone_number"] = row[46]
                 p["basic"]["authorized_official_title_or_position"] = row[45]
-                p["basic"]["mode"] = "W"
                 
                 
                 clean_basic = OrderedDict()
