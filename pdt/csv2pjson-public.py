@@ -27,22 +27,7 @@ def new_pjson_stub():
     ps["basic"]["middle_name"]= "" 
     ps["basic"]["name_suffix"]= "" 
     ps["basic"]["credential"]= "" 
-    ps["basic"]["doing_business_as"]= "" 
     ps["basic"]["sole_proprietor"]= "" 
-    ps["basic"]["other_first_name_1"]= "" 
-    ps["basic"]["other_first_name_2"]= "" 
-    ps["basic"]["other_last_name_1"]= "" 
-    ps["basic"]["other_last_name_2"]= "" 
-    ps["basic"]["other_middle_name_1"]= "" 
-    ps["basic"]["other_middle_name_2"]= "" 
-    ps["basic"]["other_name_code_1"]= "" 
-    ps["basic"]["other_name_code_2"]= "" 
-    ps["basic"]["other_name_credential_1"]= "" 
-    ps["basic"]["other_name_credential_2"]= "" 
-    ps["basic"]["other_name_prefix_1"]= "" 
-    ps["basic"]["other_name_prefix_2"]= "" 
-    ps["basic"]["other_name_suffix_1"]= "" 
-    ps["basic"]["other_name_suffix_2"]= "" 
     ps["basic"]["organization_name"]= "" 
     ps["basic"]["organization_other_name"]= "" 
     ps["basic"]["organization_other_name_code"]= "" 
@@ -94,6 +79,7 @@ def new_pjson_stub():
     ps["basic"]["contact_person_telephone_number"]= "" 
     ps["basic"]["contact_person_title"]= "" 
     ps["basic"]["contact_person_title_or_position"]= ""
+    ps["other_names"] = []
     ps["addresses"] = []
     ps["taxonomies"] = []
     ps["licenses"] = []
@@ -147,7 +133,7 @@ def publiccsv2pjson(csvfile, output_dir):
                 cleaned_headers.append(c)
         else:
 
-            #If the records is not redacted because its inactive
+            #If the records is not redacted (because its inactive)
             if row[1]:
                 zip_record = zip(cleaned_headers, row)
                 record = dict(zip(cleaned_headers, row))
@@ -274,6 +260,32 @@ def publiccsv2pjson(csvfile, output_dir):
                             clean_basic[k] = v
                          
                 p["basic"] = clean_basic
+                
+                if row[11] or row[13] or row[14]:
+                    other_name  = OrderedDict()
+                    if row[11]:
+                        other_name["organization_name"]=row[11]
+                    
+                    if row[12]:
+                        other_name["code"]=row[12]
+                    if row[19]:
+                        other_name["code"]=row[19]
+                    
+                    if row[13]:
+                        other_name["last_name"]=row[13]
+                    if row[14]:
+                        other_name["first_name"]=row[14]
+                    if row[15]:
+                        other_name["middle_name"]=row[15]
+                    if row[16]:
+                        other_name["prefix"]=row[16]
+                    if row[17]:
+                        other_name["suffix"]=row[17]
+                    if row[18]:
+                        other_name["credential"]=row[18]
+                          
+                    p["other_names"].append(other_name)    
+                
                 
                 #Addresses
                 #location ---

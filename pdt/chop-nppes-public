@@ -228,6 +228,34 @@ def flatten_licenses(csvfile):
     return output_file
 
 
+def chop_other_names(csvfile):
+    """Chop other names up into its own file.
+    No need toflatten because only one item is in the public file
+    """
+    fh              = open(csvfile, 'rb')
+    f               = csv.reader(fh, delimiter=',')
+    output_file     = csvfile[:-4]
+    output_file     = "%s_other_names.csv" % (output_file)
+    outputcsvfileb  = open(output_file,'wb')
+    csvwriterb      = csv.writer(outputcsvfileb, delimiter=',',
+                           quoting=csv.QUOTE_MINIMAL)
+    rowindex        = 0
+    print "Parsing", csvfile, "to create", output_file
+
+
+    for row in f:
+        #only write this data if something is there.
+        if row[11] or row[12] or row[13]:
+            l = row[0:2] + row[4:7] + row[11:19]
+            csvwriterb.writerow(l)
+        rowindex+=1
+
+    print "Done. Iterated over", rowindex, "rows."
+    fh.close()
+    outputcsvfileb.close()
+    return output_file
+    
+
 def chop_addresses(csvfile):
     """Chop addresses up into its own file. Not flattened."""
     fh              = open(csvfile, 'rb')
@@ -362,8 +390,11 @@ if __name__ == "__main__":
     addresses_filename = chop_addresses(main_file)
     flatten_addresses(addresses_filename)
 
+    #chop other_names
+    chop_other_names(main_file)
+
     #chop basic
     chop_basic(main_file)
-
+    
 
 
