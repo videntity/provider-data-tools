@@ -171,11 +171,11 @@ def publiccsv2pjson(csvfile, output_dir):
                 #Load basic                
                 
                 #Provider name
-                p["basic"]["name_prefix"]       = row[8].capitalize()
-                p["basic"]['first_name']        = row[6].capitalize()
-                p["basic"]["middle_name"]       = row[7].capitalize()
-                p["basic"]['last_name']         = row[5].capitalize()
-                p["basic"]["name_suffix"]       = row[9].capitalize()
+                p["basic"]["name_prefix"]       = row[8].upper()
+                p["basic"]['first_name']        = row[6].upper()
+                p["basic"]["middle_name"]       = row[7].upper()
+                p["basic"]['last_name']         = row[5].upper()
+                p["basic"]["name_suffix"]       = row[9].upper()
                 p["basic"]["credential"]        = row[10]
                 p["basic"]["gender"]            = row[41]
                 
@@ -250,11 +250,11 @@ def publiccsv2pjson(csvfile, output_dir):
                 #not included in public file
                
                 #Authorized official
-                p["basic"]["authorized_official_last_name"] = row[42]
-                p["basic"]["authorized_official_first_name"] = row[43]
-                p["basic"]["authorized_official_middle_name"] = row[44]
-                p["basic"]["authorized_official_telephone_number"] = row[46]
-                p["basic"]["authorized_official_title_or_position"] = row[45]
+                p["basic"]["authorized_official_last_name"] = row[42].upper()
+                p["basic"]["authorized_official_first_name"] = row[43].upper()
+                p["basic"]["authorized_official_middle_name"] = row[44].upper()
+                p["basic"]["authorized_official_telephone_number"] = row[46].upper()
+                p["basic"]["authorized_official_title_or_position"] = row[45].upper()
                 
                 
                 clean_basic = OrderedDict()
@@ -270,7 +270,7 @@ def publiccsv2pjson(csvfile, output_dir):
                 if row[11] or row[13] or row[14]:
                     other_name  = OrderedDict()
                     if row[11]:
-                        other_name["organization_name"]=row[11]
+                        other_name["organization_name"]=row[11].upper()
                     
                     if row[12]:
                         other_name["code"]=row[12]
@@ -278,17 +278,17 @@ def publiccsv2pjson(csvfile, output_dir):
                         other_name["code"]=row[19]
                     
                     if row[13]:
-                        other_name["last_name"]=row[13]
+                        other_name["last_name"]=row[13].upper()
                     if row[14]:
-                        other_name["first_name"]=row[14]
+                        other_name["first_name"]=row[14].upper()
                     if row[15]:
-                        other_name["middle_name"]=row[15]
+                        other_name["middle_name"]=row[15].upper()
                     if row[16]:
-                        other_name["prefix"]=row[16]
+                        other_name["prefix"]=row[16].upper()
                     if row[17]:
-                        other_name["suffix"]=row[17]
+                        other_name["suffix"]=row[17].upper()
                     if row[18]:
-                        other_name["credential"]=row[18]
+                        other_name["credential"]=row[18].upper()
                           
                     p["other_names"].append(other_name)    
                 
@@ -303,8 +303,8 @@ def publiccsv2pjson(csvfile, output_dir):
                     a["address_type"]                    = "DOM"
                     a["address_1"]                       =  row[28]
                     a["address_2"]                       =  row[29]
-                    a["city"]                            =  row[30]
-                    a["state"]                           =  row[31]
+                    a["city"]                            =  row[30].upper()
+                    a["state"]                           =  row[31].upper()
                     a["zip"]                             =  row[32]
                     
                     if a["zip"].isdigit():
@@ -324,8 +324,8 @@ def publiccsv2pjson(csvfile, output_dir):
                     a["address_type"]                    = "FGN"
                     a["address_1"]                       =  row[28]
                     a["address_2"]                       =  row[29]
-                    a["city"]                            =  row[30]
-                    a["foreign_state"]                   =  row[31]
+                    a["city"]                            =  row[30].upper()
+                    a["foreign_state"]                   =  row[31].upper()
                     a["foreign_postal"]                  =  row[32]
                     
                     if a["foreign_postal"].isdigit():
@@ -346,8 +346,8 @@ def publiccsv2pjson(csvfile, output_dir):
                     a["address_type"]                    = "DOM"
                     a["address_1"]                       =  row[20]
                     a["address_2"]                       =  row[21]
-                    a["city"]                            =  row[22]
-                    a["state"]                           =  row[23]
+                    a["city"]                            =  row[22].upper()
+                    a["state"]                           =  row[23].upper()
                     a["zip"]                             =  row[24]
                     
                     
@@ -368,8 +368,8 @@ def publiccsv2pjson(csvfile, output_dir):
                     a["address_type"]                    = "FGN"
                     a["address_1"]                       =  row[20]
                     a["address_2"]                       =  row[21]
-                    a["city"]                            =  row[22]
-                    a["foreign_state"]                   =  row[23]
+                    a["city"]                            =  row[22].upper()
+                    a["foreign_state"]                   =  row[23].upper()
                     a["foreign_postal"]                  =  row[24]
                     
                     if a["foreign_postal"].isdigit():
@@ -409,7 +409,7 @@ def publiccsv2pjson(csvfile, output_dir):
                         license             = OrderedDict()
                         mlvs                = "%s-UNK-%s" % (row[license_state_position], row[license_number_position])
                         license['code']     = mlvs
-                        license['state']    = row[license_state_position]
+                        license['state']    = row[license_state_position].upper()
                         license['type']     = "UNK"
                         license['status']   = "UNK"
                         
@@ -440,7 +440,7 @@ def publiccsv2pjson(csvfile, output_dir):
                             identifier["identifier"] = int(identifier["identifier"])
                         
                         identifier['code'] = row[identifier_code_position]
-                        identifier['state'] = row[identifier_state_position]
+                        identifier['state'] = row[identifier_state_position].upper()
                         identifier['issuer'] = row[identifier_issuer_position]
                         p['identifiers'].append(identifier)
                             
