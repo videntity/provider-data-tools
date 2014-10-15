@@ -17,7 +17,9 @@ MONGO_PORT=27017
 
 def csv2mongo( csvfile, database_name="database1",
                collection_name="collection1",
-               delete_collection_before_import=False):
+               delete_collection_before_import=False,
+               host=MONGO_HOST,
+               port=MONGO_PORT):
 
     """Return a response_dict with summary of csv2mongo transaction."""
 
@@ -27,7 +29,7 @@ def csv2mongo( csvfile, database_name="database1",
 
     try:
 
-        mconnection = Connection(MONGO_HOST, MONGO_PORT)
+        mconnection = Connection(host, port)
         db          = mconnection[database_name]
         collection  = db[collection_name]
 
@@ -106,12 +108,15 @@ if __name__ == "__main__":
     database = sys.argv[2]
     collection = sys.argv[3]
     delete_collection_before_import = sys.argv[4]
+    host                            = sys.argv[5]
+    port                            = int(sys.argv[6])
 
     if sys.argv[4].lower() in ('t', 'true', '1'):
         delete_collection_before_import = True
     else:
         delete_collection_before_import = False
-    result = csv2mongo(csv_file, database, collection, delete_collection_before_import)
+    result = csv2mongo(csv_file, database, collection, delete_collection_before_import,
+                       host, port)
     
     
     #output the JSON transaction summary

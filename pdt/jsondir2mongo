@@ -17,7 +17,8 @@ MONGO_PORT=27017
 
 def jsondir2mongo( json_dir, database_name="database1",
                collection_name="collection1",
-               delete_collection_before_import=False):
+               delete_collection_before_import=False, host=MONGO_HOST,
+               port=MONGO_PORT):
     """Return a response_dict with a summary of jsondir2mongo transaction."""
 
     
@@ -30,7 +31,7 @@ def jsondir2mongo( json_dir, database_name="database1",
     onlyfiles = []
     try:
 
-        mconnection = Connection("127.0.0.1")
+        mconnection = Connection(host, port)
         db          = mconnection[database_name]
         collection  = db[collection_name]
         
@@ -113,17 +114,20 @@ if __name__ == "__main__":
     
     if len(sys.argv)!=5:
         print "Usage:"
-        print "json2dirmongo [JSON_DIR] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]"
+        print "json2dirmongo [JSON_DIR] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)] [HOST] [PORT]"
         sys.exit(1)
 
     json_dir = sys.argv[1]
     database = sys.argv[2]
     collection = sys.argv[3]
     delete_collection_before_import = sys.argv[4]
+    host                            = sys.argv[5]
+    port                            = int(sys.argv[6])
 
     if sys.argv[4].lower() in ('t', 'true', '1'):
         delete_collection_before_import = True
     else:
         delete_collection_before_import = False
-    result = jsondir2mongo(json_dir, database, collection, delete_collection_before_import)
+    result = jsondir2mongo(json_dir, database, collection,
+                           delete_collection_before_import, host, port)
     print json.dumps(result, indent =4)
