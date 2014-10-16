@@ -112,7 +112,7 @@ def jsondir2mongo( json_dir, database_name="database1",
 if __name__ == "__main__":
 
     
-    if len(sys.argv)!=5:
+    if len(sys.argv)!=7:
         print "Usage:"
         print "json2dirmongo [JSON_DIR] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)] [HOST] [PORT]"
         sys.exit(1)

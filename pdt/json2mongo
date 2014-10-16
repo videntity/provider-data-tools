@@ -89,7 +89,7 @@ def json2mongo(jsonfile, database_name         = "database1",
 if __name__ == "__main__":
 
     
-    if len(sys.argv)!=5:
+    if len(sys.argv)!=7:
         print "Usage:"
         print "json2mongo [JSONFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)] [HOST] [PORT]"
         sys.exit(1)
