@@ -422,10 +422,7 @@ def publiccsv2pjson(csvfile, output_dir):
                     
                     if row[identifier_position]:
                         identifier = OrderedDict()
-                        identifier['identifier'] = row[identifier_position]
-
-                        identifier["identifier"] = int(identifier["identifier"])
-                        
+                        identifier['identifier'] = row[identifier_position]                        
                         identifier['code'] = row[identifier_code_position]
                         identifier['state'] = row[identifier_state_position].upper()
                         identifier['issuer'] = row[identifier_issuer_position]
