@@ -268,10 +268,7 @@ def publiccsv2pjson(csvfile, output_dir):
                 clean_basic = OrderedDict()
                 for k,v in p["basic"].items():
                     if v:
-                        if v.isdigit():
-                            clean_basic[k] = int(v)
-                        else:
-                            clean_basic[k] = v
+                        clean_basic[k] = v
                          
                 p["basic"] = clean_basic
                 
@@ -314,12 +311,7 @@ def publiccsv2pjson(csvfile, output_dir):
                     a["city"]                            =  row[30].upper()
                     a["state"]                           =  row[31].upper()
                     a["zip"]                             =  row[32]
-                    
-                    if a["zip"].isdigit():
-                        a["zip"] = int(a["zip"])
-                    
-                    
-                    
+                                        
                     if row[34]:
                         
                         a["us_telephone_number"]         =  "%s-%s-%s" % (row[34][0:3], row[34][3:6], row[34][6:12])
@@ -334,11 +326,7 @@ def publiccsv2pjson(csvfile, output_dir):
                     a["address_2"]                       =  row[29]
                     a["city"]                            =  row[30].upper()
                     a["foreign_state"]                   =  row[31].upper()
-                    a["foreign_postal"]                  =  row[32]
-                    
-                    if a["foreign_postal"].isdigit():
-                        a["foreign_postal"] = int(a["foreign_postal"])
-                    
+                    a["foreign_postal"]                  =  row[32]                    
                     a["foreign_telephone_number"]        =  row[34]
                     a["foreign_fax_number"]              =  row[35]
     
@@ -359,9 +347,6 @@ def publiccsv2pjson(csvfile, output_dir):
                     a["zip"]                             =  row[24]
                     
                     
-                    if a["zip"].isdigit():
-                        a["zip"] = int(a["zip"])
-                    
                     
                     if row[26]:
                         a["us_telephone_number"] =  "%s-%s-%s" % (row[26][0:3], row[26][3:6], row[26][6:12])
@@ -379,10 +364,6 @@ def publiccsv2pjson(csvfile, output_dir):
                     a["city"]                            =  row[22].upper()
                     a["foreign_state"]                   =  row[23].upper()
                     a["foreign_postal"]                  =  row[24]
-                    
-                    if a["foreign_postal"].isdigit():
-                        a["foreign_postal"] = int(a["foreign_postal"])
-                    
                     a["foreign_telephone_number"]        =  row[26]
                     a["foreign_fax_number"]              =  row[27]
     
@@ -442,10 +423,8 @@ def publiccsv2pjson(csvfile, output_dir):
                     if row[identifier_position]:
                         identifier = OrderedDict()
                         identifier['identifier'] = row[identifier_position]
-                        
-                        
-                        if identifier["identifier"].isdigit():
-                            identifier["identifier"] = int(identifier["identifier"])
+
+                        identifier["identifier"] = int(identifier["identifier"])
                         
                         identifier['code'] = row[identifier_code_position]
                         identifier['state'] = row[identifier_state_position].upper()
