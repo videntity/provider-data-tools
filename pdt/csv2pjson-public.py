@@ -15,6 +15,7 @@ def new_pjson_deactive_stub():
     #ProviderJSON stub
     ps['enumeration_type']=""
     ps['number'] =""
+    ps['title'] ="Deactive"
     ps["basic"] = OrderedDict()
     ps["basic"]["status"]= "D" 
     ps["basic"]["deactivation_date"]= ""
@@ -27,6 +28,7 @@ def new_pjson_stub():
     #ProviderJSON stub
     ps['enumeration_type']=""
     ps['number'] =""
+    ps['title'] = ""
     ps['last_updated_epoch'] =""
     ps['created_epoch'] =""
     ps["basic"] = OrderedDict()
@@ -160,12 +162,18 @@ def publiccsv2pjson(csvfile, output_dir):
                 
                 if row[1] == "1":
                     p["enumeration_type"] = "NPI-1"
-                if row[1] == "2":
+                    p["title"] = "%s %s" % (row[6], row[5])
+                    if row[10]:
+                         p["title"] = "%s, %s" % (p["title"], row[10])
+                    
+                elif row[1] == "2":
                     p["enumeration_type"] = "NPI-2"
+                    p["title"] = row[4]
+                    
                 else:
                     #The record is deactivated
                     p['basic']['status'] ="D"
-                
+                    p["title"] = "Deactivated"
                 
                 p["number"]             = int(row[0]) 
                 #Load basic                
