@@ -89,18 +89,15 @@ def new_pjson_stub():
     ps["basic"]["contact_person_telephone_number"]= "" 
     ps["basic"]["contact_person_title"]= "" 
     ps["basic"]["contact_person_title_or_position"]= ""
-    ps["other_names"] = []
-    ps["addresses"] = []
-    ps["taxonomies"] = []
-    ps["licenses"] = []
-    ps["identifiers"] = []
+    ps["other_names"]       = []
+    ps["addresses"]         = []
+    ps["taxonomies"]        = []
+    ps["licenses"]          = []
+    ps["taxonomy_licenses"] = []
+    ps["identifiers"]       = []
+    ps["taxonomy_groups"]   = []
     return ps
     
-
-
-
-
-
 
 def publiccsv2pjson(csvfile, output_dir):
 
@@ -403,6 +400,14 @@ def publiccsv2pjson(csvfile, output_dir):
                         license['status']   = "UNK"
                         
                         p['licenses'].append(license)
+                     #Taxonomy and License
+                    if row[license_number_position] and taxonomy_code_position:
+                        
+                        taxonomy_license  = OrderedDict()
+                        taxonomy_license['taxonomy_code'] = row[taxonomy_code_position]
+                        mlvs = "%s-UNK-%s" % (row[license_state_position], row[license_number_position])
+                        taxonomy_license['license_code'] = mlvs
+                        p['taxonomy_licenses'].append(taxonomy_license)
                     
                     
                     taxonomy_code_position += 4
@@ -429,11 +434,43 @@ def publiccsv2pjson(csvfile, output_dir):
                         p['identifiers'].append(identifier)
                             
                 
-                    identifier_position += 4
-                    identifier_code_position  += 4
+                    identifier_position        += 4
+                    identifier_code_position   += 4
                     identifier_state_position  += 4
-                    identifier_issuer_position  += 4
-            
+                    identifier_issuer_position += 4
+                    
+                #Get Taxonomy Groups for Type 2
+                for i in range(314, 328):
+                    if row[i]:
+                        code, description = row[i].split(" ", 1)
+                        tg = {"code": code, "description": description}
+                        p['taxonomy_groups'].append(tg)
+                
+                
+                #Remve any empty arrays
+                if not p["other_names"]:
+                    del p["other_names"]
+                
+                if not p["addresses"]:
+                    del p["addresses"]
+                
+                if not p["taxonomies"]:
+                    del p["taxonomies"]
+                
+                if not p["taxonomy_licenses"]:
+                    del p["taxonomy_licenses"]                  
+                
+                if not p["licenses"]:
+                    del p["licenses"]                
+                     
+                if not p["identifiers"]:
+                    del p["identifiers"]
+                    
+                if not p["taxonomy_groups"]:
+                    del p["taxonomy_groups"]                         
+                
+                
+                
             else:
                 
                 p = new_pjson_deactive_stub()
@@ -443,7 +480,10 @@ def publiccsv2pjson(csvfile, output_dir):
                     day =  row[39][3:5]
                     year = row[39][6:10]
                     p["basic"]["deactivation_date"] = "%s-%s-%s" % (year, month, day)
-                
+            
+
+                    
+            
                 
                 
             
@@ -468,7 +508,6 @@ def publiccsv2pjson(csvfile, output_dir):
             
             if po_count % 1000 == 0:
                pdir += 1
-               
                out  = "%s files created. Total time: %s seconds." % (po_count ,(time.time() - process_start_time) )
                print out   
                
@@ -499,11 +538,9 @@ if __name__ == "__main__":
         print "csv2pjson-public [CSVFILE] [OUTPUT_DIRECTORY]"
         sys.exit(1)
 
-    csv_file = sys.argv[1]
+    csv_file   = sys.argv[1]
     output_dir = sys.argv[2]
-    
 
-    
     result = publiccsv2pjson(csv_file, output_dir)
     
     #output the JSON transaction summary
