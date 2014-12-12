@@ -16,10 +16,10 @@ from pdt.pjson.validate_other_names import validate_other_name_list
 #from validate_basic import validate_basic_dict
 #from validate_addresses import validate_address_list
 #from validate_licenses import validate_license_list
-#from validate_direct_addresses import validate_direct_address_list
 #from validate_taxonomies import validate_taxonomy_list
 #from validate_identifiers import validate_identifier_list
 #from validate_other_names import validate_other_name_list
+#from validate_direct_addresses import validate_direct_address_list
 
 
 def validate_pjson(j):
@@ -103,7 +103,8 @@ def validate_pjson(j):
         license_errors = []
    
     taxonomy_errors = validate_taxonomy_list(d['taxonomies'], d['enumeration_type'],
-                        d.get('licenses', []), d['basic'].get('sole_proprietor', "NO"))
+                        d.get('licenses', []), d.get('taxonomy_licenses', []),
+                        d['basic'].get('sole_proprietor', "NO"))
 
     if d.has_key('identifiers'):
         identifier_errors = validate_identifier_list(d['identifiers'], d['enumeration_type'])
