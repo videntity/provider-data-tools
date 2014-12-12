@@ -1,7 +1,7 @@
 Provider Data Tools
 ===================
 
-Version: 0.3.2
+Version: 0.3.3
 
 By: Alan Viars
 
@@ -14,6 +14,7 @@ related code libraries for parsing data.  They are:
 * jsondir2mongo     - Convert a directory of files containing JSON objects into documents in a MongoDB datbase/collection.
 * csv2pjson         - Parse NPI CSV files, containing PII, into provider JSON. Used for bulk upload.
 * csv2pjson-public.py - Parse the npi public data dissemination into ProviderJSON files
+* validate-pjson    - Parse a Provider JSON document and output errors and warnings as JSON.
 
 
 Installation

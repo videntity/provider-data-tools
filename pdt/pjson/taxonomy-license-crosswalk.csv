@@ -1,0 +1,824 @@
+code,entity_type, license_required, classification_description,specialization_description
+390200000X,I,False,Student in an Organized Health Care Education/Training Program,
+385HR2065X,O,False,Respite Care,"Respite Care, Physical Disabilities, Child"
+385HR2060X,O,False,Respite Care,"Respite Care, Mental Retardation and/or Developmental Disabilities, Child"
+385HR2055X,O,False,Respite Care,"Respite Care, Mental Illness, Child"
+385HR2050X,O,False,Respite Care,Respite Care Camp
+385H00000X,O,False,Respite Care,
+376K00000X,I,False,Nurse's Aide,
+376J00000X,I,False,Homemaker,
+376G00000X,I,False,Nursing Home Administrator,
+374U00000X,I,False,Home Health Aide,
+374T00000X,I,False,Religious Nonmedical Nursing Personnel,
+374K00000X,I,False,Religious Nonmedical Practitioner,
+374J00000X,I,False,Doula,
+3747P1801X,I,False,Technician,Personal Care Attendant
+3747A0650X,I,False,Technician,Attendant Care Provider
+374700000X,I,False,Technician,
+373H00000X,I,False,Day Training/Habilitation Specialist,
+372600000X,I,False,Adult Companion,
+372500000X,I,False,Chore Provider,
+367H00000X,I,False,Anesthesiologist Assistant,
+367A00000X,I,False,Advanced Practice Midwife,
+367500000X,I,True,"Nurse Anesthetist, Certified Registered",
+364SX0204X,I,True,Clinical Nurse Specialist,"Oncology, Pediatrics"
+364SX0200X,I,True,Clinical Nurse Specialist,Oncology
+364SX0106X,I,True,Clinical Nurse Specialist,Occupational Health
+364SW0102X,I,True,Clinical Nurse Specialist,Women's Health
+364ST0500X,I,True,Clinical Nurse Specialist,Transplantation
+364SS0200X,I,True,Clinical Nurse Specialist,School
+364SR0400X,I,True,Clinical Nurse Specialist,Rehabilitation
+364SP2800X,I,True,Clinical Nurse Specialist,Perioperative
+364SP1700X,I,True,Clinical Nurse Specialist,Perinatal
+364SP0813X,I,True,Clinical Nurse Specialist,"Psych/Mental Health, Geropsychiatric"
+364SP0812X,I,True,Clinical Nurse Specialist,"Psych/Mental Health, Community"
+364SP0811X,I,True,Clinical Nurse Specialist,"Psych/Mental Health, Chronically Ill"
+364SP0810X,I,True,Clinical Nurse Specialist,"Psych/Mental Health, Child & Family"
+364SP0809X,I,True,Clinical Nurse Specialist,"Psych/Mental Health, Adult"
+364SP0808X,I,True,Clinical Nurse Specialist,Psych/Mental Health
+364SP0807X,I,True,Clinical Nurse Specialist,"Psych/Mental Health, Child & Adolescent"
+364SP0200X,I,True,Clinical Nurse Specialist,Pediatrics
+364SN0800X,I,True,Clinical Nurse Specialist,Neuroscience
+364SN0000X,I,True,Clinical Nurse Specialist,Neonatal
+364SM0705X,I,True,Clinical Nurse Specialist,Medical-Surgical
+364SL0600X,I,True,Clinical Nurse Specialist,Long-Term Care
+364SI0800X,I,True,Clinical Nurse Specialist,Informatics
+364SH1100X,I,True,Clinical Nurse Specialist,Holistic
+364SH0200X,I,True,Clinical Nurse Specialist,Home Health
+364SG0600X,I,True,Clinical Nurse Specialist,Gerontology
+364SF0001X,I,True,Clinical Nurse Specialist,Family Health
+364SE1400X,I,True,Clinical Nurse Specialist,Ethics
+364SE0003X,I,True,Clinical Nurse Specialist,Emergency
+364SC2300X,I,True,Clinical Nurse Specialist,Chronic Care
+364SC1501X,I,True,Clinical Nurse Specialist,Community Health/Public Health
+364SC0200X,I,True,Clinical Nurse Specialist,Critical Care Medicine
+364SA2200X,I,True,Clinical Nurse Specialist,Adult Health
+364SA2100X,I,True,Clinical Nurse Specialist,Acute Care
+364S00000X,I,True,Clinical Nurse Specialist,
+363LX0106X,I,True,Nurse Practitioner,Occupational Health
+363LX0001X,I,True,Nurse Practitioner,Obstetrics & Gynecology
+363LW0102X,I,True,Nurse Practitioner,Women's Health
+363LS0200X,I,True,Nurse Practitioner,School
+363LP2300X,I,True,Nurse Practitioner,Primary Care
+363LP1700X,I,True,Nurse Practitioner,Perinatal
+363LP0808X,I,True,Nurse Practitioner,Psych/Mental Health
+363LP0222X,I,True,Nurse Practitioner,"Pediatrics, Critical Care"
+363LP0200X,I,True,Nurse Practitioner,Pediatrics
+363LN0005X,I,True,Nurse Practitioner,"Neonatal, Critical Care"
+363LN0000X,I,True,Nurse Practitioner,Neonatal
+363LG0600X,I,True,Nurse Practitioner,Gerontology
+363LF0000X,I,True,Nurse Practitioner,Family
+363LC1500X,I,True,Nurse Practitioner,Community Health
+363LC0200X,I,True,Nurse Practitioner,Critical Care Medicine
+363LA2200X,I,True,Nurse Practitioner,Adult Health
+363LA2100X,I,True,Nurse Practitioner,Acute Care
+363L00000X,I,True,Nurse Practitioner,
+363AS0400X,I,False,Physician Assistant,Surgical
+363AM0700X,I,False,Physician Assistant,Medical
+363A00000X,I,False,Physician Assistant,
+347E00000X,O,False,Transportation Broker,
+347D00000X,O,False,Train,
+347C00000X,O,False,Private Vehicle,
+347B00000X,O,False,Bus,
+344800000X,O,False,Air Carrier,
+344600000X,O,False,Taxi,
+343900000X,O,False,Non-emergency Medical Transport (VAN),
+343800000X,O,False,Secured Medical Transport (VAN),
+3418M1130X,O,False,MilitaryU.S. Coast Guard Transport,"Military Ambulance, Water Transport"
+3418M1120X,O,False,MilitaryU.S. Coast Guard Transport,"Military Ambulance, Air Transport"
+3418M1110X,O,False,MilitaryU.S. Coast Guard Transport,"Military Ambulance, Ground Transport"
+341800000X,O,False,MilitaryU.S. Coast Guard Transport,
+3416S0300X,O,False,Ambulance,Water Transport
+3416L0300X,O,False,Ambulance,Land Transport
+3416A0800X,O,False,Ambulance,Air Transport
+341600000X,O,False,Ambulance,
+335V00000X,O,False,Portable X-Ray Supplier,
+335U00000X,O,False,Organ Procurement Organization,
+335G00000X,O,False,Medical Foods Supplier,
+335E00000X,O,False,Prosthetic/Orthotic Supplier,
+3336S0011X,O,False,Pharmacy,Specialty Pharmacy
+3336N0007X,O,False,Pharmacy,Nuclear Pharmacy
+3336M0003X,O,False,Pharmacy,Managed Care Organization Pharmacy
+3336M0002X,O,False,Pharmacy,Mail Order Pharmacy
+3336L0003X,O,False,Pharmacy,Long Term Care Pharmacy
+3336I0012X,O,False,Pharmacy,Institutional Pharmacy
+3336H0001X,O,False,Pharmacy,Home Infusion Therapy Pharmacy
+3336C0004X,O,False,Pharmacy,Compounding Pharmacy
+3336C0003X,O,False,Pharmacy,Community/Retail Pharmacy
+3336C0002X,O,False,Pharmacy,Clinic Pharmacy
+333600000X,O,False,Pharmacy,
+333300000X,O,False,Emergency Response System Companies,
+332U00000X,O,False,Home Delivered Meals,
+332S00000X,O,False,Hearing  Aid Equipment,
+332H00000X,O,False,"Eyewear Supplier (Equipment, not the service)",
+332G00000X,O,False,Eye Bank,
+332BX2000X,O,False,Durable Medical Equipment & Medical Supplies,Oxygen Equipment & Supplies
+332BP3500X,O,False,Durable Medical Equipment & Medical Supplies,Parenteral & Enteral Nutrition
+332BN1400X,O,False,Durable Medical Equipment & Medical Supplies,Nursing Facility Supplies
+332BD1200X,O,False,Durable Medical Equipment & Medical Supplies,Dialysis Equipment & Supplies
+332BC3200X,O,False,Durable Medical Equipment & Medical Supplies,Customized Equipment
+332B00000X,O,False,Durable Medical Equipment & Medical Supplies,
+332900000X,O,False,Non-Pharmacy Dispensing Site,
+332800000X,O,False,Indian Health Service/Tribal/Urban Indian Health (I/T/U) Pharmacy,
+332100000X,O,False,Department of Veterans Affairs (VA) Pharmacy,
+332000000X,O,False,MilitaryU.S. Coast Guard Pharmacy,
+331L00000X,O,False,Blood Bank,
+3245S0500X,O,False,Substance Abuse Rehabilitation Facility,"Substance Abuse Treatment, Children"
+324500000X,O,False,Substance Abuse Rehabilitation Facility,
+323P00000X,O,False,Psychiatric Residential Treatment Facility,
+322D00000X,O,False,"Residential Treatment Facility, Emotionally Disturbed Children",
+320900000X,O,False,"Community Based Residential Treatment, Mental Retardation and/or Developmental Disabilities",
+320800000X,O,False,"Community Based Residential Treatment Facility, Mental Illness",
+320700000X,O,False,"Residential Treatment Facility, Physical Disabilities",
+320600000X,O,False,"Residential Treatment Facility, Mental Retardation and/or Developmental Disabilities",
+315P00000X,O,False,"Intermediate Care Facility, Mentally Retarded",
+315D00000X,O,False,"Hospice, Inpatient",
+3140N1450X,O,False,Skilled Nursing Facility,"Nursing Care, Pediatric"
+314000000X,O,False,Skilled Nursing Facility,
+313M00000X,O,False,Nursing Facility/Intermediate Care Facility,
+311ZA0620X,O,False,Custodial Care Facility,Adult Care Home
+311Z00000X,O,False,Custodial Care Facility,
+311500000X,O,False,Alzheimer Center (Dementia Center),
+310500000X,O,False,"Intermediate Care Facility, Mental Illness",
+3104A0630X,O,False,Assisted Living Facility,"Assisted Living, Behavioral Disturbances"
+3104A0625X,O,False,Assisted Living Facility,"Assisted Living, Mental Illness"
+310400000X,O,False,Assisted Living Facility,
+305S00000X,O,False,Point of Service,
+305R00000X,O,False,Preferred Provider Organization,
+302R00000X,O,False,Health Maintenance Organization,
+302F00000X,O,False,Exclusive Provider Organization,
+293D00000X,O,False,Physiological Laboratory,
+292200000X,O,False,Dental Laboratory,
+291U00000X,O,False,Clinical Medical Laboratory,
+291900000X,O,False,Military Clinical Medical Laboratory,
+2865X1600X,O,False,Military Hospital,Military General Acute Care Hospital. Operational (Transportable)
+2865M2000X,O,False,Military Hospital,Military General Acute Care Hospital
+286500000X,O,False,Military Hospital,
+284300000X,O,False,Special Hospital,
+283XC2000X,O,False,Rehabilitation Hospital,Children
+283X00000X,O,False,Rehabilitation Hospital,
+283Q00000X,O,False,Psychiatric Hospital,
+282NW0100X,O,False,General Acute Care Hospital,Women
+282NR1301X,O,False,General Acute Care Hospital,Rural
+282NC2000X,O,False,General Acute Care Hospital,Children
+282NC0060X,O,False,General Acute Care Hospital,Critical Access
+282N00000X,O,False,General Acute Care Hospital,
+282J00000X,O,False,Religious Nonmedical Health Care Institution,
+282E00000X,O,False,Long Term Care Hospital,
+281PC2000X,O,False,Chronic Disease Hospital,Children
+281P00000X,O,False,Chronic Disease Hospital,
+276400000X,O,False,"Rehabilitation, Substance Use Disorder Unit",
+275N00000X,O,False,Medicare Defined Swing Bed Unit,
+273Y00000X,O,False,Rehabilitation Unit,
+273R00000X,O,False,Psychiatric Unit,
+273100000X,O,False,Epilepsy Unit,
+261QX0203X,O,False,Clinic/Center,"Oncology, Radiation"
+261QX0200X,O,False,Clinic/Center,Oncology
+261QX0100X,O,False,Clinic/Center,Occupational Health
+261QV0200X,O,False,Clinic/Center,VA
+261QU0200X,O,False,Clinic/Center,Urgent Care
+261QS1200X,O,False,Clinic/Center,Sleep Disorder Diagnostic
+261QS1000X,O,False,Clinic/Center,Student Health
+261QS0132X,O,False,Clinic/Center,Ophthalmologic Surgery
+261QS0112X,O,False,Clinic/Center,Oral and Maxillofacial Surgery
+261QR1300X,O,False,Clinic/Center,Rural Health
+261QR1100X,O,False,Clinic/Center,Research
+261QR0800X,O,False,Clinic/Center,Recovery Care
+261QR0405X,O,False,Clinic/Center,"Rehabilitation, Substance Use Disorder"
+261QR0404X,O,False,Clinic/Center,"Rehabilitation, Cardiac Facilities"
+261QR0401X,O,False,Clinic/Center,"Rehabilitation, Comprehensive Outpatient Rehabilitation Facility (CORF)"
+261QR0400X,O,False,Clinic/Center,Rehabilitation
+261QR0208X,O,False,Clinic/Center,"Radiology, Mobile"
+261QR0207X,O,False,Clinic/Center,"Radiology, Mobile Mammography"
+261QR0206X,O,False,Clinic/Center,"Radiology, Mammography"
+261QR0200X,O,False,Clinic/Center,Radiology
+261QP3300X,O,False,Clinic/Center,Pain
+261QP2400X,O,False,Clinic/Center,Prison Health
+261QP2300X,O,False,Clinic/Center,Primary Care
+261QP2000X,O,False,Clinic/Center,Physical Therapy
+261QP1100X,O,False,Clinic/Center,Podiatric
+261QP0905X,O,False,Clinic/Center,"Public Health, State or Local"
+261QP0904X,O,False,Clinic/Center,"Public Health, Federal"
+261QM3000X,O,False,Clinic/Center,Medically Fragile Intants and Children Day Care
+261QM2800X,O,False,Clinic/Center,Methadone Clinic
+261QM2500X,O,False,Clinic/Center,Medical Specialty
+261QM1300X,O,False,Clinic/Center,Multi-Specialty
+261QM1200X,O,False,Clinic/Center,Magnetic Resonance Imaging (MRI)
+261QM1103X,O,False,Clinic/Center,Military Ambulatory Procedure Visits Operational (Transportable)
+261QM1102X,O,False,Clinic/Center,Military Outpatient Operational (Transportable) Component
+261QM1101X,O,False,Clinic/Center,Military Ambulatory Procedure
+261QM1100X,O,False,Clinic/Center,Military Outpatient
+261QM1000X,O,False,Clinic/Center,Migrant Health
+261QM0855X,O,False,Clinic/Center,Adolescent and Children Mental Health
+261QM0850X,O,False,Clinic/Center,Adult Mental Health
+261QM0801X,O,False,Clinic/Center,Mental Health (Including Community Mental Health Center)
+261QL0400X,O,False,Clinic/Center,Lithotripsy
+261QI0500X,O,False,Clinic/Center,Infusion Therapy
+261QH0700X,O,False,Clinic/Center,Hearing and Speech
+261QH0100X,O,False,Clinic/Center,Health
+261QG0250X,O,False,Clinic/Center,Genetics
+261QF0400X,O,False,Clinic/Center,Federally Qualified Health Center (FQHC)
+261QF0050X,O,False,Clinic/Center,"Family Planning, Non-Surgical"
+261QE0800X,O,False,Clinic/Center,Endoscopy
+261QE0700X,O,False,Clinic/Center,End-Stage Renal Disease (ESRD) Treatment
+261QE0002X,O,False,Clinic/Center,Emergency Care
+261QD1600X,O,False,Clinic/Center,Developmental Disabilities
+261QD0000X,O,False,Clinic/Center,Dental
+261QC1800X,O,False,Clinic/Center,Corporate Health
+261QC1500X,O,False,Clinic/Center,Community Health
+261QC0050X,O,False,Clinic/Center,Critical Access Hospital
+261QB0400X,O,False,Clinic/Center,Birthing
+261QA3000X,O,False,Clinic/Center,Augmentative Communication
+261QA1903X,O,False,Clinic/Center,Ambulatory Surgical
+261QA0900X,O,False,Clinic/Center,Amputee
+261QA0600X,O,False,Clinic/Center,Adult Day Care
+261QA0006X,O,False,Clinic/Center,Ambulatory Fertility Facility
+261QA0005X,O,False,Clinic/Center,Ambulatory Family Planning Facility
+261Q00000X,O,False,Clinic/Center,
+253Z00000X,O,False,In Home Supportive Care,
+253J00000X,O,False,Foster Care Agency,
+252Y00000X,O,False,Early Intervention Provider Agency,
+251X00000X,O,False,Supports Brokerage,
+251V00000X,O,False,Voluntary or Charitable,
+251T00000X,O,False,PACE Provider Organization,
+251S00000X,O,False,Community/Behavioral Health,
+251K00000X,O,False,Public Health or Welfare,
+251J00000X,O,False,Nursing Care,
+251G00000X,O,False,"Hospice Care, Community Based",
+251F00000X,O,False,Home Infusion,
+251E00000X,O,False,Home Health,
+251C00000X,O,False,"Day Training, Developmentally Disabled Services",
+251B00000X,O,False,Case Management,
+251300000X,O,False,Local Education Agency (LEA),
+247ZC0005X,I,False,Pathology,"Clinical Laboratory Director, Non-physician"
+2472V0600X,I,False,"Technician, Other",Veterinary
+2472R0900X,I,False,"Technician, Other",Renal Dialysis
+2472E0500X,I,False,"Technician, Other",EEG
+2472D0500X,I,False,"Technician, Other",Darkroom
+2472B0301X,I,False,"Technician, Other",Biomedical Engineering
+247200000X,I,False,"Technician, Other",
+2471V0106X,I,False,Radiologic Technologist,Vascular-Interventional Technology
+2471V0105X,I,False,Radiologic Technologist,Vascular Sonography
+2471S1302X,I,False,Radiologic Technologist,Sonography
+2471R0002X,I,False,Radiologic Technologist,Radiation Therapy
+2471Q0001X,I,False,Radiologic Technologist,Quality Management
+2471N0900X,I,False,Radiologic Technologist,Nuclear Medicine Technology
+2471M2300X,I,False,Radiologic Technologist,Mammography
+2471M1202X,I,False,Radiologic Technologist,Magnetic Resonance Imaging
+2471C3402X,I,False,Radiologic Technologist,Radiography
+2471C3401X,I,False,Radiologic Technologist,Computed Tomography
+2471C1106X,I,False,Radiologic Technologist,Cardiac-Interventional Technology
+2471C1101X,I,False,Radiologic Technologist,Cardiovascular-Interventional Technology
+2471B0102X,I,False,Radiologic Technologist,Bone Densitometry
+247100000X,I,False,Radiologic Technologist,
+2470A2800X,I,False,"Technician, Health Information",Assistant Record Technician
+247000000X,I,False,"Technician, Health Information",
+246ZX2200X,I,False,"Specialist/Technologist, Other",Orthopedic Assistant
+246ZS0410X,I,False,"Specialist/Technologist, Other",Surgical Technologist
+246ZN0300X,I,False,"Specialist/Technologist, Other",Nephrology
+246ZI1000X,I,False,"Specialist/Technologist, Other","Illustration, Medical"
+246ZG1000X,I,False,"Specialist/Technologist, Other","Geneticist, Medical (PhD)"
+246ZG0701X,I,False,"Specialist/Technologist, Other",Graphics Methods
+246ZE0600X,I,False,"Specialist/Technologist, Other",Electroneurodiagnostic
+246ZE0500X,I,False,"Specialist/Technologist, Other",EEG
+246ZC0007X,I,False,"Specialist/Technologist, Other",Surgical Assistant
+246ZB0600X,I,False,"Specialist/Technologist, Other",Biostatistician
+246ZB0500X,I,False,"Specialist/Technologist, Other",Biochemist
+246ZB0302X,I,False,"Specialist/Technologist, Other",Biomedical Photographer
+246ZB0301X,I,False,"Specialist/Technologist, Other",Biomedical Engineering
+246ZA2600X,I,False,"Specialist/Technologist, Other","Art, Medical"
+246Z00000X,I,False,"Specialist/Technologist, Other",
+246YR1600X,I,False,"Spec/Tech, Health Info",Registered Record Administrator
+246YC3302X,I,False,"Spec/Tech, Health Info","Coding Specialist, Physician Office Based"
+246YC3301X,I,False,"Spec/Tech, Health Info","Coding Specialist, Hospital Based"
+246Y00000X,I,False,"Spec/Tech, Health Info",
+246XS1301X,I,False,"Spec/Tech, Cardiovascular",Sonography
+246XC2903X,I,False,"Spec/Tech, Cardiovascular",Vascular Specialist
+246XC2901X,I,False,"Spec/Tech, Cardiovascular",Cardiovascular Invasive Specialist
+246X00000X,I,False,"Spec/Tech, Cardiovascular",
+246W00000X,I,False,"Technician, Cardiology",
+246RP1900X,I,False,"Technician, Pathology",Phlebotomy
+246RM2200X,I,False,"Technician, Pathology",Medical Laboratory
+246RH0600X,I,False,"Technician, Pathology",Histology
+246R00000X,I,False,"Technician, Pathology",
+246QM0900X,I,False,"Spec/Tech, Pathology",Microbiology
+246QM0706X,I,False,"Spec/Tech, Pathology",Medical Technologist
+246QL0901X,I,False,"Spec/Tech, Pathology","Laboratory Management, Diplomate"
+246QL0900X,I,False,"Spec/Tech, Pathology",Laboratory Management
+246QI0000X,I,False,"Spec/Tech, Pathology",Immunology
+246QH0600X,I,False,"Spec/Tech, Pathology",Histology
+246QH0401X,I,False,"Spec/Tech, Pathology",Hemapheresis Practitioner
+246QH0000X,I,False,"Spec/Tech, Pathology",Hematology
+246QC2700X,I,False,"Spec/Tech, Pathology",Cytotechnology
+246QC1000X,I,False,"Spec/Tech, Pathology",Chemistry
+246QB0000X,I,False,"Spec/Tech, Pathology",Blood Banking
+246Q00000X,I,False,"Spec/Tech, Pathology",
+243U00000X,I,False,Radiology Practitioner Assistant,
+242T00000X,I,False,Perfusionist,
+237700000X,I,False,Hearing Instrument Specialist,
+237600000X,I,False,Audiologist-Hearing Aid Fitter,
+235Z00000X,I,False,Speech-Language Pathologist,
+2355S0801X,I,False,Specialist/Technologist,Speech-Language Assistant
+2355A2700X,I,False,Specialist/Technologist,Audiology Assistant
+235500000X,I,False,Specialist/Technologist,
+231HA2500X,I,False,Audiologist,Assistive Technology Supplier
+231HA2400X,I,False,Audiologist,Assistive Technology Practitioner
+231H00000X,I,False,Audiologist,
+229N00000X,I,False,Anaplastologist,
+2279S1500X,I,False,"Respiratory Therapist, Registered",SNF/Subacute Care
+2279P4000X,I,False,"Respiratory Therapist, Registered",Patient Transport
+2279P3900X,I,False,"Respiratory Therapist, Registered",Neonatal/Pediatrics
+2279P3800X,I,False,"Respiratory Therapist, Registered",Palliative/Hospice
+2279P1006X,I,False,"Respiratory Therapist, Registered",Pulmonary Function Technologist
+2279P1005X,I,False,"Respiratory Therapist, Registered",Pulmonary Rehabilitation
+2279P1004X,I,False,"Respiratory Therapist, Registered",Pulmonary Diagnostics
+2279H0200X,I,False,"Respiratory Therapist, Registered",Home Health
+2279G1100X,I,False,"Respiratory Therapist, Registered",General Care
+2279G0305X,I,False,"Respiratory Therapist, Registered",Geriatric Care
+2279E1000X,I,False,"Respiratory Therapist, Registered",Educational
+2279E0002X,I,False,"Respiratory Therapist, Registered",Emergency Care
+2279C0205X,I,False,"Respiratory Therapist, Registered",Critical Care
+227900000X,I,False,"Respiratory Therapist, Registered",
+2278S1500X,I,False,"Respiratory Therapist, Certified",SNF/Subacute Care
+2278P4000X,I,False,"Respiratory Therapist, Certified",Patient Transport
+2278P3900X,I,False,"Respiratory Therapist, Certified",Neonatal/Pediatrics
+2278P3800X,I,False,"Respiratory Therapist, Certified",Palliative/Hospice
+2278P1006X,I,False,"Respiratory Therapist, Certified",Pulmonary Function Technologist
+2278P1005X,I,False,"Respiratory Therapist, Certified",Pulmonary Rehabilitation
+2278P1004X,I,False,"Respiratory Therapist, Certified",Pulmonary Diagnostics
+2278H0200X,I,False,"Respiratory Therapist, Certified",Home Health
+2278G1100X,I,False,"Respiratory Therapist, Certified",General Care
+2278G0305X,I,False,"Respiratory Therapist, Certified",Geriatric Care
+2278E1000X,I,False,"Respiratory Therapist, Certified",Educational
+2278E0002X,I,False,"Respiratory Therapist, Certified",Emergency Care
+2278C0205X,I,False,"Respiratory Therapist, Certified",Critical Care
+227800000X,I,False,"Respiratory Therapist, Certified",
+226300000X,I,False,Kinesiotherapist,
+225XR0403X,I,False,Occupational Therapist,Driving and Community Mobility
+225XP0200X,I,False,Occupational Therapist,Pediatrics
+225XP0019X,I,False,Occupational Therapist,Physical Rehabilitation
+225XN1300X,I,False,Occupational Therapist,Neurorehabilitation
+225XM0800X,I,False,Occupational Therapist,Mental Health
+225XL0004X,I,False,Occupational Therapist,Low Vision
+225XH1300X,I,False,Occupational Therapist,Human Factors
+225XH1200X,I,False,Occupational Therapist,Hand
+225XG0600X,I,False,Occupational Therapist,Gerontology
+225XF0002X,I,False,Occupational Therapist,"Feeding, Eating & Swallowing"
+225XE1200X,I,False,Occupational Therapist,Ergonomics
+225XE0001X,I,False,Occupational Therapist,Environmental Modification
+225X00000X,I,False,Occupational Therapist,
+225CX0006X,I,False,Rehabilitation Counselor,Orientation and Mobility Training Provider
+225CA2500X,I,False,Rehabilitation Counselor,Assistive Technology Supplier
+225CA2400X,I,False,Rehabilitation Counselor,Assistive Technology Practitioner
+225C00000X,I,False,Rehabilitation Counselor,
+225B00000X,I,False,Pulmonary Function Technologist,
+225A00000X,I,False,Music Therapist,
+225800000X,I,False,Recreation Therapist,
+225700000X,I,False,Massage Therapist,
+225600000X,I,False,Dance Therapist,
+2255R0406X,I,False,Specialist/Technologist,"Rehabilitation, Blind"
+2255A2300X,I,False,Specialist/Technologist,Athletic Trainer
+225500000X,I,False,Specialist/Technologist,
+225400000X,I,False,Rehabilitation Practitioner,
+225200000X,I,False,Physical Therapy Assistant,
+2251X0800X,I,False,Physical Therapist,Orthopedic
+2251S0007X,I,False,Physical Therapist,Sports
+2251P0200X,I,False,Physical Therapist,Pediatrics
+2251N0400X,I,False,Physical Therapist,Neurology
+2251H1300X,I,False,Physical Therapist,Human Factors
+2251H1200X,I,False,Physical Therapist,Hand
+2251G0304X,I,False,Physical Therapist,Geriatrics
+2251E1300X,I,False,Physical Therapist,"Electrophysiology, Clinical"
+2251E1200X,I,False,Physical Therapist,Ergonomics
+2251C2600X,I,False,Physical Therapist,Cardiopulmonary
+225100000X,I,False,Physical Therapist,
+225000000X,I,False,Orthotic Fitter,
+224ZR0403X,I,False,Occupational Therapy Assistant,Driving and Community Mobility
+224ZL0004X,I,False,Occupational Therapy Assistant,Low Vision
+224ZF0002X,I,False,Occupational Therapy Assistant,"Feeding, Eating & Swallowing"
+224ZE0001X,I,False,Occupational Therapy Assistant,Environmental Modification
+224Z00000X,I,False,Occupational Therapy Assistant,
+224Y00000X,I,False,Clinical Exercise Physiologist,
+224P00000X,I,False,Prosthetist,
+224L00000X,I,False,Pedorthist,
+224900000X,I,False,Mastectomy Fitter,
+222Z00000X,I,False,Orthotist,
+222Q00000X,I,False,Developmental Therapist,
+221700000X,I,False,Art Therapist,
+213ES0131X,I,True,Podiatrist,Foot Surgery
+213ES0103X,I,True,Podiatrist,Foot & Ankle Surgery
+213ES0000X,I,True,Podiatrist,Sports Medicine
+213ER0200X,I,True,Podiatrist,Radiology
+213EP1101X,I,True,Podiatrist,Primary Podiatric Medicine
+213EP0504X,I,True,Podiatrist,Public Medicine
+213E00000X,I,True,Podiatrist,
+211D00000X,I,False,"Assistant, Podiatric",
+209800000X,I,True,Legal Medicine,
+208VP0014X,I,True,Pain Medicine,Interventional Pain Medicine
+208VP0000X,I,True,Pain Medicine,Pain Management
+208U00000X,I,True,Clinical Pharmacology,
+208M00000X,I,True,Hospitalist,
+208G00000X,I,True,Thoracic Surgery (Cardiothoracic Vascular Surgery),
+208D00000X,I,True,General Practice,
+208C00000X,I,True,Colon & Rectal Surgery,
+2088P0231X,I,True,Urology,Pediatric Urology
+2088F0040X,I,True,Urology,Female Pelvic Medicine and Reconstructive Surgery
+208800000X,I,True,Urology,
+2086X0206X,I,True,Surgery,Surgical Oncology
+2086S0129X,I,True,Surgery,Vascular Surgery
+2086S0127X,I,True,Surgery,Trauma Surgery
+2086S0122X,I,True,Surgery,Plastic and Reconstructive Surgery
+2086S0120X,I,True,Surgery,Pediatric Surgery
+2086S0105X,I,True,Surgery,Surgery of the Hand
+2086S0102X,I,True,Surgery,Surgical Critical Care
+2086H0002X,I,True,Surgery,Hospice and Palliative Medicine
+208600000X,I,True,Surgery,
+2085U0001X,I,True,Radiology,Diagnostic Ultrasound
+2085R0205X,I,True,Radiology,Radiological Physics
+2085R0204X,I,True,Radiology,Vascular & Interventional Radiology
+2085R0203X,I,True,Radiology,Therapeutic Radiology
+2085R0202X,I,True,Radiology,Diagnostic Radiology
+2085R0001X,I,True,Radiology,Radiation Oncology
+2085P0229X,I,True,Radiology,Pediatric Radiology
+2085N0904X,I,True,Radiology,Nuclear Radiology
+2085N0700X,I,True,Radiology,Neuroradiology
+2085H0002X,I,True,Radiology,Hospice and Palliative Medicine
+2085D0003X,I,True,Radiology,Diagnostic Neuroimaging
+2085B0100X,I,True,Radiology,Body Imaging
+2084V0102X,I,True,Psychiatry & Neurology,Vascular Neurology
+2084S0012X,I,True,Psychiatry & Neurology,Sleep Medicine
+2084S0010X,I,True,Psychiatry & Neurology,Sports Medicine
+2084P2900X,I,True,Psychiatry & Neurology,Pain Medicine
+2084P0805X,I,True,Psychiatry & Neurology,Geriatric Psychiatry
+2084P0804X,I,True,Psychiatry & Neurology,Child & Adolescent Psychiatry
+2084P0802X,I,True,Psychiatry & Neurology,Addiction Psychiatry
+2084P0800X,I,True,Psychiatry & Neurology,Psychiatry
+2084P0015X,I,True,Psychiatry & Neurology,Psychosomatic Medicine
+2084P0005X,I,True,Psychiatry & Neurology,Neurodevelopmental Disabilities
+2084N0600X,I,True,Psychiatry & Neurology,Clinical Neurophysiology
+2084N0402X,I,True,Psychiatry & Neurology,Neurology with Special Qualifications in Child Neurology
+2084N0400X,I,True,Psychiatry & Neurology,Neurology
+2084N0008X,I,True,Psychiatry & Neurology,Pediatric Transplant Hepatology
+2084H0002X,I,True,Psychiatry & Neurology,Hospice and Palliative Medicine
+2084F0202X,I,True,Psychiatry & Neurology,Forensic Psychiatry
+2084D0003X,I,True,Psychiatry & Neurology,Diagnostic Neuroimaging
+2084B0040X,I,True,Psychiatry & Neurology,Behavioral Neurology & Neuropsychiatry
+2084B0002X,I,True,Psychiatry & Neurology,Bariatric Medicine
+2084A0401X,I,True,Psychiatry & Neurology,Addiction Medicine
+2083X0100X,I,True,Preventive Medicine,Occupational Health
+2083T0002X,I,True,Preventive Medicine,Medical Toxicology
+2083S0010X,I,True,Preventive Medicine,Sports Medicine
+2083P0901X,I,True,Preventive Medicine,Public Health & General Preventive Medicine
+2083P0500X,I,True,Preventive Medicine,Preventive Medicine/Occupational Environmental Medicine
+2083P0011X,I,True,Preventive Medicine,Undersea and Hyperbaric Medicine
+2083C0008X,I,True,Preventive Medicine,Child Abuse Pediatrics
+2083A0100X,I,True,Preventive Medicine,Aerospace Medicine
+2082S0105X,I,True,Plastic Surgery,Surgery of the Hand
+2082S0099X,I,True,Plastic Surgery,Plastic Surgery Within the Head and Neck
+208200000X,I,True,Plastic Surgery,
+2081S0010X,I,True,Physical Medicine & Rehabilitation,Sports Medicine
+2081P2900X,I,True,Physical Medicine & Rehabilitation,Pain Medicine
+2081P0010X,I,True,Physical Medicine & Rehabilitation,Pediatric Rehabilitation Medicine
+2081P0004X,I,True,Physical Medicine & Rehabilitation,Spinal Cord Injury Medicine
+2081N0008X,I,True,Physical Medicine & Rehabilitation,Pediatric Transplant Hepatology
+2081H0002X,I,True,Physical Medicine & Rehabilitation,Hospice and Palliative Medicine
+208100000X,I,True,Physical Medicine & Rehabilitation,
+2080T0004X,I,True,Pediatrics,Pediatric Transplant Hepatology
+2080T0002X,I,True,Pediatrics,Medical Toxicology
+2080S0012X,I,True,Pediatrics,Sleep Medicine
+2080S0010X,I,True,Pediatrics,Sports Medicine
+2080P0216X,I,True,Pediatrics,Pediatric Rheumatology
+2080P0214X,I,True,Pediatrics,Pediatric Pulmonology
+2080P0210X,I,True,Pediatrics,Pediatric Nephrology
+2080P0208X,I,True,Pediatrics,Pediatric Infectious Diseases
+2080P0207X,I,True,Pediatrics,Pediatric Hematology-Oncology
+2080P0206X,I,True,Pediatrics,Pediatric Gastroenterology
+2080P0205X,I,True,Pediatrics,Pediatric Endocrinology
+2080P0204X,I,True,Pediatrics,Pediatric Emergency Medicine
+2080P0203X,I,True,Pediatrics,Pediatric Critical Care Medicine
+2080P0202X,I,True,Pediatrics,Pediatric Cardiology
+2080P0201X,I,True,Pediatrics,Pediatric Allergy/Immunology
+2080P0008X,I,True,Pediatrics,Neurodevelopmental Disabilities
+2080P0006X,I,True,Pediatrics,Developmental ? Behavioral Pediatrics
+2080N0001X,I,True,Pediatrics,Neonatal-Perinatal Medicine
+2080I0007X,I,True,Pediatrics,Clinical & Laboratory Immunology
+2080H0002X,I,True,Pediatrics,Hospice and Palliative Medicine
+2080C0008X,I,False,Pediatrics,Child Abuse Pediatrics
+2080A0000X,I,True,Pediatrics,Adolescent Medicine
+208000000X,I,True,Pediatrics,
+207ZP0213X,I,True,Pathology,Pediatric Pathology
+207ZP0105X,I,True,Pathology,Clinical Pathology/Laboratory Medicine
+207ZP0104X,I,True,Pathology,Chemical Pathology
+207ZP0102X,I,True,Pathology,Anatomic Pathology & Clinical Pathology
+207ZP0101X,I,True,Pathology,Anatomic Pathology
+207ZP0007X,I,True,Pathology,Molecular Genetic Pathology
+207ZN0500X,I,True,Pathology,Neuropathology
+207ZM0300X,I,True,Pathology,Medical Microbiology
+207ZI0100X,I,True,Pathology,Immunopathology
+207ZH0000X,I,True,Pathology,Hematology
+207ZF0201X,I,True,Pathology,Forensic Pathology
+207ZD0900X,I,True,Pathology,Dermatopathology
+207ZC0500X,I,True,Pathology,Cytopathology
+207ZC0008X,I,True,Pathology,Child Abuse Pediatrics
+207ZC0006X,I,True,Pathology,Clinical Pathology Specialization
+207ZB0001X,I,True,Pathology,Blood Banking & Transfusion Medicine
+207YX0905X,I,True,Otolaryngology,Otolaryngology/Facial Plastic Surgery
+207YX0901X,I,True,Otolaryngology,Otology & Neurotology
+207YX0602X,I,True,Otolaryngology,Otolaryngic Allergy
+207YX0007X,I,True,Otolaryngology,Plastic Surgery within the Head & Neck
+207YS0123X,I,True,Otolaryngology,Facial Plastic Surgery
+207YS0012X,I,True,Otolaryngology,Sleep Medicine
+207YP0228X,I,True,Otolaryngology,Pediatric Otolaryngology
+207Y00000X,I,True,Otolaryngology,
+207XX0801X,I,True,Orthopaedic Surgery,Orthopaedic Trauma
+207XX0005X,I,True,Orthopaedic Surgery,Sports Medicine
+207XX0004X,I,True,Orthopaedic Surgery,Foot and Ankle Surgery
+207XS0117X,I,True,Orthopaedic Surgery,Orthopaedic Surgery of the Spine
+207XS0114X,I,True,Orthopaedic Surgery,Adult Reconstructive Orthopaedic Surgery
+207XS0106X,I,True,Orthopaedic Surgery,Hand Surgery
+207XP3100X,I,True,Orthopaedic Surgery,Pediatric Orthopaedic Surgery
+207X00000X,I,True,Orthopaedic Surgery,
+207W00000X,I,True,Ophthalmology,
+207VX0201X,I,True,Obstetrics & Gynecology,Gynecologic Oncology
+207VX0000X,I,True,Obstetrics & Gynecology,Obstetrics
+207VM0101X,I,True,Obstetrics & Gynecology,Maternal & Fetal Medicine
+207VH0002X,I,True,Obstetrics & Gynecology,Hospice and Palliative Medicine
+207VG0400X,I,True,Obstetrics & Gynecology,Gynecology
+207VF0040X,I,True,Obstetrics & Gynecology,Female Pelvic Medicine and Reconstructive Surgery
+207VE0102X,I,True,Obstetrics & Gynecology,Reproductive Endocrinology
+207VC0200X,I,True,Obstetrics & Gynecology,Critical Care Medicine
+207VB0002X,I,True,Obstetrics & Gynecology,Bariatric Medicine
+207V00000X,I,True,Obstetrics & Gynecology,
+207UN0903X,I,True,Nuclear Medicine,In Vivo & In Vitro Nuclear Medicine
+207UN0902X,I,True,Nuclear Medicine,Nuclear Imaging & Therapy
+207UN0901X,I,True,Nuclear Medicine,Nuclear Cardiology
+207U00000X,I,True,Nuclear Medicine,
+207T00000X,I,True,Neurological Surgery,
+207SM0001X,I,True,Medical Genetics,Molecular Genetic Pathology
+207SG0205X,I,True,Medical Genetics,Ph.D. Medical Genetics
+207SG0203X,I,True,Medical Genetics,Clinical Molecular Genetics
+207SG0202X,I,True,Medical Genetics,Clinical Biochemical Genetics
+207SG0201X,I,True,Medical Genetics,Clinical Genetics (M.D.)
+207SC0300X,I,True,Medical Genetics,Clinical Cytogenetic
+207RX0202X,I,True,Internal Medicine,Medical Oncology
+207RT0003X,I,True,Internal Medicine,Transplant Hepatology
+207RS0012X,I,True,Internal Medicine,Sleep Medicine
+207RS0010X,I,True,Internal Medicine,Sports Medicine
+207RR0500X,I,True,Internal Medicine,Rheumatology
+207RP1001X,I,True,Internal Medicine,Pulmonary Disease
+207RN0300X,I,True,Internal Medicine,Nephrology
+207RM1200X,I,True,Internal Medicine,Magnetic Resonance Imaging (MRI)
+207RI0200X,I,True,Internal Medicine,Infectious Disease
+207RI0011X,I,True,Internal Medicine,Interventional Cardiology
+207RI0008X,I,True,Internal Medicine,Hepatology
+207RI0001X,I,True,Internal Medicine,Clinical & Laboratory Immunology
+207RH0005X,I,True,Internal Medicine,Hypertension Specialist
+207RH0003X,I,True,Internal Medicine,Hematology & Oncology
+207RH0002X,I,True,Internal Medicine,Hospice and Palliative Medicine
+207RH0000X,I,True,Internal Medicine,Hematology
+207RG0300X,I,True,Internal Medicine,Geriatric Medicine
+207RG0100X,I,True,Internal Medicine,Gastroenterology
+207RE0101X,I,True,Internal Medicine,"Endocrinology, Diabetes & Metabolism"
+207RC0200X,I,True,Internal Medicine,Critical Care Medicine
+207RC0001X,I,True,Internal Medicine,Clinical Cardiac Electrophysiology
+207RC0000X,I,True,Internal Medicine,Cardiovascular Disease
+207RB0002X,I,True,Internal Medicine,Bariatric Medicine
+207RA0401X,I,True,Internal Medicine,Addiction Medicine
+207RA0201X,I,True,Internal Medicine,Allergy & Immunology
+207RA0000X,I,True,Internal Medicine,Adolescent Medicine
+207R00000X,I,True,Internal Medicine,
+207QS1201X,I,True,Family Medicine,Sleep Medicine
+207QS0010X,I,True,Family Medicine,Sports Medicine
+207QH0002X,I,True,Family Medicine,Hospice and Palliative Medicine
+207QG0300X,I,True,Family Medicine,Geriatric Medicine
+207QB0002X,I,True,Family Medicine,Bariatric Medicine
+207QA0505X,I,True,Family Medicine,Adult Medicine
+207QA0401X,I,True,Family Medicine,Addiction Medicine
+207QA0000X,I,True,Family Medicine,Adolescent Medicine
+207Q00000X,I,True,Family Medicine,
+207PT0002X,I,True,Emergency Medicine,Medical Toxicology
+207PS0010X,I,True,Emergency Medicine,Sports Medicine
+207PP0204X,I,True,Emergency Medicine,Pediatric Emergency Medicine
+207PH0002X,I,True,Emergency Medicine,Hospice and Palliative Medicine
+207PE0005X,I,True,Emergency Medicine,Undersea and Hyperbaric Medicine
+207PE0004X,I,True,Emergency Medicine,Emergency Medical Services
+207P00000X,I,True,Emergency Medicine,
+207NS0135X,I,True,Dermatology,Procedural Dermatology
+207NP0225X,I,True,Dermatology,Pediatric Dermatology
+207NI0002X,I,True,Dermatology,Clinical & Laboratory Dermatological Immunology
+207ND0900X,I,True,Dermatology,Dermatopathology
+207ND0101X,I,True,Dermatology,MOHS-Micrographic Surgery
+207N00000X,I,True,Dermatology,
+207LP3000X,I,True,Anesthesiology,Pediatric Anesthesiology
+207LP2900X,I,True,Anesthesiology,Pain Medicine
+207LH0002X,I,True,Anesthesiology,Hospice and Palliative Medicine
+207LC0200X,I,True,Anesthesiology,Critical Care Medicine
+207LA0401X,I,True,Anesthesiology,Addiction Medicine
+207L00000X,I,True,Anesthesiology,
+207KI0005X,I,True,Allergy & Immunology,Clinical & Laboratory Immunology
+207KA0200X,I,True,Allergy & Immunology,Allergy
+207K00000X,I,True,Allergy & Immunology,
+204R00000X,I,True,Electrodiagnostic Medicine,
+204F00000X,I,True,Transplant Surgery,
+204E00000X,I,True,Oral & Maxillofacial Surgery,
+204D00000X,I,True,Neuromusculoskeletal Medicine & OMM,
+204C00000X,I,True,"Neuromusculoskeletal Medicine, Sports Medicine",
+202K00000X,I,True,Phlebology,
+202C00000X,I,True,Independent Medical Examiner,
+193400000X,O,False,Single Specialty,
+193200000X,O,False,Multi-Specialty,
+183700000X,I,False,Pharmacy Technician,
+1835X0200X,I,True,Pharmacist,Oncology
+1835P1300X,I,True,Pharmacist,Psychopharmacy
+1835P1200X,I,True,Pharmacist,Pharmacotherapy
+1835P0018X,I,True,Pharmacist,Pharmacist Clinician (PhC)/ Clinical Pharmacy Specialist
+1835N1003X,I,True,Pharmacist,Nutrition Support
+1835N0905X,I,True,Pharmacist,Nuclear Pharmacy
+1835G0303X,I,True,Pharmacist,Geriatric
+183500000X,I,True,Pharmacist,
+177F00000X,I,False,Lodging,
+176P00000X,I,False,Funeral Director,
+176B00000X,I,False,Midwife,
+175T00000X,I,False,Peer Specialist,
+175M00000X,I,False,"Midwife, Lay",
+175L00000X,I,False,Homeopath,
+175F00000X,I,False,Naturopath,
+174V00000X,I,False,Clinical Ethicist,
+174N00000X,I,False,"Lactation Consultant, Non-RN",
+174MM1900X,I,False,Veterinarian,Medical Research
+174M00000X,I,False,Veterinarian,
+174H00000X,I,False,Health Educator,
+1744R1103X,I,False,Specialist,Research Data Abstracter/Coder
+1744R1102X,I,False,Specialist,Research Study
+1744P3200X,I,False,Specialist,Prosthetics Case Management
+1744G0900X,I,False,Specialist,Graphics Designer
+174400000X,I,False,Specialist,
+174200000X,I,False,Meals,
+173F00000X,I,False,"Sleep Specialist, PhD",
+173C00000X,I,False,Reflexologist,
+173000000X,I,False,Legal Medicine,
+172V00000X,I,False,Community Health Worker,
+172P00000X,I,False,Naprapath,
+172M00000X,I,False,Mechanotherapist,
+172A00000X,I,False,Driver,
+171WV0202X,I,False,Contractor,Vehicle Modifications
+171WH0202X,I,False,Contractor,Home Modifications
+171W00000X,I,False,Contractor,
+171R00000X,I,False,Interpreter,
+171M00000X,I,False,Case ManagerCare Coordinator,
+171100000X,I,False,Acupuncturist,
+1710I1003X,I,False,Military Health Care Provider,Independent Duty Medical Technicians
+1710I1002X,I,False,Military Health Care Provider,Independent Duty Corpsman
+171000000X,I,False,Military Health Care Provider,
+170300000X,I,False,"Genetic Counselor, MS",
+170100000X,I,False,"Medical Genetics, Ph.D. Medical Genetics",
+167G00000X,I,False,Licensed Psychiatric Technician,
+164X00000X,I,True,Licensed Vocational Nurse,
+164W00000X,I,True,Licensed Practical Nurse,
+163WX1500X,I,True,Registered Nurse,Ostomy Care
+163WX1100X,I,True,Registered Nurse,Ophthalmic
+163WX0800X,I,True,Registered Nurse,Orthopedic
+163WX0601X,I,True,Registered Nurse,Otorhinolaryngology & Head-Neck
+163WX0200X,I,True,Registered Nurse,Oncology
+163WX0106X,I,True,Registered Nurse,Occupational Health
+163WX0003X,I,True,Registered Nurse,"Obstetric, Inpatient"
+163WX0002X,I,True,Registered Nurse,"Obstetric, High-Risk"
+163WW0101X,I,True,Registered Nurse,"Women's Health Care, Ambulatory"
+163WW0000X,I,True,Registered Nurse,Wound Care
+163WU0100X,I,True,Registered Nurse,Urology
+163WS0200X,I,True,Registered Nurse,School
+163WS0121X,I,True,Registered Nurse,Plastic Surgery
+163WR1000X,I,True,Registered Nurse,Reproductive Endocrinology/Infertility
+163WR0400X,I,True,Registered Nurse,Rehabilitation
+163WR0006X,I,True,Registered Nurse,Registered Nurse First Assistant
+163WP2201X,I,True,Registered Nurse,Ambulatory Care
+163WP1700X,I,True,Registered Nurse,Perinatal
+163WP0809X,I,True,Registered Nurse,"Psych/Mental Health, Adult"
+163WP0808X,I,True,Registered Nurse,Psych/Mental Health
+163WP0807X,I,True,Registered Nurse,"Psych/Mental Health, Child & Adolescent"
+163WP0218X,I,True,Registered Nurse,Pediatric Oncology
+163WP0200X,I,True,Registered Nurse,Pediatrics
+163WP0000X,I,True,Registered Nurse,Pain Management
+163WN1003X,I,True,Registered Nurse,Nutrition Support
+163WN0800X,I,True,Registered Nurse,Neuroscience
+163WN0300X,I,True,Registered Nurse,Nephrology
+163WN0003X,I,True,Registered Nurse,"Neonatal, Low-Risk"
+163WN0002X,I,True,Registered Nurse,Neonatal Intensive Care
+163WM1400X,I,True,Registered Nurse,Nurse Massage Therapist (NMT)
+163WM0705X,I,True,Registered Nurse,Medical-Surgical
+163WM0102X,I,True,Registered Nurse,Maternal Newborn
+163WL0100X,I,True,Registered Nurse,Lactation Consultant
+163WI0600X,I,True,Registered Nurse,Infection Control
+163WI0500X,I,True,Registered Nurse,Infusion Therapy
+163WH1000X,I,True,Registered Nurse,Hospice
+163WH0500X,I,True,Registered Nurse,Hemodialysis
+163WH0200X,I,True,Registered Nurse,Home Health
+163WG0600X,I,True,Registered Nurse,Gerontology
+163WG0100X,I,True,Registered Nurse,Gastroenterology
+163WG0000X,I,True,Registered Nurse,General Practice
+163WF0300X,I,True,Registered Nurse,Flight
+163WE0900X,I,True,Registered Nurse,Enterostomal Therapy
+163WE0003X,I,True,Registered Nurse,Emergency
+163WD1100X,I,True,Registered Nurse,"Dialysis, Peritoneal"
+163WD0400X,I,True,Registered Nurse,Diabetes Educator
+163WC3500X,I,True,Registered Nurse,Cardiac Rehabilitation
+163WC2100X,I,True,Registered Nurse,Continence Care
+163WC1600X,I,True,Registered Nurse,Continuing Education/Staff Development
+163WC1500X,I,True,Registered Nurse,Community Health
+163WC1400X,I,True,Registered Nurse,College Health
+163WC0400X,I,True,Registered Nurse,Case Management
+163WC0200X,I,True,Registered Nurse,Critical Care Medicine
+163WA2000X,I,True,Registered Nurse,Administrator
+163WA0400X,I,True,Registered Nurse,Addiction (Substance Use Disorder)
+163W00000X,I,True,Registered Nurse,
+156FX1900X,I,False,Technician/Technologist,Orthoptist
+156FX1800X,I,False,Technician/Technologist,Optician
+156FX1700X,I,False,Technician/Technologist,Ocularist
+156FX1202X,I,False,Technician/Technologist,Optometric Technician
+156FX1201X,I,False,Technician/Technologist,Optometric Assistant
+156FX1101X,I,False,Technician/Technologist,Ophthalmic Assistant
+156FX1100X,I,False,Technician/Technologist,Ophthalmic
+156FC0801X,I,False,Technician/Technologist,Contact Lens Fitter
+156FC0800X,I,False,Technician/Technologist,Contact Lens
+156F00000X,I,False,Technician/Technologist,
+152WX0102X,I,True,Optometrist,Occupational Vision
+152WV0400X,I,True,Optometrist,Vision Therapy
+152WS0006X,I,True,Optometrist,Sports Vision
+152WP0200X,I,True,Optometrist,Pediatrics
+152WL0500X,I,True,Optometrist,Low Vision Rehabilitation
+152WC0802X,I,True,Optometrist,Corneal and Contact Management
+152W00000X,I,True,Optometrist,
+146N00000X,I,False,"Emergency Medical Technician, Basic",
+146M00000X,I,False,"Emergency Medical Technician, Intermediate",
+146L00000X,I,False,"Emergency Medical Technician, Paramedic",
+146D00000X,I,False,Personal Emergency Response Attendant,
+136A00000X,I,False,"Dietetic Technician, Registered",
+133VN1006X,I,False,"Dietitian, Registered","Nutrition, Metabolic"
+133VN1005X,I,False,"Dietitian, Registered","Nutrition, Renal"
+133VN1004X,I,False,"Dietitian, Registered","Nutrition, Pediatric"
+133V00000X,I,False,"Dietitian, Registered",
+133NN1002X,I,False,Nutritionist,"Nutrition, Education"
+133N00000X,I,False,Nutritionist,
+132700000X,I,False,Dietary Manager,
+126900000X,I,False,Dental Laboratory Technician,
+126800000X,I,False,Dental Assistant,
+125K00000X,I,True,Advanced Practice Dental Therapist,
+125J00000X,I,True,Dental Therapist,
+124Q00000X,I,False,Dental Hygienist,
+122400000X,I,False,Denturist,
+1223X0400X,I,True,Dentist,Orthodontics and Dentofacial Orthopedics
+1223X0008X,I,True,Dentist,Oral and Maxillofacial Radiology
+1223S0112X,I,True,Dentist,Oral and Maxillofacial Surgery
+1223P0700X,I,True,Dentist,Prosthodontics
+1223P0300X,I,True,Dentist,Periodontics
+1223P0221X,I,True,Dentist,Pediatric Dentistry
+1223P0106X,I,True,Dentist,Oral and Maxillofacial Pathology
+1223G0001X,I,True,Dentist,General Practice
+1223E0200X,I,True,Dentist,Endodontics
+1223D0004X,I,True,Dentist,DENTAL SPECIALIZATION NEW
+1223D0001X,I,True,Dentist,Dental Public Health
+122300000X,I,True,Dentist,
+111NX0800X,I,True,Chiropractor,Orthopedic
+111NX0100X,I,True,Chiropractor,Occupational Health
+111NT0100X,I,True,Chiropractor,Thermography
+111NS0005X,I,True,Chiropractor,Sports Physician
+111NR0400X,I,True,Chiropractor,Rehabilitation
+111NR0200X,I,True,Chiropractor,Radiology
+111NP0017X,I,True,Chiropractor,Pediatric Chiropractor
+111NN1001X,I,True,Chiropractor,Nutrition
+111NN0400X,I,True,Chiropractor,Neurology
+111NI0900X,I,True,Chiropractor,Internist
+111NI0013X,I,True,Chiropractor,Independent Medical Examiner
+111N00000X,I,True,Chiropractor,
+106H00000X,I,False,Marriage & Family Therapist,
+1041S0200X,I,False,Social Worker,School
+1041C0700X,I,False,Social Worker,Clinical
+104100000X,I,False,Social Worker,
+103TS0200X,I,False,Psychologist,School
+103TR0400X,I,False,Psychologist,Rehabilitation
+103TP2701X,I,False,Psychologist,Group Psychotherapy
+103TP0814X,I,False,Psychologist,Psychoanalysis
+103TP0016X,I,False,Psychologist,Prescribing (Medical)
+103TM1800X,I,False,Psychologist,Mental Retardation & Developmental Disabilities
+103TH0100X,I,False,Psychologist,Health
+103TH0004X,I,False,Psychologist,Health
+103TF0200X,I,False,Psychologist,Forensic
+103TF0000X,I,False,Psychologist,Family
+103TE1100X,I,False,Psychologist,Exercise & Sports
+103TC2200X,I,False,Psychologist,Clinical Child & Adolescent
+103TC1900X,I,False,Psychologist,Counseling
+103TC0700X,I,True,Psychologist,Clinical
+103TB0200X,I,False,Psychologist,Cognitive & Behavioral
+103TA0700X,I,False,Psychologist,Adult Development & Aging
+103TA0400X,I,False,Psychologist,Addiction (Substance Use Disorder)
+103T00000X,I,False,Psychologist,
+103K00000X,I,False,Behavioral Analyst,
+103G00000X,I,False,Clinical Neuropsychologist,
+102X00000X,I,False,Poetry Therapist,
+102L00000X,I,False,Psychoanalyst,
+101YS0200X,I,False,Counselor,School
+101YP2500X,I,False,Counselor,Professional
+101YP1600X,I,False,Counselor,Pastoral
+101YM0800X,I,False,Counselor,Mental Health
+101YA0400X,I,False,Counselor,Addiction (Substance Use Disorder)
+101Y00000X,I,False,Counselor,
