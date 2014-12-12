@@ -1,7 +1,7 @@
 Provider Data Tools
 ===================
 
-Version: 0.3.3
+Version: 0.3.4
 
 By: Alan Viars
 
@@ -11,7 +11,7 @@ related code libraries for parsing data.  They are:
 * chop-nppes-public - Parse the npi public data dissemination into flattened files
 * csv2mongo         - Converting a CSV into documents directly into a MongoDB datbase/collection
 * json2mongo        - Convert a JSON file object into a record in a MongoDB datbase/collection.
-* jsondir2mongo     - Convert a directory of files containing JSON objects into documents in a MongoDB datbase/collection.
+* jsondir2mongo     - Convert a directory of files containing JSON objects into documents in a MongoDB database/collection.
 * csv2pjson         - Parse NPI CSV files, containing PII, into provider JSON. Used for bulk upload.
 * csv2pjson-public.py - Parse the npi public data dissemination into ProviderJSON files
 * validate-pjson    - Parse a Provider JSON document and output errors and warnings as JSON.
