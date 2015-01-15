@@ -88,36 +88,41 @@ def validate_pjson(j):
 
 
     #Check for errors in the basic section
-    basic_errors = validate_basic_dict(d['basic'], d['enumeration_type'], number)
+    basic_errors = validate_basic_dict(d.get('basic', {}), d.get('enumeration_type'), number)
 
 
     #Check for errors in the basic section
-    address_errors = validate_address_list(d['addresses'], d['enumeration_type'])
+    address_errors = validate_address_list(d.get('addresses', ()), d.get('enumeration_type'))
 
 
     #Check for errors in the license section
 
     if d.has_key('licenses'):
-        license_errors = validate_license_list(d['licenses'], d['enumeration_type'])
+        license_errors = validate_license_list(d.get('licenses', []),
+                                            d.get('enumeration_type'))
     else:
         license_errors = []
    
-    taxonomy_errors = validate_taxonomy_list(d['taxonomies'], d['enumeration_type'],
+    taxonomy_errors = validate_taxonomy_list(d.get('taxonomies',()),
+                                             d.get('enumeration_type',()),
                         d.get('licenses', []), d.get('taxonomy_licenses', []),
-                        d['basic'].get('sole_proprietor', "NO"))
+                        d.get('basic', {}).get('sole_proprietor', "NO"))
 
     if d.has_key('identifiers'):
-        identifier_errors = validate_identifier_list(d['identifiers'], d['enumeration_type'])
+        identifier_errors = validate_identifier_list(d.get('identifiers',[]), d.get('enumeration_type'))
     else:
         identifier_errors = []
 
     if d.has_key('direct_addresses'):
-        direct_errors = validate_direct_address_list(d['direct_addresses'], d['enumeration_type'])
+        direct_errors = validate_direct_address_list(d.get('direct_addresses',[]),
+                                                     d.get('enumeration_type'))
     else:
         direct_errors = []
          
     if d.has_key('other_names'):
-        other_names_errors = validate_other_name_list(d['other_names'], d['enumeration_type'], d['basic'])
+        other_names_errors = validate_other_name_list(d.get('other_names',[]),
+                                                      d.get('enumeration_type'),
+                                                      d.get('basic', {}))
     else:
         other_names_errors = []    
 
