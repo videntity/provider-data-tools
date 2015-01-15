@@ -91,9 +91,9 @@ def validate_pjson(j):
     basic_errors = validate_basic_dict(d.get('basic', {}), d.get('enumeration_type'), number)
 
 
-    #Check for errors in the basic section
+    #Check for errors in the addresses
     address_errors = validate_address_list(d.get('addresses', ()), d.get('enumeration_type'))
-
+    
 
     #Check for errors in the license section
 
@@ -128,7 +128,7 @@ def validate_pjson(j):
 
     errors = errors + basic_errors + other_names_errors + address_errors + license_errors + \
                         direct_errors + taxonomy_errors + identifier_errors
-
+                      
     response["errors"] = errors
     response["warnings"] = warnings
     return response

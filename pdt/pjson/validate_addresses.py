@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # vim: ai ts=4 sts=4 et sw=4
-
 # Written by Alan Viars
+
 import json, sys, datetime, re
 from choices import COUNTRIES, STATES, ADDRESS_PURPOSE, ADDRESS_TYPE
 
 
 def validate_address_list(l, enumeration_type):
     errors = []
-
+    LOCATION_ADDRESS_FOUND = False
+    MAILING_ADDRESS_FOUND  = False
     #define a max_values dict
     max_values = {
         'address_type'              : 12,
@@ -35,25 +36,32 @@ def validate_address_list(l, enumeration_type):
 
     for d in l:
 
-
         for k in max_values.keys():
             if d.get(k):
-
                     if max_values[k] < len(str(d.get(k))):
                         error = "%s : %s max allowable length %s." % (address_string, k, max_values[k])
                         errors.append(error)
 
         #check for required information
 
-
         if d.get('address_type') not in ADDRESS_TYPE:
             error = "%s : address_type must be in %s" % (address_string, ADDRESS_TYPE)
             errors.append(error)
-
+        
+        if d.get('override_address_standardization') not in (True, False):
+            error = "%s : override_address_standardization must be true or false" % (address_string)
+            errors.append(error)
+        
         if d.get('address_purpose') not in ADDRESS_PURPOSE:
             error = "%s : address_purpose must be in %s" % (address_string, ADDRESS_PURPOSE)
             errors.append(error)
-
+        
+        if d.get('address_purpose')== "MAILING":
+            MAILING_ADDRESS_FOUND = True
+        
+        if d.get('address_purpose')== "LOCATION":
+            LOCATION_ADDRESS_FOUND = True
+            
         if not d.get('address_1'):
             error = "%s : address_1 is required." % (address_string)
             errors.append(error)
@@ -83,6 +91,13 @@ def validate_address_list(l, enumeration_type):
                 error = "%s : country_code must be 2 letter ISO code."   % (address_string)
                 errors.append(error)
 
+    #Check to see if both a mail and practice location is on file for NPI-1 and NPI-2
+    if enumeration_type in ("NPI-1", "NPI-2") and not LOCATION_ADDRESS_FOUND:
+        errors.append("A practice location address was not found.")
 
-        return errors
+    if enumeration_type in ("NPI-1", "NPI-2", "HPID", "OEID") and not MAILING_ADDRESS_FOUND:
+        errors.append("A mailing address was not found.") 
+
+
+    return errors
 
