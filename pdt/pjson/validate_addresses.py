@@ -85,7 +85,6 @@ def validate_address_list(l, enumeration_type):
             error = "%s : country_code is required." % (address_string)
             errors.append(error)
 
-
         if d.get('state') not in STATES:
             error = "%s : state must be 2 letter ISO code or ZZ for foreign."  % (address_string)
             errors.append(error)
