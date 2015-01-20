@@ -27,7 +27,7 @@ def validate_identifier_list(l, enumeration_type):
         for k in max_values.keys():
             if d.get(k):
                 if max_values[k] < len(str(d.get(k))):
-                    error = "%s : %s max allowable length %s." % (identifer_string, k, max_values[k])
+                    error = "%s : %s exceeds max allowable length of %s." % (identifer_string, k, max_values[k])
                     errors.append(error)
     
     
@@ -38,6 +38,7 @@ def validate_identifier_list(l, enumeration_type):
             
         #if state is provided then it should be valid.
         if d.get('state') and d.get('state') not in STATES:
-            primary_count += 1
+            error = "%s : identifier code is not a valid 2-letter state code." % (identifer_string, d.get('state'))
+            errors.append(error)
     
     return errors

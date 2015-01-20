@@ -78,7 +78,7 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
     for k in max_values.keys():
         if d.get(k):
             if max_values[k] < len(str(d.get(k))):
-                error = "%s max allowable length %s." % (k, max_values[k])
+                error = "%s exceeds max allowable length of %s." % (k, max_values[k])
                 errors.append(error)
 
     #Validate Common items ------------------------------------------
@@ -315,7 +315,6 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
 
 
     if enumeration_type == "NPI-2":
-
         #Validate the organization
         if not d.get('organization_name', ""):
             error = "organization_name is required for a type 2 (organization) NPI."

@@ -4,23 +4,11 @@
 
 # Written by Alan Viars
 import json, sys, datetime, re
-
-
-SUFFIX_CHOICES = ['Jr.','Sr.','I','II','III','IV','V','VI','VII','VIII','IX','X']
-
-PREFIX_CHOICES = ['Ms.','Mr.','Miss', 'Mrs.','Dr.','Prof.']
-
-
-
-INDIVIDUAL_OTHER_NAME_CHOICES = ["", "1", "2", "5"]
-
-SOLE_PROPRIETOR_OTHER_NAME_CHOICES = ["", "1", "2", "3", "5"]
-
-ORGANIZATION_OTHER_NAME_CHOICES = ["", "3", "4","5"]
-
-
-OTHER_NAME_CHOICES = ["", "1", "2", "3", "4", "5"]
-
+from choices import (SUFFIX_CHOICES , PREFIX_CHOICES, INDIVIDUAL_OTHER_NAME_CHOICES,
+                     SOLE_PROPRIETOR_OTHER_NAME_CHOICES, 
+                     ORGANIZATION_OTHER_NAME_CHOICES,
+                     OTHER_NAME_CHOICES)
+                    
 
 
 
@@ -53,7 +41,7 @@ def validate_other_name_list(l, enumeration_type, basic):
         for k in max_values.keys():
             if d.get(k):
                 if max_values[k] < len(str(d.get(k))):
-                    error = "other_name %s: %s max allowable length %s." % (i, k, max_values[k])
+                    error = "other_name %s: %s exceeds max allowable length of %s." % (i, k, max_values[k])
                     errors.append(error)
         
         # Type II
@@ -98,13 +86,13 @@ def validate_other_name_list(l, enumeration_type, basic):
             errors.append(error)
     
         #suffix
-        suffix = str(d.get('suffix', ''))
+        suffix = str(d.get('suffix', '')).upper()
         if suffix and suffix not in SUFFIX_CHOICES:
             error = "other_name %s:  suffix must be in %s" % (i, SUFFIX_CHOICES)
             errors.append(error)
             
         #prefix
-        prefix = str(d.get('prefix', ''))
+        prefix = str(d.get('prefix', '')).upper()
         if prefix and prefix not in PREFIX_CHOICES:
             error = "other_name %s:  prefix must be in %s" % (i, PREFIX_CHOICES)
             errors.append(error)

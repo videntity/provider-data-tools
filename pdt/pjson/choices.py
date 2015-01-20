@@ -5,6 +5,33 @@
 
 
 
+ASSOCIATION_PURPOSE = ('HIE-EXCHANGE', 'MEDICARE-NETWORK', 'MEDICIAD-NETWORK',
+                       'PRIVATE-PAYER-NETWORK', 'ACO-NETWORK', 'PROVIDER-NETWORK', 'DOMAIN',
+                       'PROVIDES-SERVICES-ON-BEHALF-OF-THIS-ORG', 'PARENT-ORGANIZATION')
+
+ASSOCIATION_DATA_TYPE = ('NPI-1', 'NPI-2', 'HPID', 'OEID', 'MAC', 'EIN', 'PAC-ID', 'OTHER')
+
+ENDPOINT_DATA_TYPE = ('DIRECT-EMAIL-ADDRESS', 'REGULAR-EMAIL-ADDRESS',
+                      'SOAP-WS-URL', 'CONNECT-URL', 'FHIR-URL', 'RESTFUL-WS-URL',
+                      'WEBSITE-URL', 'OTHER-URL')
+
+
+
+SUFFIX_CHOICES = ('Jr.','Sr.','I','II','III','IV','V','VI','VII','VIII','IX','X')
+
+PREFIX_CHOICES = ('Ms.','Mr.','Miss', 'Mrs.','Dr.','Prof.')
+
+
+INDIVIDUAL_OTHER_NAME_CHOICES = ("", "1", "2", "5")
+
+SOLE_PROPRIETOR_OTHER_NAME_CHOICES = ("", "1", "2", "3", "5")
+
+ORGANIZATION_OTHER_NAME_CHOICES = ("", "3", "4","5")
+
+
+OTHER_NAME_CHOICES = ("", "1", "2", "3", "4", "5")
+
+
 LICENSE_TYPE_CODES = ('AK-APN', 'AK-CNA', 'AK-CNM', 'AK-CNS', 'AK-DCH', 'AK-DEN',
                       'AK-DOS', 'AK-DPM',
 'AK-DVM', 'AK-MDR', 'AK-MWF', 'AK-NPR', 'AK-ODR', 'AK-PAS', 'AK-RPH', 'AK-UNK',
