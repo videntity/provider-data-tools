@@ -35,7 +35,9 @@ def validate_address_list(l, enumeration_type):
     #Test for max_length errors
 
     for d in l:
-
+        address_string = "%s %s %s %s %s" % (d.get('address_1'), d.get('address_2'),
+                                             d.get('city'), d.get('state'),
+                                             d.get('zip'))
         for k in max_values.keys():
             if d.get(k):
                     if max_values[k] < len(str(d.get(k))):
@@ -48,7 +50,8 @@ def validate_address_list(l, enumeration_type):
             error = "%s : address_type must be in %s" % (address_string, ADDRESS_TYPE)
             errors.append(error)
         
-        if d.get('override_address_standardization') not in (True, False):
+        if d.get('override_address_standardization') and \
+           d.get('override_address_standardization') not in (True, False):
             error = "%s : override_address_standardization must be true or false" % (address_string)
             errors.append(error)
         
