@@ -1,7 +1,7 @@
 Provider Data Tools
 ===================
 
-Version: 0.3.7
+Version: 0.3.8
 
 By: Alan Viars
 
@@ -56,11 +56,11 @@ The script make take a few minutes to complete. When it completes you will have 
 in your current directory. Everything is still indexed by NPI. These files are described below.
 
 
-     _basic.csv            - Contains basic demographic info
-    _addresses_flat.csv    - one address per line identifier as practice or mailing
-    _identifiers_flat.csv  - one identifer per line
-    _licenses_flat.csv 	   - one license per line
-    _taxonomy_flat.csv     - one taxonomy code per line and identified as primary or not.
+* _basic.csv             - Contains basic demographic info
+* _addresses_flat.csv    - one address per line identifier as practice or mailing
+* _identifiers_flat.csv  - one identifer per line
+* _licenses_flat.csv 	 - one license per line
+* _taxonomy_flat.csv     - one taxonomy code per line and identified as primary or not.
 
 
 csv2mongo
