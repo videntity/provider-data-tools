@@ -8,7 +8,6 @@ import json, sys
 from pdt.pjson.validate_basic import validate_basic_dict
 from pdt.pjson.validate_addresses import validate_address_list
 from pdt.pjson.validate_licenses import validate_license_list
-from pdt.pjson.validate_direct_addresses import validate_direct_address_list
 from pdt.pjson.validate_taxonomies import validate_taxonomy_list
 from pdt.pjson.validate_identifiers import validate_identifier_list
 from pdt.pjson.validate_other_names import validate_other_name_list
@@ -20,7 +19,6 @@ from pdt.validate_associations import validate_association_list
 #from validate_taxonomies import validate_taxonomy_list
 #from validate_identifiers import validate_identifier_list
 #from validate_other_names import validate_other_name_list
-#from validate_direct_addresses import validate_direct_address_list
 #from validate_associations import validate_association_list
 
 def validate_pjson(j, action):
@@ -132,12 +130,7 @@ def validate_pjson(j, action):
     else:
         identifier_errors = []
 
-    if d.has_key('direct_addresses'):
-        direct_errors = validate_direct_address_list(d.get('direct_addresses',[]),
-                                                     d.get('enumeration_type'))
-    else:
-        direct_errors = []
-         
+
     if d.has_key('other_names'):
         other_names_errors = validate_other_name_list(d.get('other_names',[]),
                                                       d.get('enumeration_type'),
@@ -150,7 +143,7 @@ def validate_pjson(j, action):
                                                       d.get('enumeration_type'))
 
     errors = errors + basic_errors + other_names_errors + address_errors + license_errors + \
-                        direct_errors + taxonomy_errors + identifier_errors + association_errors
+                        taxonomy_errors + identifier_errors + association_errors
     warnings = warnings + basic_warnings                  
     response["errors"] = errors
     response["warnings"] = warnings
