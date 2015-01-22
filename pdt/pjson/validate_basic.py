@@ -5,6 +5,7 @@
 
 import json, sys, datetime, re
 from choices import COUNTRIES, STATES
+MIN_AGE_IN_DAYS = 6570
 
 def validate_basic_dict(d, enumeration_type, action, number=None):
     """
@@ -221,13 +222,23 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
             warnings.append(warning) 
             
         #Date of Birth
-        if not d.get('date_of_birth'):
-            error = "date_of_birth is required."
+        if action=="create" and not d.get('date_of_birth'):
+            error = "date_of_birth is required when creating a new individual's record."
             errors.append(error)
-        else:
+            
+        elif action=="update" and d.get('date_of_birth'):
+            warning = "date_of_birth cannot be updated via API. Please contact the Enumerator help desk. The provided value will be ignored."
+            warnings.append(warning) 
+            
+        elif action=="create" and d.get('date_of_birth'):
             # date supplied so let's make sure it is valid
             try:
-                date = datetime.datetime.strptime(d.get('date_of_birth'), '%Y-%m-%d').date()
+                date_of_birth = datetime.datetime.strptime(d.get('date_of_birth'), '%Y-%m-%d').date()
+                
+                age_days =  datetime.date.today() - date_of_birth
+                if age_days.days < MIN_AGE_IN_DAYS:
+                    errors.append("Candidate must be at least 16 years of age.")
+                
             except ValueError:
                 error = "date_of_birth must be in YYYY-MM-DD format."
                 errors.append(error)
