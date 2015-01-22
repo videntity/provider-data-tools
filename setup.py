@@ -67,13 +67,14 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
 
 
 setup(name="pdt",
-      version="0.3.8",
+      version="0.3.9",
       description="Provider Data Tools",
       long_description="""A collection of scripts and APIs for working with health care provider data and beyond. Many tools are generic utilities.""",
       author="Alan Viars",
       author_email="alan.viars@cms.hhs.gov",
       url="https://gitbub.com/hhsidealab/provider-data-tools",
       download_url="https://gitbub.com/hhsidealab/provider-data-tools/tarball/master",
+      install_requires=['validate_email', ],
       packages=packages,
       package_data={'':['taxonomy-license-crosswalk.csv',]},
       scripts=['pdt/chop-nppes', 

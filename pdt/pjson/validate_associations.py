@@ -5,7 +5,7 @@
 
 import json, sys, datetime, re
 from choices import ASSOCIATION_DATA_TYPE, ASSOCIATION_PURPOSE, ENDPOINT_DATA_TYPE, STATES
-
+from validate_email import validate_email
 
 
 def validate_association_list(l, enumeration_type):
@@ -95,6 +95,12 @@ def validate_association_list(l, enumeration_type):
                   (association_string, d.get('state'), STATES)
             errors.append(error)
             
+        if d.get('endpoint_data_type') in ('DIRECT-EMAIL-ADDRESS', 'REGULAR-EMAIL-ADDRESS'):
+            is_valid = validate_email(d.get('endpoint'))
+            if not is_valid:
+                error = "%s %s has and endpoint_data_type of %s and is not a valid email." % \
+                      (association_string, d.get('endpoint'), d.get('endpoint_data_type') )
+                errors.append(error)
     
         i += 1
     retval = [errors, warnings]
