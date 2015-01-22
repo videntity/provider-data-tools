@@ -11,7 +11,7 @@ from pdt.pjson.validate_licenses import validate_license_list
 from pdt.pjson.validate_taxonomies import validate_taxonomy_list
 from pdt.pjson.validate_identifiers import validate_identifier_list
 from pdt.pjson.validate_other_names import validate_other_name_list
-from pdt.validate_associations import validate_association_list
+from pdt.pjson.validate_associations import validate_association_list
 
 #from validate_basic import validate_basic_dict
 #from validate_addresses import validate_address_list
