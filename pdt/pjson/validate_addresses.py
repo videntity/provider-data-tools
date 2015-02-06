@@ -54,6 +54,12 @@ def validate_address_list(l, enumeration_type):
            d.get('override_address_standardization') not in (True, False):
             error = "%s : override_address_standardization must be true or false" % (address_string)
             errors.append(error)
+            
+            
+        if d.get('accept_address_standardization') and \
+           d.get('accept_address_standardization') not in (True, False):
+            error = "%s : accept_address_standardization must be true or false" % (address_string)
+            errors.append(error)
         
         if d.get('address_purpose') not in ADDRESS_PURPOSE:
             error = "%s : address_purpose must be in %s" % (address_string, ADDRESS_PURPOSE)

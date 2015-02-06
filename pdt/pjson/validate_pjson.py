@@ -151,25 +151,31 @@ def validate_pjson(j, action):
 
 
 if __name__ == "__main__":
-
-    if len(sys.argv)<2:
-        print "You must suppy a ProviderJSON file to validate."
-        print "Usage: validate-pjson [ProivderJSON]"
+    
+    
+    #Get the file from the command line
+    if len(sys.argv)<3:
+        print "You must supply a a ProviderJSON file to validate and an action"
+        print "Usage: validate-pjson [ProivderJSON] [update|create]"
         sys.exit(1)
     else:
         pjson_file = sys.argv[1]
+        action       = sys.argv[2]
 
+    if action.lower() not in ("create", "update"):
+        print "You must supply an action of either create or update."
+        print "Usage: validate-pjson [ProivderJSON] [update|create]"
+        sys.exit(1)
 
-
-    #Open the file
-
+    #Try to open the file
     try:
         fh = open(pjson_file, 'r')
-
+    
         j = fh.read()
-
-        errors = validate_pjson(j)
-
+        
+        #Validate the provider JSON content
+        errors = validate_pjson(j, action)
+        #Print the erros and warings as JSON to stout.     
         errors_json =  json.dumps(errors, indent =4)
         print errors_json
     except IOError:

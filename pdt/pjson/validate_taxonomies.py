@@ -53,7 +53,6 @@ def validate_taxonomy_list(taxonomies, enumeration_type, licenses,
     for tl in taxonomy_licenses: 
         tl_codes.append(tl.get('taxonomy_code')) 
     
-    
     for t in taxonomies:
         #print t
         #check for required information
