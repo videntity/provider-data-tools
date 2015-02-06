@@ -1,7 +1,7 @@
 Provider Data Tools
 ===================
 
-Version: 0.4.3
+Version: 0.4.4
 
 By: Alan Viars
 
