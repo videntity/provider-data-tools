@@ -27,7 +27,6 @@ def validate_address_list(l, enumeration_type):
         'foreign_telephone_number'  : 20,
         'foreign_fax_number'        : 20,
         'mpo'                       : 3,
-        'website'                   : 1024,
         'lat'                       : 20,
         'long'                      : 20,
         }
