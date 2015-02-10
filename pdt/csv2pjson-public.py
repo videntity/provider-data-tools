@@ -172,7 +172,7 @@ def publiccsv2pjson(csvfile, output_dir):
                     p['basic']['status'] ="D"
                     p["title"] = "Deactivated"
                 
-                p["number"]             = int(row[0]) 
+                p["number"]             = row[0] 
                 #Load basic                
                 
                 #Provider name
