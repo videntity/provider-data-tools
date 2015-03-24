@@ -5,12 +5,12 @@
 
 import json, sys
 
-from pdt.pjson.validate_pjson import validate_pjson
-#from validate_pjson import validate_pjson
+#from pdt.pjson.validate_pjson import validate_pjson
+from validate_pjson import validate_pjson
 
 if __name__ == "__main__":
-    
-    
+
+
     #Get the file from the command line
     if len(sys.argv)<3:
         print "You must supply a a ProviderJSON file to validate and an action"
@@ -28,12 +28,12 @@ if __name__ == "__main__":
     #Try to open the file
     try:
         fh = open(pjson_file, 'r')
-    
+
         j = fh.read()
-        
+
         #Validate the provider JSON content
         errors = validate_pjson(j, action)
-        #Print the erros and warings as JSON to stout.     
+        #Print the erros and warings as JSON to stout.
         errors_json =  json.dumps(errors, indent =4)
         print errors_json
     except IOError:
