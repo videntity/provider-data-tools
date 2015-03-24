@@ -1,11 +1,11 @@
 Provider Data Tools
 ===================
 
-Version: 0.4.5
+Version: 0.4.6
 
 By: Alan Viars
 
-This reposiory contains a number of command-line utilities and 
+This reposiory contains a number of command-line utilities and
 related code libraries for parsing data.  They are:
 
 * chop-nppes-public   - Parse the npi public data dissemination into flattened files
@@ -52,7 +52,7 @@ To run the utility simply call it on a command line and proivde one command line
 
 The file name `npidata_20050523-20140413.csv` will vary depending on the date.
 
-The script make take a few minutes to complete. When it completes you will have more files 
+The script make take a few minutes to complete. When it completes you will have more files
 in your current directory. Everything is still indexed by NPI. These files are described below.
 
 
@@ -106,7 +106,7 @@ jsondir2mongo
 
 
 `jsondir2mongo` imports a directory containing files of JSON objects to MongoDB documents.
- The files are checked for validity (i.e. {}) before attempting to import it each into 
+ The files are checked for validity (i.e. {}) before attempting to import it each into
  MongoDB. Files that are not JSON objects are automatically skipped.  A summary is retuned with the process ends
 
 Usage:

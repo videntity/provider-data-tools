@@ -11,15 +11,15 @@ from pdt.pjson.validate_licenses import validate_license_list
 from pdt.pjson.validate_taxonomies import validate_taxonomy_list
 from pdt.pjson.validate_identifiers import validate_identifier_list
 from pdt.pjson.validate_other_names import validate_other_name_list
-from pdt.pjson.validate_associations import validate_association_list
+from pdt.pjson.validate_affiliations import validate_affiliations_list
 
-#from validate_basic import validate_basic_dict
-#from validate_addresses import validate_address_list
-#from validate_licenses import validate_license_list
-#from validate_taxonomies import validate_taxonomy_list
-#from validate_identifiers import validate_identifier_list
-#from validate_other_names import validate_other_name_list
-#from validate_associations import validate_association_list
+# from validate_basic import validate_basic_dict
+# from validate_addresses import validate_address_list
+# from validate_licenses import validate_license_list
+# from validate_taxonomies import validate_taxonomy_list
+# from validate_identifiers import validate_identifier_list
+# from validate_other_names import validate_other_name_list
+# from validate_affiliations import validate_affiliation_list
 
 def validate_pjson(j, action):
     """
@@ -27,17 +27,17 @@ def validate_pjson(j, action):
     is empty then the file is valid.
     """
     action = action.lower()
-    
+
     errors =[]
     warnings =[]
     response = { "errors": [], "warnings": [] }
-    
-    
+
+
     #Check the action
     if action not in ("create", "update"):
         error ="action must be either create or update."
         errors.append(error)
-    
+
 
     # Does the string contain JSON
     try:
@@ -92,7 +92,7 @@ def validate_pjson(j, action):
     #else:
     #    warning ="last_updated_epoch is missing."
     #    warnings.append(warning)
-    #        
+    #
     #if d.has_key("created_epoch"):
     #    if type(d["created_epoch"]) != type(1):
     #        warning ="created_epoch is not an integer."
@@ -110,7 +110,7 @@ def validate_pjson(j, action):
 
     #Check for errors in the addresses
     address_errors = validate_address_list(d.get('addresses', ()), d.get('enumeration_type'))
-    
+
 
     #Check for errors in the license section
 
@@ -119,7 +119,7 @@ def validate_pjson(j, action):
                                             d.get('enumeration_type'))
     else:
         license_errors = []
-   
+
     taxonomy_errors = validate_taxonomy_list(d.get('taxonomies',()),
                                              d.get('enumeration_type',()),
                         d.get('licenses', []), d.get('taxonomy_licenses', []),
@@ -136,23 +136,23 @@ def validate_pjson(j, action):
                                                       d.get('enumeration_type'),
                                                       d.get('basic', {}))
     else:
-        other_names_errors = []    
+        other_names_errors = []
 
 
-    association_errors, association_warnings = validate_association_list(d.get('associations',[]),
+    affiliation_errors, affiliation_warnings = validate_affiliation_list(d.get('affiliations',[]),
                                                       d.get('enumeration_type'))
 
     errors = errors + basic_errors + other_names_errors + address_errors + license_errors + \
-                        taxonomy_errors + identifier_errors + association_errors
-    warnings = warnings + basic_warnings                  
+                        taxonomy_errors + identifier_errors + affiliation_errors
+    warnings = warnings + basic_warnings
     response["errors"] = errors
     response["warnings"] = warnings
     return response
 
 
 if __name__ == "__main__":
-    
-    
+
+
     #Get the file from the command line
     if len(sys.argv)<3:
         print "You must supply a a ProviderJSON file to validate and an action"
@@ -170,12 +170,12 @@ if __name__ == "__main__":
     #Try to open the file
     try:
         fh = open(pjson_file, 'r')
-    
+
         j = fh.read()
-        
+
         #Validate the provider JSON content
         errors = validate_pjson(j, action)
-        #Print the erros and warings as JSON to stout.     
+        #Print the erros and warings as JSON to stout.
         errors_json =  json.dumps(errors, indent =4)
         print errors_json
     except IOError:

@@ -5,11 +5,11 @@
 
 
 
-ASSOCIATION_PURPOSE = ('HIE-EXCHANGE', 'MEDICARE-NETWORK', 'MEDICAID-NETWORK',
+AFFILIATION_PURPOSE = ('HIE-EXCHANGE', 'MEDICARE-NETWORK', 'MEDICAID-NETWORK',
                        'PRIVATE-PAYER-NETWORK', 'ACO-NETWORK', 'DOMAIN',
                        'PARENT-ORGANIZATION')
 
-ASSOCIATION_DATA_TYPE = ('NPI-1', 'NPI-2', 'HPID', 'OEID', 'MAC', 'EIN', 'PAC-ID', 'OTHER')
+AFFILIATION_DATA_TYPE = ('NPI-1', 'NPI-2', 'HPID', 'OEID', 'MAC', 'EIN', 'PAC-ID', 'OTHER')
 
 ENDPOINT_DATA_TYPE = ('DIRECT-EMAIL-ADDRESS', 'REGULAR-EMAIL-ADDRESS',
                       'SOAP-WS-URL', 'CONNECT-URL', 'FHIR-URL', 'RESTFUL-WS-URL',
@@ -139,9 +139,9 @@ LICENSE_TYPE_CODES = ('AK-APN', 'AK-CNA', 'AK-CNM', 'AK-CNS', 'AK-DCH', 'AK-DEN'
 'WV-NPR', 'WV-ODR', 'WV-PAS', 'WV-RPH', 'WV-UNK', 'WY-APN', 'WY-CNA', 'WY-CNM',
 'WY-CNS', 'WY-DCH', 'WY-DEN')
 
-ADDRESS_PURPOSE = ("LOCATION", "MAILING", "MEDREC-STORAGE",     
+ADDRESS_PURPOSE = ("LOCATION", "MAILING", "MEDREC-STORAGE",
                 "1099","REVALIDATION", "ADDITIONAL-LOCATION",
-                "REMITTANCE", "TELEMEDICINE")
+                "REMITTANCE", "TELEMEDICINE", "ADDITIONAL-DOCUMENTATION-REQUESTS")
 
 ADDRESS_TYPE = ('DOM', 'MIL', 'FGN')
 
@@ -159,7 +159,7 @@ COUNTRIES = ('AF', 'AX', 'AL', 'DZ', 'AS',
                     'BF', 'BI', 'KH', 'CM', 'CA', 'CV', 'KY', 'CF', 'TD', 'CL',
                     'CN', 'CX', 'CC', 'CO', 'KM', 'CG', 'CD', 'CK', 'CR', 'CI',
                     'HR', 'CU', 'CW', 'CY', 'CZ', 'DK', 'DJ', 'DM', 'DO', 'EC',
-                    'EG', 'SV', 'GQ', 'ER', 'EE', 'ET', 'FK', 'FO', 'FJ', 'FI', 
+                    'EG', 'SV', 'GQ', 'ER', 'EE', 'ET', 'FK', 'FO', 'FJ', 'FI',
                     'FR', 'GF', 'PF', 'TF', 'GA', 'GM', 'GE', 'DE', 'GH', 'GI',
                     'GR', 'GL', 'GD', 'GP', 'GU', 'GT', 'GG', 'GN', 'GW', 'GY',
                     'HT', 'HM', 'VA', 'HN', 'HK', 'HU', 'IS', 'IN', 'ID', 'IR',
