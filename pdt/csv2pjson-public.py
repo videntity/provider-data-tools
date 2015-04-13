@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # vim: ai ts=4 sts=4 et sw=4
-# Alan Viars
+# Written by Alan Viars - This software is public domain
 
 import os, sys, string, json, csv, time
 from collections import OrderedDict
@@ -343,8 +343,6 @@ def publiccsv2pjson(csvfile, output_dir):
                     a["state"]                           =  row[23].upper()
                     a["zip"]                             =  row[24]
                     
-                    
-                    
                     if row[26]:
                         a["us_telephone_number"] =  "%s-%s-%s" % (row[26][0:3], row[26][3:6], row[26][6:12])
                     
@@ -400,9 +398,9 @@ def publiccsv2pjson(csvfile, output_dir):
                         license['status']   = "UNK"
                         
                         p['licenses'].append(license)
-                     #Taxonomy and License
-                    if row[license_number_position] and taxonomy_code_position:
-                        
+                    
+                    #Taxonomy and License
+                    if row[license_number_position] and row[taxonomy_code_position]:
                         taxonomy_license  = OrderedDict()
                         taxonomy_license['taxonomy_code'] = row[taxonomy_code_position]
                         mlvs = "%s-UNK-%s" % (row[license_state_position], row[license_number_position])
@@ -445,9 +443,8 @@ def publiccsv2pjson(csvfile, output_dir):
                         code, description = row[i].split(" ", 1)
                         tg = {"code": code, "description": description}
                         p['taxonomy_groups'].append(tg)
-                
-                
-                #Remve any empty arrays
+        
+                #Remove any empty arrays
                 if not p["other_names"]:
                     del p["other_names"]
                 
@@ -480,12 +477,6 @@ def publiccsv2pjson(csvfile, output_dir):
                     day =  row[39][3:5]
                     year = row[39][6:10]
                     p["basic"]["deactivation_date"] = "%s-%s-%s" % (year, month, day)
-            
-
-                    
-            
-                
-                
             
             fn = "%s.json" % (p["number"])
             
@@ -535,7 +526,7 @@ if __name__ == "__main__":
     
     if len(sys.argv)!=3:
         print "Usage:"
-        print "csv2pjson-public [CSVFILE] [OUTPUT_DIRECTORY]"
+        print "csv2pjson-public.py [CSVFILE] [OUTPUT_DIRECTORY]"
         sys.exit(1)
 
     csv_file   = sys.argv[1]
