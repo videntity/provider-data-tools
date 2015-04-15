@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # vim: ai ts=4 sts=4 et sw=4
-# Written by Alan Viars
+# Written by Alan Viars  - This software is public domain
 
 import json, sys
 
@@ -11,7 +11,7 @@ from pdt.pjson.validate_licenses import validate_license_list
 from pdt.pjson.validate_taxonomies import validate_taxonomy_list
 from pdt.pjson.validate_identifiers import validate_identifier_list
 from pdt.pjson.validate_other_names import validate_other_name_list
-from pdt.pjson.validate_affiliations import validate_affiliations_list
+from pdt.pjson.validate_affiliations import validate_affiliation_list
 
 # from validate_basic import validate_basic_dict
 # from validate_addresses import validate_address_list
