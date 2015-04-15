@@ -65,7 +65,7 @@ def do_update(process_full=True, download=True):
         print "Import", main_file_to_import
         #first convert to json
         json_output_dir = "json-output"
-        #call(["csv2pjson-public.py", main_file_to_import, json_output_dir ])
+        call(["csv2pjson-public.py", main_file_to_import, json_output_dir ])
         #now upload to mongo
         call(["jsondir2mongo", json_output_dir, "nppes", "pjson", "T", "127.0.0.1", "27017" ])
     
