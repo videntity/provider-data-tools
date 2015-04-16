@@ -3,7 +3,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Alan Viars
 
-from pymongo import Connection
+from pymongo import MongoClient
 import os, sys, string, json, csv
 from collections import OrderedDict
 
@@ -29,9 +29,9 @@ def csv2mongo( csvfile, database_name="database1",
 
     try:
 
-        mconnection = Connection(host, port)
-        db          = mconnection[database_name]
-        collection  = db[collection_name]
+        mc =   MongoClient(host=host, port=port)
+        db          =   mc[database_name]
+        collection  =  db[collection_name]
 
         if delete_collection_before_import:
             myobjectid=collection.remove({})

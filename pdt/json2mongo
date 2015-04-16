@@ -3,7 +3,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Alan Viars
 
-from pymongo import Connection
+from pymongo import MongoClient
 import os, sys, string, json
 from collections import OrderedDict
 
@@ -29,8 +29,8 @@ def json2mongo(jsonfile, database_name         = "database1",
     mongoindex = 0
     error_list = []
 
-    mconnection = Connection(MONGO_HOST, MONGO_PORT)
-    db          = mconnection[database_name]
+    mc          = MongoClient(host=host, port=port)
+    db          = mc[database_name]
     collection  = db[collection_name]
 
     if delete_collection_before_import:
@@ -59,21 +59,21 @@ def json2mongo(jsonfile, database_name         = "database1",
         mongoindex += 1
 
         if error_list:
-            response_dict['num_files_imported']=mongoindex
+            response_dict['num_files_imported']= mongoindex
             response_dict['num_file_errors']=len(error_list)
             response_dict['errors']=error_list
             response_dict['code']=400
             response_dict['message']="Completed with errors."
   
         else:
-            response_dict['num_rows_imported']=mongoindex
+            response_dict['num_rows_imported']= mongoindex
             response_dict['num_file_errors']=len(error_list)
             response_dict['code']=200
             response_dict['message']="Completed without errors."
 
   
     else:    
-        response_dict['num_rows_imported']=mongoindex
+        response_dict['num_rows_imported']= mongoindex
         response_dict['num_file_errors']=len(error_list)
         response_dict['code']=500
         syserror = sys.exc_info()
