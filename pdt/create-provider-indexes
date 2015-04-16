@@ -29,6 +29,10 @@ def ensure_provider_indexes(database_name, collection_name,host=MONGO_HOST,
         collection.create_index([("enumeration_type",ASCENDING)],
             background=background)
 
+        collection.create_index([("enumeration_type",ASCENDING),
+                                 ("addresses.state",ASCENDING)],
+                                   background=background)
+        
         
         collection.create_index([("basic.status",     ASCENDING),
                                  ("enumeration_type", ASCENDING),
