@@ -3,7 +3,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Alan Viars
 
-from pymongo import Connection
+from pymongo import MongoClient
 import os, sys, string, json
 from collections import OrderedDict
 
@@ -31,13 +31,9 @@ def jsondir2mongo( json_dir, database_name="database1",
     onlyfiles = []
     try:
 
-        mconnection = Connection(host, port)
-        db          = mconnection[database_name]
-        collection  = db[collection_name]
-        
-
-        
-        
+        mc =   MongoClient(host=host, port=port)
+        db          =   mc[database_name]
+        collection  =  db[collection_name]
         
         if delete_collection_before_import:
             myobjectid=collection.remove({})
@@ -51,14 +47,12 @@ def jsondir2mongo( json_dir, database_name="database1",
                 if file.endswith(".json") or file.endswith(".js"):
                     onlyfiles.append(os.path.join(root, file))
         
-            
+        print "Done creating file list. Begin file import."    
         for f in onlyfiles:
             j = None
             error_message = ""    
             
             fh = open(f, 'rU')
-            
-            
             fileindex += 1
             j = fh.read()
             fh.close()
