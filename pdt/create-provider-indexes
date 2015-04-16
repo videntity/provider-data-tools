@@ -42,11 +42,11 @@ def ensure_provider_indexes(database_name, collection_name,host=MONGO_HOST,
                                     background=background)
         
 
-        collection.create_index([("address.city", ASCENDING)],
+        collection.create_index([("addresses.city", ASCENDING)],
             background=background)
-        collection.create_index([("address.state", ASCENDING)],
+        collection.create_index([("addresses.state", ASCENDING)],
             background=background)
-        collection.create_index([("address.zip", ASCENDING)],
+        collection.create_index([("addresses.zip", ASCENDING)],
             background=background)
         collection.create_index([("basic.status", ASCENDING)],
             background=background)
@@ -64,12 +64,12 @@ def ensure_provider_indexes(database_name, collection_name,host=MONGO_HOST,
             background=background)
         
         collection.create_index([("updated_epoch",ASCENDING),
-                                 ("address.state", ASCENDING),
-                                 ("address.purpose", ASCENDING),],
+                                 ("addressed.state", ASCENDING),
+                                 ("addressed.purpose", ASCENDING),],
             background=background)
         
-        collection.create_index([("address.state", ASCENDING),
-                                 ("address.purpose", ASCENDING),],
+        collection.create_index([("addresses.state", ASCENDING),
+                                 ("addresses.purpose", ASCENDING),],
             background=background)
         
            
