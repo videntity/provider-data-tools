@@ -69,6 +69,9 @@ def do_update(process_full=True, download=True):
         #now upload to mongo
         call(["jsondir2mongo", json_output_dir, "nppes", "pjson", "T", "127.0.0.1", "27017" ])
     
+    
+        #now create indexes
+        call(["create-provider-indexes", "nppes", "pjson", "127.0.0.1", "27017", "Y" ])
     #Download weekly files
         #for link in weeklylinks:
         #    print "weekly", link        
