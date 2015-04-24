@@ -5,8 +5,8 @@
 
 import json, sys
 
-#from pdt.pjson.validate_pjson import validate_pjson
-from validate_pjson import validate_pjson
+from pdt.pjson.validate_pjson import validate_pjson
+#from validate_pjson import validate_pjson
 
 if __name__ == "__main__":
 
