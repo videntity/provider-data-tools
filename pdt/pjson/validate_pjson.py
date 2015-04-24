@@ -5,6 +5,7 @@
 
 import json, sys
 from baluhn import verify
+
 from pdt.pjson.validate_basic import validate_basic_dict
 from pdt.pjson.validate_addresses import validate_address_list
 from pdt.pjson.validate_licenses import validate_license_list

@@ -1,7 +1,7 @@
 Provider Data Tools
 ===================
 
-Version: 0.5.2
+Version: 0.5.3
 
 This reposiory contains a number of command-line utilities and related code libraries for
 parsing, creating, and validating provider data data.  They are:
