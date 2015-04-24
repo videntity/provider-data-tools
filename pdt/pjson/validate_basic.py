@@ -77,7 +77,9 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
 
     for k in max_values.keys():
         if d.get(k):
-            if max_values[k] < len(str(d.get(k))):
+            
+            cleaned_value = d.get(k).encode('ascii', 'ignore').decode('ascii')
+            if max_values[k] < len(cleaned_value):
                 error = "%s exceeds max allowable length of %s." % (k, max_values[k])
                 errors.append(error)
 
