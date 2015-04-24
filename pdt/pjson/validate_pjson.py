@@ -5,21 +5,21 @@
 
 import json, sys
 
-from pdt.pjson.validate_basic import validate_basic_dict
-from pdt.pjson.validate_addresses import validate_address_list
-from pdt.pjson.validate_licenses import validate_license_list
-from pdt.pjson.validate_taxonomies import validate_taxonomy_list
-from pdt.pjson.validate_identifiers import validate_identifier_list
-from pdt.pjson.validate_other_names import validate_other_name_list
-from pdt.pjson.validate_affiliations import validate_affiliation_list
+#from pdt.pjson.validate_basic import validate_basic_dict
+#from pdt.pjson.validate_addresses import validate_address_list
+#from pdt.pjson.validate_licenses import validate_license_list
+#from pdt.pjson.validate_taxonomies import validate_taxonomy_list
+#from pdt.pjson.validate_identifiers import validate_identifier_list
+#from pdt.pjson.validate_other_names import validate_other_name_list
+#from pdt.pjson.validate_affiliations import validate_affiliation_list
 
-# from validate_basic import validate_basic_dict
-# from validate_addresses import validate_address_list
-# from validate_licenses import validate_license_list
-# from validate_taxonomies import validate_taxonomy_list
-# from validate_identifiers import validate_identifier_list
-# from validate_other_names import validate_other_name_list
-# from validate_affiliations import validate_affiliation_list
+from validate_basic import validate_basic_dict
+from validate_addresses import validate_address_list
+from validate_licenses import validate_license_list
+from validate_taxonomies import validate_taxonomy_list
+from validate_identifiers import validate_identifier_list
+from validate_other_names import validate_other_name_list
+from validate_affiliations import validate_affiliation_list
 
 def validate_pjson(j, action):
     """
@@ -34,9 +34,11 @@ def validate_pjson(j, action):
 
 
     #Check the action
-    if action not in ("create", "update"):
-        error ="action must be either create or update."
+    if action not in ("create", "update", "public"):
+        error ="action must be create, update, or public."
         errors.append(error)
+        response["errors"] = errors
+        return response
 
 
     # Does the string contain JSON
@@ -56,11 +58,21 @@ def validate_pjson(j, action):
         return response
 
     # Does it contain the top-level enumeration_type
-    if not d.has_key("enumeration_type"):
+    if not d.has_key("enumeration_type") and action!="public":
         error ="The JSON object does not contain an enumeration_type."
         errors.append(error)
         response["errors"] = errors
         return response
+    
+    #Check for deactivation
+    print d.has_key("number"), d.has_key("enumeration_type"), action
+    
+    if d.has_key("number") and not d.get("enumeration_type", "") and action=="public":
+        warning ="This appears to be a deactivated NPI. No information is available for deactivated NPIs."
+        warnings.append(warning)
+        response["warnings"] = warnings
+        return response
+
 
 
     # Is the enumeration_type a valid?
@@ -69,6 +81,8 @@ def validate_pjson(j, action):
         errors.append(error)
         response["errors"] = errors
         return response
+
+        
 
     #If a number is present we assume this is an update.
     if not d.has_key("number"):
@@ -162,9 +176,9 @@ if __name__ == "__main__":
         pjson_file = sys.argv[1]
         action       = sys.argv[2]
 
-    if action.lower() not in ("create", "update"):
+    if action.lower() not in ("create", "update", "public"):
         print "You must supply an action of either create or update."
-        print "Usage: validate-pjson [ProivderJSON] [update|create]"
+        print "Usage: validate-pjson [ProivderJSON] [update|create|public]"
         sys.exit(1)
 
     #Try to open the file
