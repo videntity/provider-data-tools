@@ -1,12 +1,10 @@
 Provider Data Tools
 ===================
 
-Version: 0.5.1
+Version: 0.5.2
 
-By: Alan Viars
-
-This reposiory contains a number of command-line utilities and
-related code libraries for parsing data.  They are:
+This reposiory contains a number of command-line utilities and related code libraries for
+parsing, creating, and validating provider data data.  They are:
 
 * chop-nppes-public   - Parse the npi public data dissemination into flattened files
 * csv2mongo           - Converting a CSV into documents directly into a MongoDB datbase/collection

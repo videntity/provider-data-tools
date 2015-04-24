@@ -4,7 +4,7 @@
 # Written by Alan Viars  - This software is public domain
 
 import json, sys
-
+from baluhn import verify
 #from pdt.pjson.validate_basic import validate_basic_dict
 #from pdt.pjson.validate_addresses import validate_address_list
 #from pdt.pjson.validate_licenses import validate_license_list
@@ -20,6 +20,9 @@ from validate_taxonomies import validate_taxonomy_list
 from validate_identifiers import validate_identifier_list
 from validate_other_names import validate_other_name_list
 from validate_affiliations import validate_affiliation_list
+
+LUHN_PREFIX ="80840"
+
 
 def validate_pjson(j, action):
     """
@@ -64,9 +67,7 @@ def validate_pjson(j, action):
         response["errors"] = errors
         return response
     
-    #Check for deactivation
-    print d.has_key("number"), d.has_key("enumeration_type"), action
-    
+    #Check for deactivation    
     if d.has_key("number") and not d.get("enumeration_type", "") and action=="public":
         warning ="This appears to be a deactivated NPI. No information is available for deactivated NPIs."
         warnings.append(warning)
@@ -97,24 +98,15 @@ def validate_pjson(j, action):
     if action=="update" and not number:
         error ="enumeration number is required when performaing an update."
         errors.append(error)
-
-    ## Sanity check epoch dates
-    #if d.has_key("last_updated_epoch"):
-    #    if type(d["last_updated_epoch"]) != type(1):
-    #        warning ="last_updated_epoch is not an integer."
-    #        warnings.append(warning)
-    #else:
-    #    warning ="last_updated_epoch is missing."
-    #    warnings.append(warning)
-    #
-    #if d.has_key("created_epoch"):
-    #    if type(d["created_epoch"]) != type(1):
-    #        warning ="created_epoch is not an integer."
-    #        warnings.append(warning)
-    #else:
-    #    warning ="created_date_epoch is missing."
-    #    warnings.append(warning)
-
+        
+    #Check if the Luhn checkdigit makes is correcense.
+    if number and d['enumeration_type'] in ('NPI-1', 'NPI-2'):
+        
+        prefixed_number = "%s%s" % (LUHN_PREFIX, number)
+        luhn_verified = verify(prefixed_number)
+        if not luhn_verified:
+            warning ="The number %s did not pass Luhn algorithm check digit sanitiy check." % (number)
+            warnings.append(warning)
 
     #Check for errors in the basic section
     basic_errors, basic_warnings = validate_basic_dict(d.get('basic', {}),
