@@ -78,7 +78,7 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
     for k in max_values.keys():
         if d.get(k):
             
-            cleaned_value = d.get(k).encode('ascii', 'ignore').decode('ascii')
+            cleaned_value = d.get(k, "").encode('ascii', 'ignore').decode('ascii')
             if max_values[k] < len(cleaned_value):
                 error = "%s exceeds max allowable length of %s." % (k, max_values[k])
                 errors.append(error)
@@ -348,9 +348,10 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
                 error = "organization_name is longer than allowed."
                 errors.append(error)
 
-        if not d.get('ein'):
-            error = "EIN is required for a type-2 organization provider."
-            errors.append(error)
+        if action != "public":
+            if not d.get('ein'):
+                error = "EIN is required for a type-2 organization provider."
+                errors.append(error)
 
         if d.get('ein') and len(str(d.get('ein'))) != 9 :
             error = "EIN must be 9 digits."
