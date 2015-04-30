@@ -6,7 +6,7 @@
 import json, sys, datetime, re
 from choices import LICENSE_TYPE_CODES
 
-def validate_license_list(l, enumeration_type):
+def validate_license_list(l, enumeration_type, action):
     errors = []
 
     #define a max_values dict
@@ -32,9 +32,10 @@ def validate_license_list(l, enumeration_type):
             errors.append(error)
         else:
             license_code  = d.get('code')[0:6]
-            if license_code not in LICENSE_TYPE_CODES:
-                error = "%s : Licese code must be a valid license type code.  See https://github.com/HHSIDEAlab/mlvs/blob/master/docs/USProviderLicenseTypesFeb2014.csv" % (d.get('code'))
-                errors.append(error)
+            if action != "public":
+                if license_code not in LICENSE_TYPE_CODES:
+                    error = "%s : License code must be a valid license type code.  See https://github.com/HHSIDEAlab/mlvs/blob/master/docs/USProviderLicenseTypesFeb2014.csv" % (d.get('code'))
+                    errors.append(error)
 
     return errors
 

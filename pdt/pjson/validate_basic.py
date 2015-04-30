@@ -155,10 +155,8 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
     if d.get('contact_person_telephone_number') and not re.match(r'^[0-9]{3}-[0-9]{3}-[0-9]{4}$',d.get('contact_person_telephone_number')):
         error = "contact_person_telephone_number must be in XXX-XXX-XXXX format."
         errors.append(error)
+    
 
-    if d.get('authorized_official_telephone_number') and not re.match(r'^[0-9]{3}-[0-9]{3}-[0-9]{4}$',d.get('authorized_official_telephone_number')):
-        error = "authorized_official_telephone_number must be in XXX-XXX-XXXX format."
-        errors.append(error)
 
     #Meta fields -----------------------------------
     if d.get("mode") and  d.get("mode", "").upper() not in ('W', 'P', 'E', 'A'):
@@ -357,9 +355,9 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
             error = "EIN must be 9 digits."
             errors.append(error)
 
-        #if not d.get('authorized_official_email'):
-        #    error = "authorized_official_email is required for a type-2 organization provider."
-        #    errors.append(error)
+        if d.get('authorized_official_telephone_number') and not re.match(r'^[0-9]{3}-[0-9]{3}-[0-9]{4}$',d.get('authorized_official_telephone_number')):
+            error = "authorized_official_telephone_number must be in XXX-XXX-XXXX format."
+            errors.append(error)
 
         if not d.get('authorized_official_first_name'):
             error = "authorized_official_first_name is required for a type-2 organization provider."

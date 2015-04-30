@@ -6,21 +6,21 @@
 import json, sys
 from baluhn import verify
 
-#from pdt.pjson.validate_basic import validate_basic_dict
-#from pdt.pjson.validate_addresses import validate_address_list
-#from pdt.pjson.validate_licenses import validate_license_list
-#from pdt.pjson.validate_taxonomies import validate_taxonomy_list
-#from pdt.pjson.validate_identifiers import validate_identifier_list
-#from pdt.pjson.validate_other_names import validate_other_name_list
-#from pdt.pjson.validate_affiliations import validate_affiliation_list
+from pdt.pjson.validate_basic import validate_basic_dict
+from pdt.pjson.validate_addresses import validate_address_list
+from pdt.pjson.validate_licenses import validate_license_list
+from pdt.pjson.validate_taxonomies import validate_taxonomy_list
+from pdt.pjson.validate_identifiers import validate_identifier_list
+from pdt.pjson.validate_other_names import validate_other_name_list
+from pdt.pjson.validate_affiliations import validate_affiliation_list
 
-from validate_basic import validate_basic_dict
-from validate_addresses import validate_address_list
-from validate_licenses import validate_license_list
-from validate_taxonomies import validate_taxonomy_list
-from validate_identifiers import validate_identifier_list
-from validate_other_names import validate_other_name_list
-from validate_affiliations import validate_affiliation_list
+#from validate_basic import validate_basic_dict
+#from validate_addresses import validate_address_list
+#from validate_licenses import validate_license_list
+#from validate_taxonomies import validate_taxonomy_list
+#from validate_identifiers import validate_identifier_list
+#from validate_other_names import validate_other_name_list
+#from validate_affiliations import validate_affiliation_list
 
 LUHN_PREFIX ="80840"
 
@@ -123,14 +123,14 @@ def validate_pjson(j, action):
 
     if d.has_key('licenses'):
         license_errors = validate_license_list(d.get('licenses', []),
-                                            d.get('enumeration_type'))
+                                            d.get('enumeration_type'), action)
     else:
         license_errors = []
 
     taxonomy_errors = validate_taxonomy_list(d.get('taxonomies',()),
                                              d.get('enumeration_type',()),
                         d.get('licenses', []), d.get('taxonomy_licenses', []),
-                        d.get('basic', {}).get('sole_proprietor', "NO"))
+                        d.get('basic', {}).get('sole_proprietor', "NO"), action)
 
     if d.has_key('identifiers'):
         identifier_errors = validate_identifier_list(d.get('identifiers',[]), d.get('enumeration_type'))
