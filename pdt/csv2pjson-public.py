@@ -124,7 +124,6 @@ def publiccsv2pjson(csvfile, output_dir):
     error_list = []   
         
     for row in csvhandle :
-            
         if rowindex==0:
                  
             rowindex += 1    
@@ -174,15 +173,21 @@ def publiccsv2pjson(csvfile, output_dir):
                 
                 p["number"]             = row[0] 
                 #Load basic                
+                for i in range(0, len(row)):
+                    if row[i]:
+                        row[i] = row[i].decode('ascii', 'ignore')
+                    else:
+                         row[i] = ""
                 
+
                 #Provider name
-                p["basic"]["name_prefix"]       = row[8].encode('ascii', 'ignore').decode('ascii').upper()
-                p["basic"]['first_name']        = row[6].encode('ascii', 'ignore').decode('ascii').upper()
-                p["basic"]["middle_name"]       = row[7].encode('ascii', 'ignore').decode('ascii').upper()
-                p["basic"]['last_name']         = row[5].encode('ascii', 'ignore').decode('ascii').upper()
-                p["basic"]["name_suffix"]       = row[9].upper()
-                p["basic"]["credential"]        = row[10].encode('ascii', 'ignore').decode('ascii')
-                p["basic"]["gender"]            = row[41]
+                p["basic"]["name_prefix"]       = row[8].capitalize()
+                p["basic"]['first_name']        = row[6].upper()
+                p["basic"]["middle_name"]       = row[7].upper()
+                p["basic"]['last_name']         = row[5].upper()
+                p["basic"]["name_suffix"]       = row[9]
+                p["basic"]["credential"]        = row[10]
+                p["basic"]["gender"]            = row[41].upper()
                 
                 if row[307] in (True, "Y", "y", "YES"):
                     p["basic"]["sole_proprietor"]   = "YES"
@@ -191,10 +196,10 @@ def publiccsv2pjson(csvfile, output_dir):
                     
                 
                 #provider_organization
-                p["basic"]["organization_name"] = row[4].encode('ascii', 'ignore').decode('ascii')
+                p["basic"]["organization_name"] = row[4]
                 
                 
-                p["basic"]["ein"]               = row[3]     
+                p["basic"]["ein"]              = row[3]     
                 if p["basic"]["ein"] == "<UNAVAIL>":
                     p["basic"]["ein"] = ""
                 
@@ -220,7 +225,7 @@ def publiccsv2pjson(csvfile, output_dir):
                 
                 p["basic"]["deactivation_date"]         = row[39]
                 p["basic"]["reactivation_date"]         = row[40]
-                p["basic"]["deactivation_reason_code"] = row[38]
+                p["basic"]["deactivation_reason_code"]  = row[38]
                 
                 if row[37]:
                     month = row[37][0:2]
@@ -248,15 +253,21 @@ def publiccsv2pjson(csvfile, output_dir):
                     p["basic"]["reactivation_date"] = "%s-%s-%s" % (year, month, day)
                 
             
-                #Contact person
-                #not included in public file
+                #Contact person not included in public file
                
                 #Authorized official
-                p["basic"]["authorized_official_last_name"] = row[42].encode('ascii', 'ignore').decode('ascii').upper()
-                p["basic"]["authorized_official_first_name"] = row[43].encode('ascii', 'ignore').decode('ascii').upper()
-                p["basic"]["authorized_official_middle_name"] = row[44].encode('ascii', 'ignore').decode('ascii').upper()
-                p["basic"]["authorized_official_telephone_number"] = row[46].upper()
-                p["basic"]["authorized_official_title_or_position"] = row[45].encode('ascii', 'ignore').decode('ascii').upper()
+                p["basic"]["authorized_official_last_name"]  = row[42].upper()
+                p["basic"]["authorized_official_first_name"] = row[43].upper()
+                p["basic"]["authorized_official_middle_name"] = row[44].upper()
+                
+                ao_phone_number = row[46].upper()
+                
+                ao_phone_number = "%s-%s-%s" % (ao_phone_number[0:3], ao_phone_number[3:6], ao_phone_number[6:12])
+                
+                if ao_phone_number != "--":
+                    p["basic"]["authorized_official_telephone_number"] = ao_phone_number
+                
+                p["basic"]["authorized_official_title_or_position"] = row[45].upper()
                 
                 
                 clean_basic = OrderedDict()
@@ -269,42 +280,41 @@ def publiccsv2pjson(csvfile, output_dir):
                 if row[11] or row[13] or row[14]:
                     other_name  = OrderedDict()
                     if row[11]:
-                        other_name["organization_name"]=row[11].upper()
+                        other_name["organization_name"] = row[11].upper()
                     
                     if row[12]:
-                        other_name["code"]=row[12]
+                        other_name["code"]= row[12].upper()
                     if row[19]:
-                        other_name["code"]=row[19]
+                        other_name["code"]= row[19].upper()
                     
                     if row[13]:
-                        other_name["last_name"]=row[13].encode('ascii', 'ignore').decode('ascii').upper()
+                        other_name["last_name"]=row[13].upper()
                     if row[14]:
-                        other_name["first_name"]=row[14].encode('ascii', 'ignore').decode('ascii').upper()
+                        other_name["first_name"]=row[14].upper()
                     if row[15]:
-                        other_name["middle_name"]=row[15].encode('ascii', 'ignore').decode('ascii').upper()
+                        other_name["middle_name"]=row[15].upper()
                     if row[16]:
-                        other_name["prefix"]=row[16].upper()
+                        other_name["prefix"]=row[16].capitalize()
                     if row[17]:
-                        other_name["suffix"]=row[17].upper()
+                        other_name["suffix"]=row[17].capitalize()
                     if row[18]:
-                        other_name["credential"]=row[18].encode('ascii', 'ignore').decode('ascii').upper()
-                          
+                        other_name["credential"]=row[18]
                     p["other_names"].append(other_name)    
                 
                 
                 #Addresses
                 #location ---
                 a = OrderedDict()
-                a["country_code"]                    = row[33].encode('ascii', 'ignore').decode('ascii')
+                a["country_code"]                    = row[33].upper()
                 a["address_purpose"]                 = "LOCATION"
                 
                 if a["country_code"] == "US":
                     a["address_type"]                    = "DOM"
-                    a["address_1"]                       =  row[28]
-                    a["address_2"]                       =  row[29]
-                    a["city"]                            =  row[30].encode('ascii', 'ignore').decode('ascii').upper()
-                    a["state"]                           =  row[31].encode('ascii', 'ignore').decode('ascii').upper()
-                    a["zip"]                             =  row[32]
+                    a["address_1"]                       =  row[28].upper()
+                    a["address_2"]                       =  row[29].upper()
+                    a["city"]                            =  row[30].upper()
+                    a["state"]                           =  row[31].upper()
+                    a["zip"]                             =  row[32].upper()
                                         
                     if row[34]:
                         
@@ -316,29 +326,29 @@ def publiccsv2pjson(csvfile, output_dir):
                     
                 else:
                     a["address_type"]                    = "FGN"
-                    a["address_1"]                       =  row[28]
-                    a["address_2"]                       =  row[29]
+                    a["address_1"]                       =  row[28].upper()
+                    a["address_2"]                       =  row[29].upper()
                     a["city"]                            =  row[30].upper()
                     a["foreign_state"]                   =  row[31].upper()
-                    a["foreign_postal"]                  =  row[32]                    
-                    a["foreign_telephone_number"]        =  row[34]
-                    a["foreign_fax_number"]              =  row[35]
+                    a["foreign_postal"]                  =  row[32].upper()                   
+                    a["foreign_telephone_number"]        =  row[34].upper()
+                    a["foreign_fax_number"]              =  row[35].upper()
     
     
                 p['addresses'].append(a)
                 
                 #Maiing address ---
                 a = OrderedDict()
-                a["country_code"]                    = row[25].encode('ascii', 'ignore').decode('ascii')
+                a["country_code"]                    = row[25].upper()
                 a["address_purpose"]                 = "MAILING"
                 
                 if a["country_code"] == "US":
                     a["address_type"]                    = "DOM"
-                    a["address_1"]                       =  row[20]
-                    a["address_2"]                       =  row[21]
-                    a["city"]                            =  row[22].encode('ascii', 'ignore').decode('ascii').upper()
-                    a["state"]                           =  row[23].encode('ascii', 'ignore').decode('ascii').upper()
-                    a["zip"]                             =  row[24]
+                    a["address_1"]                       =  row[20].upper()
+                    a["address_2"]                       =  row[21].upper()
+                    a["city"]                            =  row[22].upper()
+                    a["state"]                           =  row[23].upper()
+                    a["zip"]                             =  row[24].upper()
                     
                     if row[26]:
                         a["us_telephone_number"] =  "%s-%s-%s" % (row[26][0:3], row[26][3:6], row[26][6:12])
@@ -351,13 +361,13 @@ def publiccsv2pjson(csvfile, output_dir):
                     
                 else:
                     a["address_type"]                    = "FGN"
-                    a["address_1"]                       =  row[20]
-                    a["address_2"]                       =  row[21]
-                    a["city"]                            =  row[22].encode('ascii', 'ignore').decode('ascii').upper()
-                    a["foreign_state"]                   =  row[23].encode('ascii', 'ignore').decode('ascii').upper()
-                    a["foreign_postal"]                  =  row[24].encode('ascii', 'ignore').decode('ascii')
-                    a["foreign_telephone_number"]        =  row[26].encode('ascii', 'ignore').decode('ascii')
-                    a["foreign_fax_number"]              =  row[27].encode('ascii', 'ignore').decode('ascii')
+                    a["address_1"]                       =  row[20].upper()
+                    a["address_2"]                       =  row[21].upper()
+                    a["city"]                            =  row[22].upper()
+                    a["foreign_state"]                   =  row[23].upper()
+                    a["foreign_postal"]                  =  row[24].upper()
+                    a["foreign_telephone_number"]        =  row[26].upper()
+                    a["foreign_fax_number"]              =  row[27].upper()
     
     
                 p['addresses'].append(a)
@@ -490,13 +500,10 @@ def publiccsv2pjson(csvfile, output_dir):
             ofile.writelines(json.dumps(p, indent =4))
             ofile.close()
             po_count += 1
-            if po_count % 100 == 0:
-               out  = "%s files created. Total time: %s seconds." % (po_count ,(time.time() - process_start_time) )
-               print out
             
             if po_count % 1000 == 0:
                pdir += 1
-               out  = "%s files created. Total time: %s seconds." % (po_count ,(time.time() - process_start_time) )
+               out  = "%s files created. Total time is %s seconds." % (po_count ,(time.time() - process_start_time) )
                print out   
                
         

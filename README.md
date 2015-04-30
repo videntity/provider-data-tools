@@ -1,7 +1,7 @@
 Provider Data Tools
 ===================
 
-Version: 0.5.3
+Version: 0.5.7
 
 This reposiory contains a number of command-line utilities and related code libraries for
 parsing, creating, and validating provider data data.  They are:
@@ -10,27 +10,22 @@ parsing, creating, and validating provider data data.  They are:
 * csv2mongo           - Converting a CSV into documents directly into a MongoDB datbase/collection
 * json2mongo          - Convert a JSON file object into a record in a MongoDB datbase/collection.
 * jsondir2mongo       - Convert a directory of files containing JSON objects into documents in a MongoDB database/collection.
-* csv2pjson           - Parse NPI CSV files, containing PII, into provider JSON. Used for bulk upload.
 * csv2pjson-public.py - Parse the npi public data dissemination into ProviderJSON files
 * validate-pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
+* validate-pjson-dir  - Bulk validation of the output of csv2pjson-public.py
 * loadnppes.py        - Download public, parse to JSON, and load to MongoDB in one step.
 
 Installation
 ------------
 
-This simple utility creates several "flattened" CSV files from the origional NPPES public data dissemination file.  The only requirements to use the tool are
-
-1. Obtain the public "NPPES Data Dissemination" CSV file
-2. Have Python installed on your computer.  If you ae usung Mac or Linux, Python is already installed).
-
-You can install the tool using `pip` or download it from GitHub (https://github.com/hhsidealab/provider-data-tools)
-
+You can install the tool using `pip`. 
 
 To install with pip just type:
 
     ~$ sudo pip install pdt
 
-The utility `chop-nppes-public` will be installed at the system level, if you use `sudo`.
+Note: If you use `sudo`, the scripts  will be installed at the system level and used by all users.
+Add  `--upgrade` to the above install instructions to ensure you fetch the newest version. 
 
 
 chop-nppes-public
@@ -70,12 +65,12 @@ header row are auto-fixed by converting to ` `, `_`, or `-`.
 
 Usage:
 
-    csv2mongo [CSVFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]
+    ~$ csv2mongo [CSVFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]
 
 
 Example:
 
-    csv2mongo npidata_20050523-20140413.csv npi nppes T
+    ~$ csv2mongo npidata_20050523-20140413.csv npi nppes T
 
 
 
@@ -89,13 +84,13 @@ for validity (i.e. {}) before attempting to import it into MongoDB.
 
 Usage:
 
-    json2mongo [JSONFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]
+    ~$ json2mongo [JSONFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]
 
 
 Example:
 
 
-    json2mongo test.json npi nppes T
+    ~$ json2mongo test.json npi nppes T
 
 
 
@@ -109,13 +104,13 @@ jsondir2mongo
 
 Usage:
 
-    json2mongo [JSONFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]
+    ~$ json2mongo [JSONFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]
 
 
 Example:
 
 
-    json2mongo data npi nppes T
+    ~$ json2mongo data npi nppes T
 
 Example output:
 
@@ -151,7 +146,7 @@ Convert the GAO CSV file format to a directory of files in ProviderJSON format.
 
 Usage:
 
-    csv2pjson.py [CSV_FILE] [OUTPUT_DIR]
+    ~$ csv2pjson.py [CSV_FILE] [OUTPUT_DIR]
 
 
 Example:

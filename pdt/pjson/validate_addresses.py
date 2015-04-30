@@ -34,12 +34,16 @@ def validate_address_list(l, enumeration_type):
     #Test for max_length errors
 
     for d in l:
-        address_string = "%s %s %s %s %s" % (d.get('address_1'), d.get('address_2'),
-                                             d.get('city'), d.get('state'),
-                                             d.get('zip'))
+        address_string = "%s %s %s %s %s" % (d.get('address_1', "").encode('ascii', 'ignore').decode('ascii'),
+                                             d.get('address_2', "").encode('ascii', 'ignore').decode('ascii'),
+                                             d.get('city', "").encode('ascii', 'ignore').decode('ascii'),
+                                             d.get('state', "").encode('ascii', 'ignore').decode('ascii'),
+                                             d.get('zip', "").encode('ascii', 'ignore').decode('ascii'))
+        
         for k in max_values.keys():
             if d.get(k):
-                    if max_values[k] < len(str(d.get(k))):
+                    if max_values[k] < len(d.get(k, "").encode('ascii', 'ignore').decode('ascii')):
+                        
                         error = "%s : %s max allowable length %s." % (address_string, k, max_values[k])
                         errors.append(error)
 
@@ -91,7 +95,7 @@ def validate_address_list(l, enumeration_type):
             errors.append(error)
 
         if d.get('state') not in STATES:
-            error = "%s : state must be 2 letter ISO code or ZZ for foreign."  % (address_string)
+            error = "%s : state must be 2 letter ISO code or set to ZZ for a foreign country."  % (address_string)
             errors.append(error)
 
         if d.get('country_code') not in COUNTRIES:

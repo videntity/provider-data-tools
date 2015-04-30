@@ -40,7 +40,7 @@ def validate_other_name_list(l, enumeration_type, basic):
     
         for k in max_values.keys():
             if d.get(k):
-                if max_values[k] < len(str(d.get(k))):
+                if max_values[k] < len(d.get(k, "").encode('ascii', 'ignore').decode('ascii')):
                     error = "other_name %s: %s exceeds max allowable length of %s." % (i, k, max_values[k])
                     errors.append(error)
         
@@ -49,7 +49,7 @@ def validate_other_name_list(l, enumeration_type, basic):
             error = "other_name %s: %s other_name for organizations is not in %s." % (i, d.get('code'), ORGANIZATION_OTHER_NAME_CHOICES)
             errors.append(error)
             
-        if enumeration_type == "NPI-2" and not str(d.get('organization_name', '')):   
+        if enumeration_type == "NPI-2" and not d.get('organization_name', ''):   
             error = "other_name %s: organization_name required for NPI-2," % (i)
             errors.append(error)
   
@@ -86,15 +86,15 @@ def validate_other_name_list(l, enumeration_type, basic):
             errors.append(error)
     
         #suffix
-        suffix = str(d.get('suffix', '')).upper()
+        suffix = d.get('suffix', '')
         if suffix and suffix not in SUFFIX_CHOICES:
-            error = "other_name %s:  suffix must be in %s" % (i, SUFFIX_CHOICES)
+            error = "other_name %s: suffix must be in %s" % (i, SUFFIX_CHOICES)
             errors.append(error)
             
         #prefix
-        prefix = str(d.get('prefix', '')).upper()
+        prefix = d.get('prefix', '')
         if prefix and prefix not in PREFIX_CHOICES:
-            error = "other_name %s:  prefix must be in %s" % (i, PREFIX_CHOICES)
+            error = "other_name %s: prefix must be in %s" % (i, PREFIX_CHOICES)
             errors.append(error)
             
             

@@ -123,14 +123,14 @@ def validate_pjson(j, action):
 
     if d.has_key('licenses'):
         license_errors = validate_license_list(d.get('licenses', []),
-                                            d.get('enumeration_type'))
+                                            d.get('enumeration_type'), action)
     else:
         license_errors = []
 
     taxonomy_errors = validate_taxonomy_list(d.get('taxonomies',()),
                                              d.get('enumeration_type',()),
                         d.get('licenses', []), d.get('taxonomy_licenses', []),
-                        d.get('basic', {}).get('sole_proprietor', "NO"))
+                        d.get('basic', {}).get('sole_proprietor', "NO"), action)
 
     if d.has_key('identifiers'):
         identifier_errors = validate_identifier_list(d.get('identifiers',[]), d.get('enumeration_type'))

@@ -4,36 +4,16 @@
 # Written by Alan Viars
 
 import json, sys, os, datetime, csv
-from choices import TAXONOMY_CODES
-
 
 def validate_taxonomy_list(taxonomies, enumeration_type, licenses,
-                           taxonomy_licenses, sole_proprietor):
+                           taxonomy_licenses, sole_proprietor, action):
     
     csvfile = os.path.join( os.path.dirname( __file__),  "taxonomy-license-crosswalk.csv")
     
     errors = []
     primary_count  = 0
 
-    for t in taxonomies:
- 
-        #check for required information
-        if t.get('code') not in TAXONOMY_CODES:
-            error = "%s : code (taxonomy) is not a valid taxonomy code. See http://www.wpc-edi.com/taxonomy" % t.get('code')
-            errors.append(error)
 
-        if type(t.get('primary')) != type(True) :
-            error = "%s : primay must be true or false." % (d.get('code'))
-            errors.append(error)
-
-        if t.get('primary') == True:
-            primary_count += 1
-    # check that only one taxonomy is marked as primary
-
-    if primary_count != 1:
-        error = "Exactly 1 taxonomy code must be marked as primary. The primary count is %s." % (primary_count)
-        errors.append(error)
-    
     taxonomy_license_crosswalk ={}
     #Load the CSV
     fh = open(csvfile, 'rb')
@@ -47,6 +27,28 @@ def validate_taxonomy_list(taxonomies, enumeration_type, licenses,
             license_required = True
         
         taxonomy_license_crosswalk[key] =  (entity_type, license_required  ) 
+
+
+    for t in taxonomies:
+        if action != "public":
+            
+            #check for required information
+            if t.get('code') not in taxonomy_license_crosswalk.keys():
+                error = "%s : code (taxonomy) is not a valid taxonomy code. See http://www.wpc-edi.com/taxonomy" % t.get('code')
+                errors.append(error)
+    
+        if type(t.get('primary')) != type(True) :
+            error = "%s : primay must be true or false." % (d.get('code'))
+            errors.append(error)
+    
+        if t.get('primary') == True:
+            primary_count += 1
+    # check that only one taxonomy is marked as primary
+    if primary_count != 1:
+        error = "Exactly 1 taxonomy code must be marked as primary. The primary count is %s." % (primary_count)
+        errors.append(error)
+    
+
     
     #Get the taxonomy license codes  
     tl_codes = []
@@ -64,17 +66,17 @@ def validate_taxonomy_list(taxonomies, enumeration_type, licenses,
             requires_license = cw[1]
             
             #print code , requires_license
-            
-            if cw[0]=="I" and enumeration_type != "NPI-1" and sole_proprietor=="NO":
-                error = "Taxonomy %s is only for for individuals / NPI-1." % (t.get('code'))
-                errors.append(error)
-            if cw[0]=="O" and enumeration_type != "NPI-2":
-                error = "Taxonomy %s is only for for organizations / NPI-2." % (t.get('code'))
-                errors.append(error)
-            #Check to see if the taxonomy requires a license     
-            if requires_license and t.get('code') not in tl_codes:
-                error = "Taxonomy %s requires a license." % (t.get('code'))
-                errors.append(error)
+            if action != "public":
+                if cw[0]=="I" and enumeration_type != "NPI-1" and sole_proprietor=="NO":
+                    error = "Taxonomy %s is only for for individuals / NPI-1." % (t.get('code'))
+                    errors.append(error)
+                if cw[0]=="O" and enumeration_type != "NPI-2":
+                    error = "Taxonomy %s is only for for organizations / NPI-2." % (t.get('code'))
+                    errors.append(error)
+                #Check to see if the taxonomy requires a license     
+                if requires_license and t.get('code') not in tl_codes:
+                    error = "Taxonomy %s requires a license." % (t.get('code'))
+                    errors.append(error)
                 
     return errors
 
