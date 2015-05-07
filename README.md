@@ -1,7 +1,7 @@
-Provider Data Tools
-===================
+pdt - Provider Data Tools
+=========================
 
-Version: 0.5.7
+Version: 0.5.8
 
 This reposiory contains a number of command-line utilities and related code libraries for
 parsing, creating, and validating provider data data.  They are:
@@ -13,7 +13,14 @@ parsing, creating, and validating provider data data.  They are:
 * csv2pjson-public.py - Parse the npi public data dissemination into ProviderJSON files
 * validate-pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
 * validate-pjson-dir  - Bulk validation of the output of csv2pjson-public.py
+* create-provider-indexes - Create default MongoDB indexes on Provides JSON data to support public search on common fields.
 * loadnppes.py        - Download public, parse to JSON, and load to MongoDB in one step.
+
+
+Please note the utilities `csv2json`, `json2mongo`, and `jsondir2mongo` have been
+moved from `pdt` and placed in their own package called `jdt`. These tools are generic
+and have utility outside health provider data.
+
 
 Installation
 ------------
@@ -55,89 +62,6 @@ in your current directory. Everything is still indexed by NPI. These files are d
 * _licenses_flat.csv 	 - one license per line
 * _taxonomy_flat.csv     - one taxonomy code per line and identified as primary or not.
 
-
-csv2mongo
----------
-
-`csv2mongo` convert a CSV into a MongoDB collection.  The script expects the first row of
-data to contain header information. Any whitespace and other funky characters in the
-header row are auto-fixed by converting to ` `, `_`, or `-`.
-
-Usage:
-
-    ~$ csv2mongo [CSVFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]
-
-
-Example:
-
-    ~$ csv2mongo npidata_20050523-20140413.csv npi nppes T
-
-
-
-
-json2mongo
-----------
-
-`json2mongo` imports a JSON object file into a MongoDB document. The file is checked
-for validity (i.e. {}) before attempting to import it into MongoDB.
-
-
-Usage:
-
-    ~$ json2mongo [JSONFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]
-
-
-Example:
-
-
-    ~$ json2mongo test.json npi nppes T
-
-
-
-jsondir2mongo
--------------
-
-
-`jsondir2mongo` imports a directory containing files of JSON objects to MongoDB documents.
- The files are checked for validity (i.e. {}) before attempting to import it each into
- MongoDB. Files that are not JSON objects are automatically skipped.  A summary is retuned with the process ends
-
-Usage:
-
-    ~$ json2mongo [JSONFILE] [DATABASE] [COLLECTION] [DELETE_COLLECTION_BEFORE_IMPORT (T/F)]
-
-
-Example:
-
-
-    ~$ json2mongo data npi nppes T
-
-Example output:
-
-
-    Clearing the collection prior to import.
-
-Start the import of the directory data into the collection test within the database csv2json .
-
-
-    {
-            "info": [
-                "The collection was cleared prior to import."
-            ],
-            "num_files_attempted": 4,
-            "num_files_imported": 2,
-            "num_file_errors": 2,
-            "errors": [
-                "File data/3.json did not contain a json object, i.e. {}.",
-                "File data/4.json did not contain valid JSON."
-            ],
-            "code": 400,
-            "message": "Completed with errors."
-        }
-
-
-In the above example, the files `1.json` and `2.json` were processed while `3.json` and
-`4.json` were not imported.
 
 csv2pjson.py
 ------------

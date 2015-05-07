@@ -1,0 +1,138 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# vim: ai ts=4 sts=4 et sw=4
+# Alan Viars
+
+
+import os, sys, string, json, shutil
+from collections import OrderedDict
+import functools
+import time
+import hashlib
+from pdt.pjson.validate_pjson import validate_pjson
+
+
+
+def validate_pjsondir(json_dir, action, json_error_dir, error_dir):
+    """Check all files in the subdirectory.  Copy files with errors to thir own folder."""
+
+    
+    print "Start validation of the directory", json_dir, "."
+    
+    #Initialize some things...
+    fileindex = 0
+    validationindex= 0
+    validation_error_count = 0
+    error_list =[]
+    response_dict = OrderedDict()
+    onlyfiles = []
+    
+    #make the error_json_dir
+    try:
+        os.mkdir(error_json_dir)
+    except:
+        pass
+    
+    #make the error_dir
+    try:
+        os.mkdir(error_dir)
+    except:
+        pass
+    
+    
+    try:
+
+        #get the files in the specified directory
+        print "Getting a list of all files for valiation from", json_dir
+        for root, dirs, files in os.walk(json_dir):
+            for file in files:
+                if file.endswith(".json") or file.endswith(".js"):
+                    onlyfiles.append(os.path.join(root, file))
+        
+        print "Done creating file list. Begin file validation."    
+        for f in onlyfiles:
+            j = None
+            error_message = ""    
+            fh = open(f, 'rU')
+            fileindex += 1
+            j = fh.read()
+            fh.close()
+            
+            try:
+                #cleanj = str(j).encode('ascii', 'ignore').decode('ascii')
+                #if not j:
+                jl = json.loads(j)
+                print jl['number']
+                if type(jl) != type({}):
+                    error_message = "File " + f +  " did not contain a JSON object, i.e. {}."
+                    error_list.append(error_message)
+            except :
+                error_message = "File " + f +  " did not contain valid JSON."
+                error_list.append(error_message)
+                    
+            if not error_message:  
+                
+                
+                #Now do the validation
+                
+                result = validate_pjson(j, action)
+                #parse the result
+                #If errors, copy file f to error_json_dir and copy result to error_dir
+                if result.get("errors", []):
+                    validation_error_count +=1
+                    shutil.move(f, json_error_dir)
+                    error_report = os.path.join(error_dir, os.path.basename(f))
+                    
+                    #Add some infor to our error result
+                    result['number'] = jl['number']
+                    result['enumeration_type'] = jl['enumeration_type']
+                    result['title'] = jl['title']
+                    
+                    eh = open(error_report, 'w')
+                    eh.writelines(json.dumps(result, indent = 4))
+                    eh.close()
+
+        if error_list:
+                response_dict['num_files_attempted']    = fileindex
+                response_dict['num_files_validated']    = validationindex
+                response_dict['num_json_errors']        = len(error_list)
+                response_dict['num_validation_errors']  = validation_error_count
+                response_dict['errors']                 = error_list
+                response_dict['code']                   = 400
+                response_dict['message']                = "Completed with errors."
+        else:
+
+                response_dict['num_files_attempted']    = fileindex
+                response_dict['num_files_imported']     = validationindex
+                response_dict['num_json_errors']        = len(error_list)
+                response_dict['num_validation_errors']  = validation_error_count
+                response_dict['code']                   = 200
+                response_dict['message']                = "Completed without errors."
+
+    except:
+        response_dict = {}
+        response_dict['num_files_attempted']     = fileindex
+        response_dict['num_files_imported']      = validationindex
+        response_dict['num_json_errors']         = len(error_list)
+        response_dict['num_validation_errors']   = validation_error_count
+        response_dict['code']                    = 500
+        response_dict['errors']                  = [str(sys.exc_info()), ]
+        response_dict['message']                 = str(sys.exc_info())
+
+
+    return response_dict
+
+if __name__ == "__main__":
+
+    
+    if len(sys.argv)!=5:
+        print "Usage:"
+        print "validate-pjson-dir [IN_JSON_DIR] [ACTION] [REJECT_JSON_DIR] [ERRORS_DIR]"
+        sys.exit(1)
+
+    json_dir = sys.argv[1]
+    action = sys.argv[2]
+    error_json_dir = sys.argv[3]
+    error_dir = sys.argv[4]
+    result = validate_pjsondir(json_dir, action,error_json_dir, error_dir)
+    print json.dumps(result, indent =4)
