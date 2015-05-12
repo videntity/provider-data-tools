@@ -763,7 +763,6 @@ code,entity_type, license_required, classification_description,specialization_de
 126900000X,I,False,Dental Laboratory Technician,
 126800000X,I,False,Dental Assistant,
 125K00000X,I,True,Advanced Practice Dental Therapist,
-125Q00000X,I,True,Oral Medicinist, 
 125J00000X,I,True,Dental Therapist,
 124Q00000X,I,False,Dental Hygienist,
 122400000X,I,False,Denturist,
@@ -776,6 +775,7 @@ code,entity_type, license_required, classification_description,specialization_de
 1223P0106X,I,True,Dentist,Oral and Maxillofacial Pathology
 1223G0001X,I,True,Dentist,General Practice
 1223E0200X,I,True,Dentist,Endodontics
+125Q00000X,I,True,Dentist,Oral Medicinist 
 1223D0004X,I,True,Dentist,DENTAL SPECIALIZATION NEW
 1223D0001X,I,True,Dentist,Dental Public Health
 122300000X,I,True,Dentist,
