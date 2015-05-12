@@ -763,7 +763,7 @@ code,entity_type, license_required, classification_description,specialization_de
 126900000X,I,False,Dental Laboratory Technician,
 126800000X,I,False,Dental Assistant,
 125K00000X,I,True,Advanced Practice Dental Therapist,
-125Q00000X,I,True,Oral Medicinist 
+125Q00000X,I,True,Oral Medicinist, 
 125J00000X,I,True,Dental Therapist,
 124Q00000X,I,False,Dental Hygienist,
 122400000X,I,False,Denturist,
