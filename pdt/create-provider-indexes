@@ -68,8 +68,8 @@ def ensure_provider_indexes(database_name, collection_name,host=MONGO_HOST,
             background=background)
         
         collection.create_index([("updated_epoch",ASCENDING),
-                                 ("addressed.state", ASCENDING),
-                                 ("addressed.purpose", ASCENDING),],
+                                 ("addresses.state", ASCENDING),
+                                 ("addresses.purpose", ASCENDING),],
             background=background)
         
         collection.create_index([("addresses.state", ASCENDING),
