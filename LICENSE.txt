@@ -1,9 +1,9 @@
-Centeres for Medicare and Medicaid Services
+This software is Pblic Domain and was created by Alan Viars
 
-Public Domain
+at the Centers for Medicare and Medicaid Services
 
 Security Classification: 
 
 Confidentiality: N/A
-Avialibilty: Low
+Availability: Low
 Integrity: Medium
