@@ -7,14 +7,17 @@ from bs4 import BeautifulSoup
 import urllib2
 import re, glob, sys
 from subprocess import call
+from datetime import datetime
 
 def do_update(process_full=True, download=True):
-    months = ["January","Feburary","March","April", "May", "June"]
+    months = ["Jan","Feb","Mar","Apr", "May", "June", "Sept", "Oct", "Nov", "Dec"]
     #Get just the html page
-    html_page = urllib2.urlopen("http://nppes.viva-it.com/NPI_Files.html")
+    html_page = urllib2.urlopen("http://download.cms.gov/nppes/NPI_Files.html")
+    link_prefix = "http://download.cms.gov/nppes/"
+    
     soup = BeautifulSoup(html_page)
     month =""
-    year="2015"
+    year= datetime.now().year
     #get all links
     zipfilelinks = []
     for link in soup.findAll('a'):
@@ -30,7 +33,7 @@ def do_update(process_full=True, download=True):
 
         for m in months:
             if link.__contains__(m):
-                full_link = link
+                full_link = link_prefix + link
                 month = m
         if link.__contains__("Report"):
             deactivation_link = link
@@ -40,7 +43,7 @@ def do_update(process_full=True, download=True):
             
     #Download full file
     if process_full:
-        print 
+        
         if download:
             print "Downloading", full_link        
             call(["wget", full_link])

@@ -67,11 +67,11 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
 
 
 setup(name="pdt",
-      version="0.6.1",
+      version="0.6.2",
       description="Provider Data Tools",
       long_description="""A collection of scripts and APIs for working with health care provider data and beyond. Many tools are generic utilities.""",
       author="Alan Viars",
-      author_email="alan.viars@cms.hhs.gov",
+      author_email="sales@videntity.com",
       url="https://gitbub.com/hhsidealab/provider-data-tools",
       download_url="https://gitbub.com/hhsidealab/provider-data-tools/tarball/master",
       install_requires=['validate_email', 'beautifulsoup4', 'baluhn', 'jdt', ],
