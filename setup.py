@@ -67,7 +67,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
 
 
 setup(name="pdt",
-      version="0.6.3",
+      version="0.6.4",
       description="Provider Data Tools",
       long_description="""A collection of scripts and APIs for working with health care provider data and beyond. Many tools are generic utilities.""",
       author="Alan Viars",
@@ -84,6 +84,7 @@ setup(name="pdt",
                'pdt/csv2pjson-public.py',
                'pdt/csv2pjson.py',
                'pdt/loadnppes.py',
+               'pdt/vnpi.py',
                'pdt/pjson/validate-pjson',
                'pdt/pjson/validate-pjson-dir',
                ]
