@@ -15,13 +15,13 @@ def do_update(process_full=True, download=True):
     html_page = urllib2.urlopen("http://download.cms.gov/nppes/NPI_Files.html")
     link_prefix = "http://download.cms.gov/nppes/"
     
-    soup = BeautifulSoup(html_page)
+    soup = BeautifulSoup(html_page, "html.parser")
     month =""
     year= datetime.now().year
     #get all links
     zipfilelinks = []
     for link in soup.findAll('a'):
-        #print link
+        print link
         #get just zips
         if link.get('href', "").endswith(".zip"):
             zipfilelinks.append(link.get('href', ""))
