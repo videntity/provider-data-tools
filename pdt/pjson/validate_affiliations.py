@@ -6,7 +6,8 @@
 import json, sys, datetime, re
 from choices import AFFILIATION_DATA_TYPE, AFFILIATION_PURPOSE, ENDPOINT_DATA_TYPE, STATES
 from validate_email import validate_email
-
+from baluhn import verify
+LUHN_PREFIX ="80840"
 
 def validate_affiliation_list(l, enumeration_type):
     errors = []
@@ -99,13 +100,19 @@ def validate_affiliation_list(l, enumeration_type):
             error = "%s state %s is not a valid value. Valid values are %s." % \
                   (affiliation_string, d.get('state'), STATES)
             errors.append(error)
+        if d.get('affiliation_data_type') in ('NPI-1', 'NPI-2'): 
+            prefixed_number = "%s%s" % (LUHN_PREFIX, d['affiliation_identifier'])
+            luhn_verified = verify(prefixed_number)
+            if not luhn_verified:
+                error ="The NPI affiliation_identifier %s did not pass Luhn algorithm check digit sanitiy check." % (d['affiliation_identifier'])
+                errors.append(error)
 
-        #if d.get('endpoint_data_type') in ('DIRECT-EMAIL-ADDRESS', 'REGULAR-EMAIL-ADDRESS'):
-        #    is_valid = validate_email(d.get('endpoint'))
-        #    if not is_valid:
-        #        error = "%s %s has and endpoint_data_type of %s and is not a valid email." % \
-        #              (affiliation_string, d.get('endpoint'), d.get('endpoint_data_type') )
-        #        errors.append(error)
+        if d.get('endpoint_data_type') in ('DIRECT-EMAIL-ADDRESS', 'REGULAR-EMAIL-ADDRESS'):
+            is_valid = validate_email(d.get('endpoint'))
+            if not is_valid:
+                error = "%s %s has and endpoint_data_type of %s and is not a valid email." % \
+                      (affiliation_string, d.get('endpoint'), d.get('endpoint_data_type') )
+                errors.append(error)
 
         i += 1
     retval = [errors, warnings]
