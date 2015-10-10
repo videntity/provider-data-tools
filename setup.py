@@ -86,7 +86,7 @@ setup(name="pdt",
                'pdt/loadnppes.py',
                'pdt/vnpi.py',
                'pdt/pjson/validate-pjson',
-               'pdt/pjson/validate-pjson-affilations',
+               'pdt/pjson/validate-pjson-affiliations',
                'pdt/pjson/validate-pjson-dir',
                ]
       )
