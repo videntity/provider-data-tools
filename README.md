@@ -60,31 +60,6 @@ in your current directory. Everything is still indexed by NPI. These files are d
 * _taxonomy_flat.csv     - one taxonomy code per line and identified as primary or not.
 
 
-csv2pjson.py
-------------
-
-Convert the GAO CSV file format to a directory of files in ProviderJSON format.
-
-Usage:
-
-    ~$ csv2pjson.py [CSV_FILE] [OUTPUT_DIR]
-
-
-Example:
-
-
-    csv2pjson.py gao-csvfile.csv output
-
-Output:
-
-
-One file is created per line in the CSV file file inside the directory `output`.
-Files are fanned out into a directory structure so as not to create millions of files
-in one directory.
-
-
-
-
 csv2pjson-public.py
 ------------------
 
