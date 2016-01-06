@@ -85,7 +85,7 @@ if __name__ == "__main__":
     #Get the file from the command line
     if len(sys.argv)<2:
         print "You must supply a a ProviderJSON file to validate"
-        print "Usage: validate_pjson_affilations [ProivderJSON]"
+        print "Usage: validate_pjson_affiliations [ProivderJSON]"
         sys.exit(1)
     else:
         pjson_file = sys.argv[1]
