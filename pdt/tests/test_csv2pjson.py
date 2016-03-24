@@ -9,9 +9,9 @@ class csv2pjson(unittest.TestCase):
         
         """Run CSV2pjson should return results """
         
-        csvfile = os.path.join( os.path.dirname( __file__),  "onehundredthousand.csv")        
+        csvfile = os.path.join( os.path.dirname( __file__),  "fiftythousand.csv")        
         output_dir = "test_output"
-        number_processed = 100000
+        number_processed = 50000
         
         result = publiccsv2pjson(csvfile, output_dir)                 
         self.assertEqual(result['num_files_created'], number_processed)

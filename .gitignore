@@ -6,3 +6,5 @@ MANIFEST
 data/
 *.komodoproject
 *.kpf
+*.csv
+test_output/

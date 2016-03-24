@@ -1,2 +1,1 @@
 include README.rst
-recursive-include pdt/tests/*.csv
