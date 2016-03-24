@@ -530,7 +530,7 @@ if __name__ == "__main__":
     
     if len(sys.argv)!=3:
         print "Usage:"
-        print "csv2pjson-public.py [CSVFILE] [OUTPUT_DIRECTORY]"
+        print "csv2pjson_public.py [CSVFILE] [OUTPUT_DIRECTORY]"
         sys.exit(1)
 
     csv_file   = sys.argv[1]

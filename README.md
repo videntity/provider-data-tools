@@ -1,13 +1,13 @@
 pdt - Provider Data Tools
 =========================
 
-Version: 0.6.5
+Version: 0.6.7
 
-This reposiory contains a number of command-line utilities and related code libraries for
+This repository contains a number of command-line utilities and related code libraries for
 parsing, creating, and validating provider data data.  They are:
 
 * chop-nppes-public   - Parse the npi public data dissemination into flattened files
-* csv2pjson-public.py - Parse the npi public data dissemination into ProviderJSON files
+* csv2pjson_public.py - Parse the npi public data dissemination into ProviderJSON files
 * validate-pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
 * validate-pjson-dir  - Bulk validation of the output of csv2pjson-public.py
 * create-provider-indexes - Create default MongoDB indexes on Provides JSON data to support public search on common fields.
@@ -32,7 +32,7 @@ Note: If you use `sudo`, the scripts  will be installed at the system level and 
 Add  `--upgrade` to the above install instructions to ensure you fetch the newest version. 
 
 
-chop-nppes-public
+chop_nppes_public
 -----------------
 
 
@@ -43,9 +43,9 @@ Get the "Full Replacement Monthly" zip file.  Unzip the file with the unzip tool
 
 
 
-To run the utility simply call it on a command line and proivde one command line argument, the csv file to parse:
+To run the utility simply call it on a command line and provide one command line argument, the csv file to parse:
 
-    ~$ chop-nppes-public npidata_20050523-20140413.csv
+    ~$ chop_nppes_public npidata_20050523-20140413.csv
 
 The file name `npidata_20050523-20140413.csv` will vary depending on the date.
 
@@ -55,15 +55,16 @@ in your current directory. Everything is still indexed by NPI. These files are d
 
 * _basic.csv             - Contains basic demographic info
 * _addresses_flat.csv    - one address per line identifier as practice or mailing
-* _identifiers_flat.csv  - one identifer per line
+* _identifiers_flat.csv  - one identifier per line
 * _licenses_flat.csv 	 - one license per line
 * _taxonomy_flat.csv     - one taxonomy code per line and identified as primary or not.
 
 
-csv2pjson-public.py
+csv2pjson_public.py
 ------------------
 
-Convert the NPPES Public Data Dissemination  CSV file format to a directory og files in ProviderJSON format.
+Convert the NPPES Public Data Dissemination  CSV file format to a directory of files in
+ProviderJSON format.
 
 Usage:
 
@@ -73,7 +74,7 @@ Usage:
 Example:
 
 
-    csv2pjson.py public-csvfile.csv output
+    csv2pjson.py public_csvfile.csv output
 
 Output:
 
@@ -83,20 +84,21 @@ Output:
 
 
 
-validate-pjson
+validate_pjson
 --------------
 
-Validate the PJSON for complaince with a create/update request. It returns errors and warnings in JSON to stdout.
+Validate the PJSON for compliance with a create/update request. It returns errors and warnings in
+JSON to stdout.
 
 Usage:
 
 
-    validate-pjson [ProivderJSON] [update|create]
+    validate_pjson [ProivderJSON] [update|create]
 
 
 Example:
 
-    validate-pjson  1003819723.json update
+    validate_pjson  1003819723.json update
 
 Example Output:
 
