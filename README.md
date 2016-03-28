@@ -4,12 +4,12 @@ pdt - Provider Data Tools
 Version: 0.6.7
 
 This repository contains a number of command-line utilities and related code libraries for
-parsing, creating, and validating provider data data.  They are:
+parsing, creating, and validating US-based health provider data.  These tools are:
 
-* chop-nppes-public   - Parse the npi public data dissemination into flattened files
-* csv2pjson_public.py - Parse the npi public data dissemination into ProviderJSON files
+* chop-nppes-public   - Parse the npi public data dissemination into flattened files.
+* csv2pjson_public.py - Parse the npi public data dissemination into ProviderJSON files.
 * validate-pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
-* validate-pjson-dir  - Bulk validation of the output of csv2pjson-public.py
+* validate-pjson-dir  - Bulk validation of the output of csv2pjson-public.py.
 * create-provider-indexes - Create default MongoDB indexes on Provides JSON data to support public search on common fields.
 * loadnppes.py        - Download public, parse to JSON, and load to MongoDB in one step.
 
@@ -53,10 +53,10 @@ The script make take a few minutes to complete. When it completes you will have 
 in your current directory. Everything is still indexed by NPI. These files are described below.
 
 
-* _basic.csv             - Contains basic demographic info
-* _addresses_flat.csv    - one address per line identifier as practice or mailing
-* _identifiers_flat.csv  - one identifier per line
-* _licenses_flat.csv 	 - one license per line
+* _basic.csv             - Contains basic demographic info.
+* _addresses_flat.csv    - one address per line identifier as practice or mailing.
+* _identifiers_flat.csv  - one identifier per line.
+* _licenses_flat.csv 	 - one license per line.
 * _taxonomy_flat.csv     - one taxonomy code per line and identified as primary or not.
 
 
