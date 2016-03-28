@@ -1,13 +1,14 @@
 pdt - Provider Data Tools
 =========================
 
-Version: 0.6.7
+Version: 0.6.8
 
 This repository contains a number of command-line utilities and related code libraries for
 parsing, creating, and validating US-based health provider data.  These tools are:
 
 * chop-nppes-public   - Parse the npi public data dissemination into flattened files.
 * csv2pjson_public.py - Parse the npi public data dissemination into ProviderJSON files.
+* csv2fhir_public.py  - Parse the npi public data dissemination to FHIR Practitioner and Organiation Resources.
 * validate-pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
 * validate-pjson-dir  - Bulk validation of the output of csv2pjson-public.py.
 * create-provider-indexes - Create default MongoDB indexes on Provides JSON data to support public search on common fields.
@@ -68,18 +69,41 @@ ProviderJSON format.
 
 Usage:
 
-    csv2pjson.py [CSV_FILE] [OUTPUT_DIR]
+    csv2pjson_public.py [CSV_FILE] [OUTPUT_DIR]
 
 
 Example:
 
 
-    csv2pjson.py public_csvfile.csv output
+    csv2pjson_public.py public_csvfile.csv output
 
 Output:
 
   One file is created per line in the CSV file file inside  the directory`output`. Files are fanned out
   into a directory structure so as not to create millions of files in one directory.
+
+
+csv2fhir_public.py
+------------------
+
+Convert the NPPES Public Data Dissemination  CSV file format to a directory of files in
+ProviderJSON format.
+
+Usage:
+
+    csv2fhir_public.py [CSV_FILE] [OUTPUT_DIR]
+
+
+Example:
+
+
+    csv2fhir_public.py public_csvfile.csv output
+
+Output:
+
+  One file is created per line in the CSV file file inside  the directory`output`. Files are fanned out
+  into a directory structure so as not to create millions of files in one directory.
+
 
 
 

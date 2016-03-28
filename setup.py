@@ -8,7 +8,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(name="pdt",
-      version="0.6.7",
+      version="0.6.8",
       description="Provider Data Tools",
       long_description="""A collection of scripts and APIs for working with health care provider data and beyond. Many tools are generic utilities.""",
       author="Alan Viars",
@@ -23,6 +23,7 @@ setup(name="pdt",
                'pdt/build-cdn.sh',
                'pdt/create_provider_indexes',
                'pdt/csv2pjson_public.py',
+               'pdt/csv2fhir_public.py',
                'pdt/loadnppes.py',
                'pdt/vnpi.py',
                'pdt/pjson/validate_pjson',
