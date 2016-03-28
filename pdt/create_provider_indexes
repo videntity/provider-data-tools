@@ -17,7 +17,7 @@ MONGO_PORT=27017
 
 def ensure_provider_indexes(database_name, collection_name,host=MONGO_HOST,
                port=MONGO_PORT, background=True):
-    """Apply suiteable indexes to pjson (aka provider regisitry) collection."""
+    """Apply suitable indexes to pjson (aka provider registry) collection."""
 
     response_dict ={}
     try:
@@ -76,13 +76,14 @@ def ensure_provider_indexes(database_name, collection_name,host=MONGO_HOST,
                                  ("addresses.purpose", ASCENDING),],
             background=background)
         
-           
-        response_dict['created_indexes'] = True
+        response_dict['code'] = 200   
+        response_dict['success'] = True
         response_dict['background'] = background
     except:
         response_dict = {}
 
         response_dict['code'] = 500
+        response_dict['success'] = False
         response_dict['errors']=[str(sys.exc_info()), ]
         response_dict['message'] = str(sys.exc_info())
 
@@ -94,6 +95,7 @@ if __name__ == "__main__":
     if len(sys.argv)!=6:
         print "Usage:"
         print "create-provider-indexes [DATABASE] [COLLECTION] [HOST] [PORT] [BACKGROUND Y/N]"
+        print "create-provider-indexes  nppes  pjson  127.0.0.1  27017 Y"
         sys.exit(1)
 
     database   = sys.argv[1]
