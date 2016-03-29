@@ -1,21 +1,16 @@
 import unittest, os
-from pdt.csv2pjson_public import publiccsv2pjson
-from pdt.csv2pjson import gao_csv2pjson
-
+from pdt import loadnppes
 
 
 class Testloadnppes(unittest.TestCase):
 
-    def testRunCSV2PJSON_PUBLIC(self):
+    def test_loadnppes(self):
 
         """Run loadnppes should return results """
 
         csvfile = os.path.join( os.path.dirname( __file__),  "fiftythousand.csv")
-        output_dir = "test_output"
-        number_processed = 50000
 
-        result = publiccsv2pjson(csvfile, output_dir)
-        self.assertEqual(result['num_files_created'], number_processed)
+        loadnppes.do_update()
 
 if __name__ == '__main__':
     unittest.main()

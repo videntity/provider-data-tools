@@ -1,4 +1,5 @@
 import unittest, os, imp
+from pdt import create_provider_indexes
 
 
 
@@ -9,12 +10,11 @@ class TestCreateProviderIndexes(unittest.TestCase):
 
         """Run ensure_provider_indexes should return results """
 
-        indexes = imp.load_source('create_provider_indexes.ensure_provider_indexes', '../pdt/create_provider_indexes')
         csvfile = os.path.join( os.path.dirname( __file__),  "fiftythousand.csv")
-        output_dir = "test_output"
+        outputdir = "outputdir"
 
-        result = ensure_provider_indexes(csvfile, output_dir)
-        print(response_dict)
+        result = create_provider_indexes.ensure_provider_indexes(csvfile, outputdir)
+        print(result)
 
 if __name__ == '__main__':
     unittest.main()

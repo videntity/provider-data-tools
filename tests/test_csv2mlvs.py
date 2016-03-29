@@ -1,18 +1,19 @@
-import unittest, os, imp
+import unittest, os
+from pdt import csv2mlvs
 
 
-class Testcsv2mlvs(unittest.TestCase):
+class TestCSV2MLVS(unittest.TestCase):
 
-    def testRunCSV2MLVS(self):
+    def test_run_CSV2MLVS(self):
 
         """Run CSV2mlvs should return results """
-        csv2mlvs = imp.load_source('csv2mlvs', '../pdt/csv2mlvs')
         csvfile = os.path.join( os.path.dirname( __file__),  "fiftythousand.csv")
-        output_dir = "test_output"
-        number_processed = 50000
+        mlvs_csv = os.path.join( os.path.dirname( __file__),  "mlvs.csv")
+        output_dir = "mlvs_test_output"
+        number_processed = 3
 
-        result = csv2mlvs.csv2mlvs(csvfile, output_dir)
-        self.assertEqual(response_dict['num_files_created'], number_processed)
+        result = csv2mlvs.csv2mlvs(mlvs_csv, output_dir)
+        self.assertEqual(result['num_files_created'], number_processed)
 
 if __name__ == '__main__':
     unittest.main()

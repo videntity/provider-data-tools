@@ -1,19 +1,18 @@
 import unittest, os
-from pdt.vnpi import verify_npi
+from pdt import vnpi
 
 
 
 
 class Testvnpi(unittest.TestCase):
 
-    def testRunCSV2PJSON_PUBLIC(self):
+    def test_vnpi(self):
 
-        """Run vnpi should return results """
+        """Run a real npi and a fake npi to see if True and False """
+        self.assertTrue(vnpi.verify_npi(1679576722))
+        self.assertFalse(vnpi.verify_npi(1111111111))
 
-        csvfile = os.path.join( os.path.dirname( __file__),  "fiftythousand.csv")
-        number_processed = 50000
 
-        print(verify_npi(csvfile))
 
 if __name__ == '__main__':
     unittest.main()
