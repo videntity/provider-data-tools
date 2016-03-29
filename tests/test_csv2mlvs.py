@@ -12,7 +12,7 @@ class TestCSV2MLVS(unittest.TestCase):
         output_dir = "mlvs_test_output"
         number_processed = 3
 
-        result = csv2mlvs.csv2mlvs(mlvs_csv, output_dir)
+        result = csv2mlvs(mlvs_csv, output_dir)
         self.assertEqual(result['num_files_created'], number_processed)
 
 if __name__ == '__main__':
