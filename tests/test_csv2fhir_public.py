@@ -13,6 +13,7 @@ class TestCSV2FHIR_PUBLIC(unittest.TestCase):
 
         result = fhir.publiccsv2fhir(csvfile, output_dir)
         self.assertEqual(result['num_files_created'], number_processed)
+        self.assertEqual(result['message'], "Completed without errors.")
 
 if __name__ == '__main__':
     unittest.main()
