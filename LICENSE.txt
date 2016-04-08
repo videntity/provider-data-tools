@@ -1,8 +1,8 @@
-This software is Pblic Domain and was created by Alan Viars
+This software is Public Domain and was created by Alan Viars
 
 at the Centers for Medicare and Medicaid Services
 
-Security Classification: 
+Security Classification:
 
 Confidentiality: N/A
 Availability: Low

@@ -16,7 +16,7 @@ setup(name="pdt",
       url="https://github.com/hhsidealab/provider-data-tools",
       download_url="https://github.com/hhsidealab/provider-data-tools/tarball/master",
       install_requires=['validate_email', 'beautifulsoup4', 'baluhn', 'jdt', ],
-      packages= ['pdt', 'pdt.tests', 'pdt.pjson'],
+      packages= ['pdt', 'pdt.pjson', 'tests'],
       package_data={'':['taxonomy-license-crosswalk.csv','fiftythousand.csv']},
       scripts=['pdt/chop_nppes_public',
                'pdt/csv2mlvs',
@@ -31,6 +31,3 @@ setup(name="pdt",
                'pdt/pjson/validate_pjson_dir',
                ]
       )
-
-
-

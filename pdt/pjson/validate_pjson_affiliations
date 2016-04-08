@@ -42,7 +42,7 @@ def validate_pjson(j):
         errors.append(error)
         response["errors"] = errors
         return response
-    
+
     #Check for enumeration number
     if not d.has_key("number"):
         error ="The JSON object does not contain an enumeration number."
@@ -60,7 +60,7 @@ def validate_pjson(j):
 
     #Check if the Luhn checkdigit makes is correcense.
     if d['enumeration_type'] in ('NPI-1', 'NPI-2'):
-        
+
         prefixed_number = "%s%s" % (LUHN_PREFIX, d['number'])
         luhn_verified = verify(prefixed_number)
         if not luhn_verified:
@@ -69,7 +69,7 @@ def validate_pjson(j):
             response["errors"] = errors
             return response
 
-    
+
     affiliation_errors, affiliation_warnings = validate_affiliation_list(d.get('affiliations',[]),
                                                       d.get('enumeration_type'))
 
@@ -99,13 +99,9 @@ if __name__ == "__main__":
 
         #Validate the provider JSON content
         errors = validate_pjson(j)
-        #Print the erros and warings as JSON to stout.
+        #Print the errors and warnings as JSON to stout.
         errors_json =  json.dumps(errors, indent =4)
         print errors_json
     except IOError:
         print "Could not open file %s." % (pjson_file)
         sys.exit(1)
-
-
-
-
