@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# vim: ai ts=4 sts=4 et sw=4
+# Written by Alan Viars
+
+import json, sys
+
+from pdt.pjson.validate_pjson import validate_pjson
+#from validate_pjson import validate_pjson
+
+if __name__ == "__main__":
+
+
+    #Get the file from the command line
+    if len(sys.argv)<3:
+        print "You must supply a a ProviderJSON file to validate and an action"
+        print "Usage: validate-pjson [ProivderJSON] [update|create|public]"
+        sys.exit(1)
+    else:
+        pjson_file = sys.argv[1]
+        action       = sys.argv[2]
+
+    if action.lower() not in ("create", "update", "public"):
+        print "You must supply an action of either create or update."
+        print "Usage: validate-pjson [ProivderJSON] [update|create|public]"
+        sys.exit(1)
+
+    #Try to open the file
+    try:
+        
+        fh = open(pjson_file, 'r')
+        j = fh.read()
+        #Validate the provider JSON content
+        errors = validate_pjson(j, action)
+        #Print the erros and warings as JSON to stout.
+        errors_json =  json.dumps(errors, indent =4)
+        print errors_json
+    except IOError:
+        print "Could not open file %s." % (pjson_file)
+        sys.exit(1)
+
+
+
+
