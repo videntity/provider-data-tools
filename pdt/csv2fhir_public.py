@@ -177,7 +177,7 @@ def publiccsv2fhir(csvfile, output_dir):
 
 
 
-
+            #Work Address
 
             a = OrderedDict()
 
@@ -192,6 +192,18 @@ def publiccsv2fhir(csvfile, output_dir):
             a["country"]     = row[33].upper()
 
             r['address'].append(a)
+
+            #Gender
+            if row[1] == "1":
+                if row[41] == "M":
+                    r["gender"] = "male"
+                elif row[41] == "F":
+                    r["gender"] = "female"
+                elif row[41] != "M" or "F":
+                    r["gender"] = "other"
+                else:
+                    r["gender"] = "unknown"
+                
 
 
             if row[34]:
