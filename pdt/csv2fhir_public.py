@@ -203,8 +203,36 @@ def publiccsv2fhir(csvfile, output_dir):
                     r["gender"] = "other"
                 else:
                     r["gender"] = "unknown"
-                
 
+            #Organization Contact
+            #Is this logic ok, or problematic?
+            if row[43]:
+                contact = OrderedDict()
+                contact['purpose'] = row[45]
+                contact['name'] = [
+                            {
+                              "family": [
+                                row[42]
+                              ],
+                              "given": [
+                                row[43]
+                              ],
+                              "suffix": [
+                                row[312]
+                              ],
+                              "prefix": [
+                                row[311]
+                              ]
+                          }
+                        ]
+                contact['telecom'] = [
+                            {
+                                "system": "phone",
+                                "value": "%s-%s-%s" % (row[46][0:3], row[46][3:6], row[46][6:12]),
+                                "use" : "business"
+                            }
+                          ]
+                r['contact'] = contact
 
             if row[34]:
                 t = OrderedDict()
@@ -231,7 +259,7 @@ def publiccsv2fhir(csvfile, output_dir):
                 a['line'].append(row[21].upper())
             a["city"]                            =  row[22].upper()
             a["state"]                           =  row[23].upper()
-            a["postaCode"]                       =  row[24].upper()
+            a["postalCode"]                       =  row[24].upper()
             a["country"] = row[25].upper()
             r['address'].append(a)
 
