@@ -235,13 +235,14 @@ def publiccsv2fhir(csvfile, output_dir):
                           ]
                 r['contact'] = contact
 
+            #Provider Business Practice Location Address Telephone Number
             if row[34]:
                 t = OrderedDict()
                 t['system'] = "phone"
                 t['value'] =  "%s-%s-%s" % (row[34][0:3], row[34][3:6], row[34][6:12])
                 t['use'] = "practice"
                 r['telecom'] = t
-
+            #Provider Business Practice Location Address Fax Number
             if row[35]:
                 t = OrderedDict()
                 t['system'] = "fax"
