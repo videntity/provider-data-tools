@@ -49,7 +49,7 @@ def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
                       }
                     }
                   ]
-    ps['active'] = "True"
+    ps['active'] = "true"
     ps['name'] = [
                 {
                   "family": [
