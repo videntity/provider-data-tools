@@ -209,7 +209,7 @@ def publiccsv2fhir(csvfile, output_dir):
             #Is this logic ok, or problematic?
             if row[43]:
                 contact = OrderedDict()
-                contact['purpose'] = row[45]
+                contact['purpose'] = "Admin"
                 contact['name'] = [
                             {
                               "family": [
@@ -266,7 +266,7 @@ def publiccsv2fhir(csvfile, output_dir):
             r['address'].append(a)
 
 
-
+            #Phone and Fax numbers
             if row[26]:
                 t = OrderedDict()
                 t['system'] = "phone"
@@ -281,6 +281,24 @@ def publiccsv2fhir(csvfile, output_dir):
                 t['value'] =  "%s-%s-%s" % (row[27][0:3], row[27][3:6], row[27][6:12])
                 t['use'] = "business"
                 r['telecom'] = t
+
+            #Extension, specifically taxonomy codes
+
+            # Getting taxonomy codes
+
+            for i in range(50,107,4):
+                if row[i] == "Y":
+
+                    taxonomy = OrderedDict()
+                    #Fill in url
+                    taxonomy['url'] = ''
+                    coding = OrderedDict()
+                    coding['system'] = "http://www.nucc.org/"
+                    coding['code'] = row[i-3],
+                    #To be filled in
+                    coding['display'] = ""
+                    taxonomy['valueCodeableConcept'] = coding
+                    r['extension'] = taxonomy
 
 
             fn = "%s.json" % (row[0])
