@@ -49,7 +49,7 @@ def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
                       }
                     }
                   ]
-    ps['active'] = True
+    ps['active'] = bool(True)
     ps['name'] = [
                 {
                   "family": [
@@ -298,7 +298,7 @@ def publiccsv2fhir(csvfile, output_dir):
                     #To be filled in
                     coding['display'] = ""
                     taxonomy['valueCodeableConcept'] = coding
-                    r['extension'] = taxonomy
+                    r['extension'] = [taxonomy]
 
 
             fn = "%s.json" % (row[0])
@@ -351,7 +351,7 @@ def publiccsv2fhir(csvfile, output_dir):
 if __name__ == "__main__":
 
 
-    if len(sys.argv)!=0o3:
+    if len(sys.argv)!=3:
         print("Usage:")
         print("csv2fhir-public.py [CSVFILE] [OUTPUT_DIRECTORY]")
         sys.exit(1)
