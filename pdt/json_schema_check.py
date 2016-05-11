@@ -4,6 +4,7 @@
 # Written by Alan Viars - This software is public domain
 
 import os, sys, json, jsonschema
+from jsonschema import exceptions
 from collections import OrderedDict
 
 
@@ -18,12 +19,28 @@ def json_schema_check(json_schema_path, file_to_check_path):
         deserialized_json_schema = json.load(json_schema)
         # print deserialized_json_schema
 
-    jsonschema.validate(deserialized_json_file, deserialized_json_schema)
+
+    # print(exceptions.best_match(jsonschema.Draft4Validator(deserialized_json_schema).iter_errors(11)).message)
+    v = jsonschema.Draft4Validator(deserialized_json_schema)
+    errors = sorted(v.iter_errors(deserialized_json_file), key=lambda e: e.path)
+    for error in errors:
+        print(error.message)
+    # for error in errors:
+    #     for suberror in sorted(error.context, key=lambda e: e.schema_path):
+    #         print(list(suberror.schema_path), suberror.message)
+
+
+    # jsonschema.validate(deserialized_json_file, deserialized_json_schema)
 
     """JSON SCHEMA CHECK"""
     results = OrderedDict()
     # results['hello']="World"
-    results['errors'] = []
+    if errors:
+        results['errors'] = errors
+
+    else:
+        results['results'] = "Congrats! The JSON file fits the schema. There were no errors."
+
 
     return results
 
@@ -31,8 +48,8 @@ if __name__ == "__main__":
 
 
     if len(sys.argv)!=3:
-        print "Usage:"
-        print "json_schema_check.py [JSON SCHEMA] [JSON FILE TO CHECK]"
+        print("Usage:")
+        print("json_schema_check.py [JSON SCHEMA] [JSON FILE TO CHECK]")
         sys.exit(1)
 
     json_schema_path   = sys.argv[1]
@@ -40,4 +57,4 @@ if __name__ == "__main__":
 
     result = json_schema_check(json_schema_path, file_to_check_path)
     #output the JSON transaction summary
-    print json.dumps(result, indent =4)
+    print(json.dumps(result, indent =4))
