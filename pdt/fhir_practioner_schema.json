@@ -1,0 +1,677 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "definitions": {
+
+    "Meta": {
+      "type": "object",
+      "properties": {
+        "versionId": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "type": "string"
+        },
+        "profile": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "security": {
+          "type": "array",
+          "items": {
+            "coding": {
+              "$ref": "#/definitions/Coding"
+            }
+          }
+        },
+        "tag": {
+          "type": "array",
+          "items": {
+            "coding": {
+              "$ref": "#/definitions/Coding"
+            }
+          }
+        }
+        }
+      },
+    "Coding": {
+      "type": "object",
+      "properties": {
+        "system": {
+          "type": "string",
+          "format": "uri"
+        },
+        "version": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "display": {
+          "type": "string"
+        },
+        "userSelected": {
+          "type": "boolean"
+        }
+      }
+      },
+    "Resource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "meta": {
+          "ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "type": "string",
+          "format": "uri"
+        },
+        "language": {
+          "type": "string"
+        }
+      }
+    },
+    "HumanName": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "use": {
+            "type": "string",
+            "enum": ["usual" , "official" , "temp" , "nickname" , "anonymous" , "old" , "maiden"]
+          },
+          "text": {
+            "type": "string"
+          },
+          "family": {
+            "type": "array",
+            "items": {
+              "type": "string"
+              }
+            },
+          "given": {
+            "type":"array",
+            "items": {
+              "type": "string"
+              }
+            },
+          "prefix": {
+            "type":"array",
+            "items": {
+              "type": "string"
+              }
+            },
+          "suffix": {
+            "type":"array",
+            "items": {
+              "type": "string"
+              }
+          },
+          "Period": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "end": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      }
+    },
+    "CodeableConcept": {
+      "type": "object",
+      "properties": {
+        "CodeableConcept": {
+          "type": "array",
+          "items": {
+            "coding": {
+              "$ref": "#/definitions/Coding"
+            }
+          }
+        },
+      "text": {
+        "type": "string"
+        }
+      }
+    },
+    "Attatchment": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "data": {
+          "type":"string"
+        },
+        "url": {
+          "type":"string",
+          "format": "uri"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hash": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "creation":{
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+
+    },
+    "Identifier": {
+      "type": "object",
+      "properties": {
+        "use": {
+          "type": "string",
+          "enum": ["usual", "official", "temp", "secondary"]
+        },
+        "type": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "system": {
+          "type": "string",
+          "format": "uri"
+        },
+        "value": {
+          "type": "string"
+        },
+        "period": {
+          "$ref": "#/definitions/HumanName/Period"
+        },
+        "assigner": {
+          "type": "object",
+          "properties": {
+            "Reference": {
+              "type": "object",
+              "properties": {
+                "reference": {
+                  "type": "string"
+                },
+                "display": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Quantity": {
+      "type": "object",
+      "properties": {
+        "value":{
+          "type": "number"
+        },
+        "comparator": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "system": {
+          "type": "string",
+          "format": "uri"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "SimpleQuantity": {
+      "type": "object",
+      "properties": {
+        "value":{
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "system": {
+          "type": "string",
+          "format": "uri"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "Range": {
+      "type": "object",
+      "properties": {
+        "low": {
+          "$ref": "#/definitions/SimpleQuantity"
+        },
+        "high": {
+          "$ref": "#/definitions/SimpleQuantity"
+        }
+      }
+    },
+    "Ratio": {
+      "type": "object",
+      "properties": {
+        "numerator": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "denominator": {
+          "$ref": "#/definitions/Quantity"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "resourceType":{
+          "type": "string",
+          "pattern": "^Address$"
+        },
+        "use": {
+          "type": "string",
+          "enum": ["home", "work", "temp", "old"]
+        },
+        "type": {
+          "type": "string",
+          "enum":["postal", "physical", "both"]
+        },
+        "text": {
+          "type": "string"
+        },
+        "line": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "city": {
+          "type": "string"
+        },
+        "district": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "period": {
+          "$ref": "#definitions/HumanName/Period"
+        }
+      }
+    },
+    "ContactPoint": {
+      "type": "string",
+      "properties": {
+        "resourceType": {
+          "type": "string",
+          "pattern": "^ContactPoint$"
+        },
+        "system": {
+          "type": "string",
+          "enum": ["phone", "fax", "email", "paper", "other"]
+        },
+        "value": {
+          "type": "string"
+        },
+        "use": {
+          "type": "string",
+          "enum": ["home", "work", "temp", "old", "mobile"]
+        },
+        "rank": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "period": {
+          "$ref": "#/definitions/HumanName/Period"
+        }
+      }
+    }
+  },
+
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "pattern": "^Practitioner$"
+    },
+    "id": {
+      "type": "string"
+    },
+    "meta": {
+      "$ref": "#/definitions/Meta"
+    },
+    "implicitRules": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "text": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "id": "status",
+          "type": "string",
+          "enum": ["generated", "extensions", "additional", "empty"]
+        },
+        "div": {
+          "type": "string"
+        },
+      "required": ["status", "div"]
+      }
+    },
+    "contained": {
+      "type": "array",
+      "items": {
+        "resource": {
+          "$ref": "#/definitions/Resource"
+        }
+      }
+    },
+
+    "extension": {
+      "type": "array",
+      "items":{
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "valueInteger": {
+              "type": "number"
+            },
+            "valueDecimal": {
+              "type": "number"
+            },
+            "valueDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "valueDate": {
+              "type":"string",
+              "format": "date-time"
+            },
+            "instant": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "valueString": {
+              "type": "string"
+            },
+            "valueUri": {
+              "type":"string",
+              "format": "uri"
+            },
+            "valueBoolean": {
+              "type": "boolean"
+            },
+            "valueCode": {
+              "type": "string"
+            },
+            "valueBase64Binary": {
+              "type": "string"
+            },
+            "valueCoding": {
+              "$ref": "#/definitions/Coding"
+            },
+            "valueCodeableConcept": {
+              "$ref": "#/definitions/CodeableConcept"
+            },
+            "valueAttatchment": {
+              "$ref": "#/definitions/Attatchment"
+            },
+            "valueIdentifier": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "valueQuantity": {
+              "$ref": "#/definitions/Quantity"
+            },
+            "valueRange": {
+              "$ref": "#/definitions/Range"
+            },
+            "valuePeriod": {
+              "$ref": "#/definitions/HumanName/Period"
+            },
+            "valueRatio": {
+              "$ref": "#definitions/Ratio"
+            },
+            "valueHumanName": {
+              "$ref": "#definitions/HumanName"
+            },
+            "valueAddress":{
+              "$ref": "#definitions/Address"
+            },
+            "valueContactPoint": {
+              "$ref": "#definitions/ContactPoint"
+            },
+            "valueReference": {
+              "$ref": "#definitions/Identifier/assigner/Reference"
+            }
+          }
+        }
+      },
+
+    "identifier": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": false,
+      "additionalItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "system": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "use": {
+            "type": "string"
+          },
+          "period": {
+            "properties": {
+              "start": "datetime",
+              "end": "datetime"
+            },
+          "assigner": {
+            "type": "string"
+          }
+
+          }
+        }
+      }
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "name": {
+      "$ref": "#/definitions/HumanName"
+    },
+    "practitionerRole": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": false,
+      "additionalItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "organization": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "reference": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "role": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "coding": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": false,
+                "additionalItems": true,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "system": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "period": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "id": "start",
+                "type": "string",
+                "minLength": 1
+              },
+              "end": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "location": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": false,
+            "additionalItems": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "reference": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "display": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "healthcareService": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": false,
+            "additionalItems": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "reference": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "qualification": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": false,
+      "additionalItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "identifier": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": false,
+            "additionalItems": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "system": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "code": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "period": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "start": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "issuer": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "display": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
