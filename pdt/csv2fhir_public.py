@@ -26,6 +26,7 @@ def newfhir_deactive_stub():
                       }
                     }
                   ]
+    ps['active'] = bool(False)
     return ps
 
 def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
@@ -135,7 +136,7 @@ def publiccsv2fhir(csvfile, output_dir):
         pass
 
     response_dict = OrderedDict()
-    fh = open(csvfile, 'rb')
+    fh = open(csvfile, 'r')
     csvhandle = csv.reader(fh, delimiter=',')
     rowindex = 0
     po_count = 0
@@ -176,12 +177,15 @@ def publiccsv2fhir(csvfile, output_dir):
             elif row[1] == "2":
                 r =  new_fhir_organization_stub(row[0], row[4])
 
+            else:
+                r = newfhir_deactive_stub()
+
 
 
             #Work Address
 
             a = OrderedDict()
-
+            r['address']=[]
             a["use"]  = "work"
             a["line"] = []
             a["line"].append(row[28].upper())
@@ -230,7 +234,7 @@ def publiccsv2fhir(csvfile, output_dir):
                             {
                                 "system": "phone",
                                 "value": "%s-%s-%s" % (row[46][0:3], row[46][3:6], row[46][6:12]),
-                                "use" : "business"
+                                "use" : "work"
                             }
                           ]
                 r['contact'] = contact
@@ -240,21 +244,21 @@ def publiccsv2fhir(csvfile, output_dir):
                 t = OrderedDict()
                 t['system'] = "phone"
                 t['value'] =  "%s-%s-%s" % (row[34][0:3], row[34][3:6], row[34][6:12])
-                t['use'] = "practice"
+                t['use'] = "work"
                 r['telecom'] = t
             #Provider Business Practice Location Address Fax Number
             if row[35]:
                 t = OrderedDict()
                 t['system'] = "fax"
                 t['value'] =  "%s-%s-%s" % (row[35][0:3], row[35][3:6], row[35][6:12])
-                t['use'] = "practice"
+                t['use'] = "work"
                 r['telecom'] = t
 
 
 
             #Mailing address --------------------
             a = OrderedDict()
-            a['use'] = 'mailing'
+            a['use'] = 'home'
             a['line'] = []
             a['line'].append(row[20].upper())
             if row[21]:
@@ -271,16 +275,16 @@ def publiccsv2fhir(csvfile, output_dir):
                 t = OrderedDict()
                 t['system'] = "phone"
                 t['value'] =  "%s-%s-%s" % (row[26][0:3], row[26][3:6], row[26][6:12])
-                t['use'] = "business"
-                r['telecom'] = t
+                t['use'] = "home"
+                r['telecom'] = [t]
 
 
             if row[27]:
                 t = OrderedDict()
                 t['system'] = "fax"
                 t['value'] =  "%s-%s-%s" % (row[27][0:3], row[27][3:6], row[27][6:12])
-                t['use'] = "business"
-                r['telecom'] = t
+                t['use'] = "home"
+                r['telecom'] = [t]
 
             #Extension, specifically taxonomy codes
 
