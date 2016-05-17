@@ -321,7 +321,7 @@
       }
     },
     "ContactPoint": {
-      "type": "string",
+      "type": "object",
       "properties": {
         "resourceType": {
           "type": "string",
@@ -509,6 +509,32 @@
     },
     "name": {
       "$ref": "#/definitions/HumanName"
+    },
+    "telecom": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ContactPoint"
+      }
+    },
+    "address": {
+      "type": "array",
+      "items": {
+        "$ref": "#definitions/Address"
+      }
+    },
+    "gender": {
+      "type": "string",
+      "enum": ["male", "female", "other", "unknown"]
+    },
+    "birthDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "photo": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Attatchment"
+      }
     },
     "practitionerRole": {
       "type": "array",
