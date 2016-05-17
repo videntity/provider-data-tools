@@ -11,7 +11,7 @@ def csv2mlvs(csvfile, output_dir="output"):
     """Return a response_dict with summary of csv2mlvs transaction."""
 
     response_dict = OrderedDict()
-    print "Start the conversion of", csvfile, "into the MLVS into the directory ", output_dir, "."
+    print("Start the conversion of", csvfile, "into the MLVS into the directory ", output_dir, ".")
 
     #open the csv file.
     csvhandle = csv.reader(open(csvfile, 'rb'), delimiter=',')
@@ -23,9 +23,9 @@ def csv2mlvs(csvfile, output_dir="output"):
 
     try:
         os.mkdir(output_dir)
-        print "Output directory", output_dir, "created."
+        print("Output directory", output_dir, "created.")
     except:
-        print "Output directory", output_dir, "already exists."
+        print("Output directory", output_dir, "already exists.")
 
 
     for row in csvhandle :
@@ -42,13 +42,13 @@ def csv2mlvs(csvfile, output_dir="output"):
                 cleaned_headers.append(c)
         else:
 
-            record = dict(zip(cleaned_headers, row))
+            record = dict(list(zip(cleaned_headers, row)))
 
             #create the state dir if not already created
             state_dir = os.path.join(output_dir, record["state"])
             try:
                 os.mkdir(state_dir)
-                print "State directory", state_dir, "created."
+                print("State directory", state_dir, "created.")
             except:
                 pass
 
@@ -56,7 +56,7 @@ def csv2mlvs(csvfile, output_dir="output"):
             lt_dir = os.path.join(state_dir, record["license_type"])
             try:
                 os.mkdir(lt_dir)
-                print "License type directory", lt_dir, "created."
+                print("License type directory", lt_dir, "created.")
             except:
                 pass
 
@@ -91,9 +91,9 @@ if __name__ == "__main__":
 
 
     if len(sys.argv)!=3:
-        print "Usage:"
-        print "csv2mlvs.py [CSVFILE] [OUTPUT_DIR]"
-        print "See mlvs.csv in the samples directory for a sample CSV file layout."
+        print("Usage:")
+        print("csv2mlvs.py [CSVFILE] [OUTPUT_DIR]")
+        print("See mlvs.csv in the samples directory for a sample CSV file layout.")
         sys.exit(1)
 
     csv_file = sys.argv[1]
@@ -102,4 +102,4 @@ if __name__ == "__main__":
     result = csv2mlvs(csv_file, output_dir)
 
     #output the JSON transaction summary
-    print json.dumps(result, indent =4)
+    print(json.dumps(result, indent =4))

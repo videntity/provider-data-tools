@@ -92,8 +92,8 @@ def ensure_provider_indexes(database_name, collection_name,host=MONGO_HOST,
 if __name__ == "__main__":
 
     if len(sys.argv)!=6:
-        print "Usage:"
-        print "create-provider-indexes [DATABASE] [COLLECTION] [HOST] [PORT] [BACKGROUND Y/N]"
+        print("Usage:")
+        print("create-provider-indexes [DATABASE] [COLLECTION] [HOST] [PORT] [BACKGROUND Y/N]")
         sys.exit(1)
 
     database   = sys.argv[1]
@@ -108,4 +108,4 @@ if __name__ == "__main__":
 
 
     result = ensure_provider_indexes(database, collection, host, port, background)
-    print json.dumps(result, indent =4)
+    print(json.dumps(result, indent =4))
