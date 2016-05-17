@@ -13,32 +13,25 @@ def json_schema_check(json_schema_path, file_to_check_path):
 
     with open(file_to_check_path) as json_file:
         deserialized_json_file = json.load(json_file)
-        # print deserialized_json_file
 
     with open(json_schema_path) as json_schema:
         deserialized_json_schema = json.load(json_schema)
-        # print deserialized_json_schema
 
+    # Do I need to close the above files?
 
-    # print(exceptions.best_match(jsonschema.Draft4Validator(deserialized_json_schema).iter_errors(11)).message)
     v = jsonschema.Draft4Validator(deserialized_json_schema)
     errors = sorted(v.iter_errors(deserialized_json_file), key=lambda e: e.path)
     for error in errors:
         print(error.message)
-    # for error in errors:
-    #     for suberror in sorted(error.context, key=lambda e: e.schema_path):
-    #         print(list(suberror.schema_path), suberror.message)
 
-
-    # jsonschema.validate(deserialized_json_file, deserialized_json_schema)
 
     """JSON SCHEMA CHECK"""
     results = OrderedDict()
-    # results['hello']="World"
     if errors:
         results['errors'] = errors
 
     else:
+        results['errors'] = []
         results['results'] = "Congrats! The JSON file fits the schema. There were no errors."
 
 
@@ -56,5 +49,4 @@ if __name__ == "__main__":
     file_to_check_path = sys.argv[2]
 
     result = json_schema_check(json_schema_path, file_to_check_path)
-    #output the JSON transaction summary
     print(json.dumps(result, indent =4))
