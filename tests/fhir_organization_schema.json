@@ -77,10 +77,12 @@
       }
     },
     "HumanName": {
-      "type": "array",
-      "items": {
         "type": "object",
         "properties": {
+          "resourceType": {
+            "type":"string",
+            "pattern": "^HumanName$"
+          },
           "use": {
             "type": "string",
             "enum": ["usual" , "official" , "temp" , "nickname" , "anonymous" , "old" , "maiden"]
@@ -126,8 +128,7 @@
             }
           }
         }
-      }
-    },
+      },
     "CodeableConcept": {
       "type": "object",
       "properties": {
@@ -356,7 +357,7 @@
   "properties": {
     "resourceType": {
       "type": "string",
-      "pattern": "^Practitioner$"
+      "pattern": "^Organization$"
     },
     "id": {
       "type": "string"
@@ -475,157 +476,61 @@
           }
         }
       },
-
-    "identifier": {
-      "type": "array",
-      "minItems": 1,
-      "uniqueItems": false,
-      "additionalItems": true,
-      "items": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "system": {
-            "type": "string"
-          },
-          "value": {
-            "type": "string"
-          },
-          "use": {
-            "type": "string"
-          },
-          "period": {
-            "properties": {
-              "start": "datetime",
-              "end": "datetime"
-            },
-          "assigner": {
-            "type": "string"
-          }
-
-          }
-        }
-      }
-    },
-    "active": {
-      "$ref": "#/definitions/Active"
-    },
-    "name": {
-      "$ref": "#/definitions/HumanName"
-    },
-    "telecom": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ContactPoint"
-      }
-    },
-    "address": {
-      "type": "array",
-      "items": {
-        "$ref": "#definitions/Address"
-      }
-    },
-    "gender": {
-      "type": "string",
-      "enum": ["male", "female", "other", "unknown"]
-    },
-    "birthDate": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "photo": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Attatchment"
-      }
-    },
-    "practitionerRole": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "organization": {
-            "type": "object",
-            "properties": {
-              "Reference": {
-                "$ref": "#/definitions/Identifier/assigner/Reference"
-                }
-            }
-          },
-          "role": {
-            "type": "object",
-            "properties": {
-              "$ref": "#/definitions/CodeableConcept"
-            }
-          },
-          "specialty": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "$ref": "#/definitions/CodeableConcept"
-              }
-            }
-          },
-          "identifier": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Identifier"
-            }
-          },
-          "telecom": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/ContactPoint"
-            }
-          },
-          "period": {
-            "$ref": "#/definitions/Period"
-          },
-          "location": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Reference"
-            }
-          },
-          "healthcareService": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Reference"
-              }
-            }
-          }
+      "identifier": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Identifier"
         }
       },
-    "qualification": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "identifier": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Identifier"
+      "active": {
+        "$ref": "#/definitions/Active"
+      },
+      "type": {
+        "$ref": "#/definitions/CodeableConcept"
+      },
+      "name": {
+        "type": "string"
+      },
+      "telecom": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/ContactPoint"
+        }
+      },
+      "address": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Address"
+        }
+      },
+      "partOf": {
+        "$ref": "#/definitions/Reference"
+      },
+      "contact": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "purpose": {
+              "$ref": "#/definitions/CodeableConcept"
+            },
+            "name": {
+              "$ref": "#/definitions/HumanName"
+            },
+            "telecom": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ContactPoint"
+              }
+            },
+            "address": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Address"
             }
-          },
-          "code": {
-            "$ref": "#/definitions/CodeableConcept"
-          },
-          "period": {
-            "$ref": "#/definitions/Period"
-          },
-          "issuer": {
-            "$ref": "#/definitions/Reference"
           }
         }
-      }
-    },
-    "communication": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/CodeableConcept"
       }
     }
   }
-
 }
