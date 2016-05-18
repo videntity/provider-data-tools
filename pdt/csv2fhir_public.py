@@ -366,7 +366,7 @@ def publiccsv2fhir(csvfile, output_dir):
                 response_dict['num_csv_rows']=rowindex -1
                 response_dict['code']=200
                 response_dict['message']="Completed without errors."
-
+    fh.close()
     return response_dict
 
 if __name__ == "__main__":
