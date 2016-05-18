@@ -141,8 +141,8 @@ def publiccsv2pjson(csvfile, output_dir):
 
             #If the records is not redacted (because its inactive)
             
-            zip_record = zip(cleaned_headers, row)
-            record = dict(zip(cleaned_headers, row))
+            zip_record = list(zip(cleaned_headers, row))
+            record = dict(list(zip(cleaned_headers, row)))
             
             #get rid of blanks 
             no_blank_zip = []
@@ -271,7 +271,7 @@ def publiccsv2pjson(csvfile, output_dir):
                 
                 
                 clean_basic = OrderedDict()
-                for k,v in p["basic"].items():
+                for k,v in list(p["basic"].items()):
                     if v:
                         clean_basic[k] = v
                          
@@ -504,7 +504,7 @@ def publiccsv2pjson(csvfile, output_dir):
             if po_count % 1000 == 0:
                pdir += 1
                out  = "%s files created. Total time is %s seconds." % (po_count ,(time.time() - process_start_time) )
-               print out   
+               print(out)   
                
         
             rowindex += 1
@@ -529,8 +529,8 @@ if __name__ == "__main__":
 
     
     if len(sys.argv)!=3:
-        print "Usage:"
-        print "csv2pjson_public.py [CSVFILE] [OUTPUT_DIRECTORY]"
+        print("Usage:")
+        print("csv2pjson_public.py [CSVFILE] [OUTPUT_DIRECTORY]")
         sys.exit(1)
 
     csv_file   = sys.argv[1]
@@ -539,4 +539,4 @@ if __name__ == "__main__":
     result = publiccsv2pjson(csv_file, output_dir)
     
     #output the JSON transaction summary
-    print json.dumps(result, indent =4)
+    print(json.dumps(result, indent =4))
