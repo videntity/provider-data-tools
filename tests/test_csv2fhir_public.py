@@ -9,7 +9,7 @@ class TestCSV2FHIR_PUBLIC(unittest.TestCase):
 
         """Run CSV2FHIR should return results """
         CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-        csvfile = os.path.join( CURRENT_DIR,  "fiftythousand.csv")
+        csvfile = os.path.join( CURRENT_DIR,  "first10.csv")
         output_dir = "fhir_test_output"
         with open(csvfile):
 
@@ -19,28 +19,26 @@ class TestCSV2FHIR_PUBLIC(unittest.TestCase):
     def test_FHIR_results(self):
 
         """Put newly created files through json_schema to check"""
-        CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-        output_dir = os.path.join( CURRENT_DIR,  "fhir_test_output")
-        json_schema = os.path.join( CURRENT_DIR,  "fhir_practitioner_schema.json")
+        CURRENT_DIR =os.path.dirname(os.path.abspath(__file__))
 
 
 
         for x in range(1000,2000):
             if os.path.exists(os.path.join("fhir_test_output", "Practitioner", str(x))):
                 for files in os.listdir(os.path.join("fhir_test_output","Practitioner",str(x))):
-                    result = pdt.json_schema_check.json_schema_check(os.path.join( CURRENT_DIR, "fhir_practitioner_schema.json"), os.path.join("fhir_test_output", "Practitioner", str(x), files))
+                    result = pdt.json_schema_check.json_schema_check(os.path.join( CURRENT_DIR, "..", "fhir_json_schema", "fhir_practitioner_schema.json"), os.path.join("fhir_test_output", "Practitioner", str(x), files))
                     self.assertEqual(result['errors'], [])
                 # To test to make sure works when running from different directories, using nosetest.
                 # If not using a test runner, make sure to run tests from the project root.
-                # if x > 1500:
-                #     self.assertFail()
-            # else:
-            #     print(x)
+                # if x > 1200:
+                #     self.fail()
+                    # print(x)
             if os.path.exists(os.path.join("fhir_test_output", "Organization", str(x))):
                 for files in os.listdir(os.path.join("fhir_test_output","Organization",str(x))):
-                    result = pdt.json_schema_check.json_schema_check(os.path.join( CURRENT_DIR, "fhir_organization_schema.json"), os.path.join("fhir_test_output", "Organization", str(x), files))
+                    result = pdt.json_schema_check.json_schema_check(os.path.join( CURRENT_DIR, "..", "fhir_json_schema","fhir_organization_schema.json"), os.path.join("fhir_test_output", "Organization", str(x), files))
                     self.assertEqual(result['errors'], [])
-
+                # if x > 1200:
+                #     self.fail()
 
 if __name__ == '__main__':
     unittest.main()
