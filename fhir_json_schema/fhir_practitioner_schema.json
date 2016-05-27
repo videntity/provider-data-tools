@@ -364,6 +364,44 @@
     },
     "Active": {
       "type": "boolean"
+    },
+    "Comment": {
+          "type": "string"
+      },
+    "Schedule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor"],
+      "properties": {
+        "resourceType": {
+          "type":"string",
+          "pattern": "^Schedule$"
+        },
+        "identifier": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          }
+        },
+        "serviceCategory": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "specialty": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          }
+        },
+        "actor": {
+          "$ref": "#/definitions/Reference"
+        },
+        "planningHorizon": {
+          "$ref": "#/definitions/Period"
+        },
+        "comment": {
+          "$ref": "#/definitions/Comment"
+        }
+      }
     }
   },
 
@@ -415,6 +453,7 @@
       "items":{
           "type": "object",
           "required": ["url"],
+          "maxProperties": 2,
           "additionalProperties": false,
           "properties": {
             "url": {
@@ -489,7 +528,7 @@
               "$ref": "#/definitions/ContactPoint"
             },
             "valueSchedule": {
-              "$ref": "fhir_schedule_schema.json"
+              "$ref": "#/definitions/Schedule"
             },
             "valueReference": {
               "$ref": "#/definitions/Reference"
