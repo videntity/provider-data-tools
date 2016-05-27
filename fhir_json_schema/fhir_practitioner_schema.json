@@ -201,6 +201,7 @@
     "Identifier": {
       "type": "object",
       "additionalProperties": false,
+      "maxProperties": 6,
       "properties": {
         "use": {
           "type": "string",
@@ -563,7 +564,7 @@
       "address": {
         "type": "array",
         "items": {
-          "$ref": "#definitions/Address"
+          "$ref": "#/definitions/Address"
         }
       },
       "gender": {
