@@ -27,18 +27,14 @@ if __name__ == "__main__":
 
     #Try to open the file
     try:
-        
+
         fh = open(pjson_file, 'r')
         j = fh.read()
         #Validate the provider JSON content
         errors = validate_pjson(j, action)
-        #Print the erros and warings as JSON to stout.
+        #Print the errors and warnings as JSON to stout.
         errors_json =  json.dumps(errors, indent =4)
         print errors_json
     except IOError:
         print "Could not open file %s." % (pjson_file)
         sys.exit(1)
-
-
-
-
