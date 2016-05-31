@@ -166,7 +166,7 @@ def publiccsv2fhir(csvfile, output_dir):
 
 
 
-            #Work Address
+            #Practice Address
 
             a = OrderedDict()
             r['address']=[]
@@ -180,7 +180,21 @@ def publiccsv2fhir(csvfile, output_dir):
             a["postalCode"]  = row[32].upper()
             a["country"]     = row[33].upper()
 
-            r['address'].append(a)
+            r['address'] = [a]
+
+            #Mailing address --------------------
+            a = OrderedDict()
+            if row[1] == "1":
+                a['use'] = 'home'
+                a['line'] = []
+                a['line'].append(row[20].upper())
+                if row[21]:
+                    a['line'].append(row[21].upper())
+                a["city"]                            =  row[22].upper()
+                a["state"]                           =  row[23].upper()
+                a["postalCode"]                       =  row[24].upper()
+                a["country"] = row[25].upper()
+                r['address'].append(a)
 
             #Gender
             if row[1] == "1":
@@ -194,7 +208,7 @@ def publiccsv2fhir(csvfile, output_dir):
                     r["gender"] = "unknown"
 
             #Organization Contact
-            #Is this logic ok, or problematic?
+
             if row[43]:
                 contact_list = list()
                 contact = OrderedDict()
@@ -217,10 +231,10 @@ def publiccsv2fhir(csvfile, output_dir):
                           ]
                 contact_list.append(contact)
                 r['contact'] = contact_list
-
             #Provider Business Practice Location Address Telephone Number
+
+            t = OrderedDict()
             if row[34]:
-                t = OrderedDict()
                 t['system'] = "phone"
                 t['value'] =  "%s-%s-%s" % (row[34][0:3], row[34][3:6], row[34][6:12])
                 t['use'] = "work"
@@ -231,43 +245,30 @@ def publiccsv2fhir(csvfile, output_dir):
                 t['system'] = "fax"
                 t['value'] =  "%s-%s-%s" % (row[35][0:3], row[35][3:6], row[35][6:12])
                 t['use'] = "work"
-                r['telecom'] = [t]
+                r['telecom'].append(t)
 
 
 
-            #Mailing address --------------------
-            a = OrderedDict()
-            a['use'] = 'home'
-            a['line'] = []
-            a['line'].append(row[20].upper())
-            if row[21]:
-                a['line'].append(row[21].upper())
-            a["city"]                            =  row[22].upper()
-            a["state"]                           =  row[23].upper()
-            a["postalCode"]                       =  row[24].upper()
-            a["country"] = row[25].upper()
-            r['address'].append(a)
+            #Mailing Phone and Fax numbers for Practitioners
+            if row[1] == "1":
+                if row[26]:
+                    t = OrderedDict()
+                    t['system'] = "phone"
+                    t['value'] =  "%s-%s-%s" % (row[26][0:3], row[26][3:6], row[26][6:12])
+                    t['use'] = 'home'
+                    r['telecom'].append(t)
 
 
-            #Phone and Fax numbers
-            if row[26]:
-                t = OrderedDict()
-                t['system'] = "phone"
-                t['value'] =  "%s-%s-%s" % (row[26][0:3], row[26][3:6], row[26][6:12])
-                t['use'] = "home"
-                r['telecom'] = [t]
-
-
-            if row[27]:
-                t = OrderedDict()
-                t['system'] = "fax"
-                t['value'] =  "%s-%s-%s" % (row[27][0:3], row[27][3:6], row[27][6:12])
-                t['use'] = "home"
-                r['telecom'] = [t]
+                if row[27]:
+                    t = OrderedDict()
+                    t['system'] = "fax"
+                    t['value'] =  "%s-%s-%s" % (row[27][0:3], row[27][3:6], row[27][6:12])
+                    t['use'] = 'home'
+                    r['telecom'].append(t)
 
             #Extension, specifically taxonomy codes
             # Getting taxonomy codes
-            #Refactor to make more readable
+
 
             for i in range(50,107,4):
                 if row[i] == "Y":
@@ -317,18 +318,15 @@ def publiccsv2fhir(csvfile, output_dir):
             rowindex += 1
 
 
-        if error_list:
-                response_dict['num_files_created']=rowindex-1
-                response_dict['num_file_errors']=len(error_list)
-                response_dict['errors']=error_list
-                response_dict['code']=400
-                response_dict['message']="Completed with errors."
-        else:
+        try:
 
                 response_dict['num_files_created']=rowindex -1
                 response_dict['num_csv_rows']=rowindex -1
                 response_dict['code']=200
                 response_dict['message']="Completed without errors."
+        except:
+
+                response_dict['message']="Completed with errors."
     fh.close()
     return response_dict
 
