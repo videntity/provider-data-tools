@@ -40,6 +40,7 @@
       },
     "Coding": {
       "type": "object",
+      "maxProperties": 5,
       "additionalProperties": false,
       "properties": {
         "system": {
@@ -63,6 +64,7 @@
     "Resource": {
       "type": "object",
       "additionalProperties": false,
+      "maxProperties": 4,
       "properties": {
         "id": {
           "type": "string"
@@ -155,6 +157,10 @@
     "Attatchment": {
       "type": "object",
       "additionalProperties": false,
+      "maxProperties": 8,
+      "dependencies": {
+        "data": ["contentType"]
+      },
       "properties": {
         "contentType": {
           "type": "string"
@@ -227,6 +233,10 @@
     },
     "Quantity": {
       "type": "object",
+      "maxProperties": 5,
+      "dependencies": {
+        "unit": ["system"]
+      },
       "additionalProperties": false,
       "properties": {
         "value":{
@@ -269,6 +279,7 @@
     "Range": {
       "type": "object",
       "additionalProperties": false,
+      "maxProperties": 2,
       "properties": {
         "low": {
           "$ref": "#/definitions/SimpleQuantity"
@@ -281,6 +292,7 @@
     "Ratio": {
       "type": "object",
       "additionalProperties": false,
+      "maxProperties": 2,
       "properties": {
         "numerator": {
           "$ref": "#/definitions/Quantity"
@@ -300,7 +312,7 @@
         },
         "use": {
           "type": "string",
-          "enum": ["home", "work", "temp", "old"]
+          "enum": ["work", "temp", "old"]
         },
         "type": {
           "type": "string",
@@ -352,7 +364,7 @@
         },
         "use": {
           "type": "string",
-          "enum": ["home", "work", "temp", "old", "mobile"]
+          "enum": ["work", "temp", "old", "mobile"]
         },
         "rank": {
           "type": "integer",
@@ -427,6 +439,7 @@
     },
     "text": {
       "type": "object",
+      "maxProperties": 2,
       "properties": {
         "status": {
           "type": "string",

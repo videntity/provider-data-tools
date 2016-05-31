@@ -41,6 +41,7 @@
     "Coding": {
       "type": "object",
       "additionalProperties": false,
+      "maxProperties": 5,
       "properties": {
         "system": {
           "type": "string",
@@ -63,6 +64,7 @@
     "Resource": {
       "type": "object",
       "additionalProperties": false,
+      "maxProperties": 4,
       "properties": {
         "id": {
           "type": "string"
@@ -154,7 +156,11 @@
     },
     "Attatchment": {
       "type": "object",
+      "maxProperties": 8,
       "additionalProperties": false,
+      "dependencies": {
+        "data": ["contentType"]
+      },
       "properties": {
         "contentType": {
           "type": "string"
@@ -227,7 +233,11 @@
     },
     "Quantity": {
       "type": "object",
+      "maxProperties": 5,
       "additionalProperties": false,
+      "dependencies": {
+        "unit": ["system"]
+      },
       "properties": {
         "value":{
           "type": "number"
@@ -280,6 +290,8 @@
     },
     "Ratio": {
       "type": "object",
+      "maxProperties": 2,
+      "additionalProperties": false,
       "properties": {
         "numerator": {
           "$ref": "#/definitions/Quantity"
@@ -428,6 +440,7 @@
     },
     "text": {
       "type": "object",
+      "maxProperties": 2,
       "properties": {
         "status": {
           "id": "status",
