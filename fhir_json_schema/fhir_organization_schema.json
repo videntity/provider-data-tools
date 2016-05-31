@@ -5,6 +5,7 @@
 
     "Meta": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "versionId": {
           "type": "string"
@@ -39,6 +40,8 @@
       },
     "Coding": {
       "type": "object",
+      "maxProperties": 5,
+      "additionalProperties": false,
       "properties": {
         "system": {
           "type": "string",
@@ -60,6 +63,8 @@
       },
     "Resource": {
       "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 4,
       "properties": {
         "id": {
           "type": "string"
@@ -78,6 +83,7 @@
     },
     "HumanName": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "resourceType": {
             "type":"string",
@@ -115,38 +121,46 @@
               }
           },
           "Period": {
-            "type": "object",
-            "properties": {
-              "start": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "end": {
-                "type": "string",
-                "format": "date-time"
-              }
-            }
+            "$ref": "#/definitions/Period"
           }
         }
       },
-    "CodeableConcept": {
+      "Period": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
-        "CodeableConcept": {
-          "type": "array",
-          "items": {
-            "coding": {
-              "$ref": "#/definitions/Coding"
-            }
-          }
+        "start": {
+          "type": "string",
+          "format": "date-time"
         },
-      "text": {
-        "type": "string"
+        "end": {
+          "type": "string",
+          "format": "date-time"
+          }
         }
-      }
-    },
+      },
+      "CodeableConcept": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "coding": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Coding"
+              }
+            },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
     "Attatchment": {
       "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 8,
+      "dependencies": {
+        "data": ["contentType"]
+      },
       "properties": {
         "contentType": {
           "type": "string"
@@ -178,8 +192,22 @@
       }
 
     },
+    "Reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "display": {
+          "type": "string"
+        }
+      }
+    },
     "Identifier": {
       "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 6,
       "properties": {
         "use": {
           "type": "string",
@@ -196,28 +224,20 @@
           "type": "string"
         },
         "period": {
-          "$ref": "#/definitions/HumanName/Period"
+          "$ref": "#/definitions/Period"
         },
         "assigner": {
-          "type": "object",
-          "properties": {
-            "Reference": {
-              "type": "object",
-              "properties": {
-                "reference": {
-                  "type": "string"
-                },
-                "display": {
-                  "type": "string"
-                }
-              }
-            }
-          }
+              "$ref": "#/definitions/Reference"
         }
       }
     },
     "Quantity": {
       "type": "object",
+      "maxProperties": 5,
+      "dependencies": {
+        "unit": ["system"]
+      },
+      "additionalProperties": false,
       "properties": {
         "value":{
           "type": "number"
@@ -239,6 +259,7 @@
     },
     "SimpleQuantity": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "value":{
           "type": "number"
@@ -257,6 +278,8 @@
     },
     "Range": {
       "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 2,
       "properties": {
         "low": {
           "$ref": "#/definitions/SimpleQuantity"
@@ -268,6 +291,8 @@
     },
     "Ratio": {
       "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 2,
       "properties": {
         "numerator": {
           "$ref": "#/definitions/Quantity"
@@ -279,6 +304,7 @@
     },
     "Address": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "resourceType":{
           "type": "string",
@@ -286,7 +312,7 @@
         },
         "use": {
           "type": "string",
-          "enum": ["home", "work", "temp", "old"]
+          "enum": ["work", "temp", "old"]
         },
         "type": {
           "type": "string",
@@ -317,12 +343,13 @@
           "type": "string"
         },
         "period": {
-          "$ref": "#definitions/HumanName/Period"
+          "$ref": "#/definitions/Period"
         }
       }
     },
     "ContactPoint": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "resourceType": {
           "type": "string",
@@ -337,23 +364,62 @@
         },
         "use": {
           "type": "string",
-          "enum": ["home", "work", "temp", "old", "mobile"]
+          "enum": ["work", "temp", "old", "mobile"]
         },
         "rank": {
           "type": "integer",
           "minimum": 1
         },
         "period": {
-          "$ref": "#/definitions/HumanName/Period"
+          "$ref": "#/definitions/Period"
         }
       }
     },
     "Active": {
       "type": "boolean"
+    },
+    "Comment": {
+          "type": "string"
+      },
+    "Schedule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor"],
+      "properties": {
+        "resourceType": {
+          "type":"string",
+          "pattern": "^Schedule$"
+        },
+        "identifier": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          }
+        },
+        "serviceCategory": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "specialty": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          }
+        },
+        "actor": {
+          "$ref": "#/definitions/Reference"
+        },
+        "planningHorizon": {
+          "$ref": "#/definitions/Period"
+        },
+        "comment": {
+          "$ref": "#/definitions/Comment"
+        }
+      }
     }
   },
 
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "resourceType": {
       "type": "string",
@@ -373,9 +439,9 @@
     },
     "text": {
       "type": "object",
+      "maxProperties": 2,
       "properties": {
         "status": {
-          "id": "status",
           "type": "string",
           "enum": ["generated", "extensions", "additional", "empty"]
         },
@@ -398,6 +464,9 @@
       "type": "array",
       "items":{
           "type": "object",
+          "additionalProperties": false,
+          "required": ["url"],
+          "maxProperties": 2,
           "properties": {
             "url": {
               "type": "string",
@@ -456,25 +525,31 @@
               "$ref": "#/definitions/Range"
             },
             "valuePeriod": {
-              "$ref": "#/definitions/HumanName/Period"
+              "$ref": "#/definitions/Period"
             },
             "valueRatio": {
-              "$ref": "#definitions/Ratio"
+              "$ref": "#/definitions/Ratio"
             },
             "valueHumanName": {
-              "$ref": "#definitions/HumanName"
+              "$ref": "#/definitions/HumanName"
             },
             "valueAddress":{
-              "$ref": "#definitions/Address"
+              "$ref": "#/definitions/Address"
             },
             "valueContactPoint": {
-              "$ref": "#definitions/ContactPoint"
+              "$ref": "#/definitions/ContactPoint"
+            },
+            "valueSchedule": {
+              "$ref": "#/definitions/Schedule"
             },
             "valueReference": {
-              "$ref": "#definitions/Identifier/assigner/Reference"
+              "$ref": "#/definitions/Reference"
             }
           }
         }
+      },
+      "modifierExtension": {
+        "$ref": "#/properties/extension"
       },
       "identifier": {
         "type": "array",
@@ -524,10 +599,7 @@
               }
             },
             "address": {
-              "type": "array",
-              "items": {
                 "$ref": "#/definitions/Address"
-            }
           }
         }
       }

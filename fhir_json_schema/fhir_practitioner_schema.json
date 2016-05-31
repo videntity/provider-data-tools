@@ -5,6 +5,7 @@
 
     "Meta": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "versionId": {
           "type": "string"
@@ -39,6 +40,8 @@
       },
     "Coding": {
       "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 5,
       "properties": {
         "system": {
           "type": "string",
@@ -60,6 +63,8 @@
       },
     "Resource": {
       "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 4,
       "properties": {
         "id": {
           "type": "string"
@@ -77,10 +82,13 @@
       }
     },
     "HumanName": {
-      "type": "array",
-      "items": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
+          "resourceType": {
+            "type":"string",
+            "pattern": "^HumanName$"
+          },
           "use": {
             "type": "string",
             "enum": ["usual" , "official" , "temp" , "nickname" , "anonymous" , "old" , "maiden"]
@@ -112,40 +120,47 @@
               "type": "string"
               }
           },
-          "Period": {
-            "type": "object",
-            "properties": {
-              "start": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "end": {
-                "type": "string",
-                "format": "date-time"
-              }
-            }
+          "period": {
+            "$ref": "#/definitions/Period"
           }
+        }
+      },
+    "Period": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
     "CodeableConcept": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
-        "CodeableConcept": {
+        "coding": {
           "type": "array",
           "items": {
-            "coding": {
               "$ref": "#/definitions/Coding"
             }
-          }
-        },
-      "text": {
-        "type": "string"
+          },
+        "text": {
+          "type": "string"
         }
       }
     },
     "Attatchment": {
       "type": "object",
+      "maxProperties": 8,
+      "additionalProperties": false,
+      "dependencies": {
+        "data": ["contentType"]
+      },
       "properties": {
         "contentType": {
           "type": "string"
@@ -177,8 +192,22 @@
       }
 
     },
+    "Reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "display": {
+          "type": "string"
+        }
+      }
+    },
     "Identifier": {
       "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 6,
       "properties": {
         "use": {
           "type": "string",
@@ -195,28 +224,20 @@
           "type": "string"
         },
         "period": {
-          "$ref": "#/definitions/HumanName/Period"
+          "$ref": "#/definitions/Period"
         },
         "assigner": {
-          "type": "object",
-          "properties": {
-            "Reference": {
-              "type": "object",
-              "properties": {
-                "reference": {
-                  "type": "string"
-                },
-                "display": {
-                  "type": "string"
-                }
-              }
-            }
-          }
+              "$ref": "#/definitions/Reference"
         }
       }
     },
     "Quantity": {
       "type": "object",
+      "maxProperties": 5,
+      "additionalProperties": false,
+      "dependencies": {
+        "unit": ["system"]
+      },
       "properties": {
         "value":{
           "type": "number"
@@ -238,6 +259,7 @@
     },
     "SimpleQuantity": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "value":{
           "type": "number"
@@ -256,6 +278,7 @@
     },
     "Range": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "low": {
           "$ref": "#/definitions/SimpleQuantity"
@@ -267,6 +290,8 @@
     },
     "Ratio": {
       "type": "object",
+      "maxProperties": 2,
+      "additionalProperties": false,
       "properties": {
         "numerator": {
           "$ref": "#/definitions/Quantity"
@@ -278,6 +303,7 @@
     },
     "Address": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "resourceType":{
           "type": "string",
@@ -316,12 +342,14 @@
           "type": "string"
         },
         "period": {
-          "$ref": "#definitions/HumanName/Period"
+          "$ref": "#/definitions/Period"
         }
       }
     },
     "ContactPoint": {
       "type": "object",
+      "additionalProperties": false,
+      "required": ["system"],
       "properties": {
         "resourceType": {
           "type": "string",
@@ -343,20 +371,60 @@
           "minimum": 1
         },
         "period": {
-          "$ref": "#/definitions/HumanName/Period"
+          "$ref": "#/definitions/Period"
         }
       }
     },
     "Active": {
       "type": "boolean"
+    },
+    "Comment": {
+          "type": "string"
+      },
+    "Schedule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor"],
+      "properties": {
+        "resourceType": {
+          "type":"string",
+          "pattern": "^Schedule$"
+        },
+        "identifier": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          }
+        },
+        "serviceCategory": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "specialty": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          }
+        },
+        "actor": {
+          "$ref": "#/definitions/Reference"
+        },
+        "planningHorizon": {
+          "$ref": "#/definitions/Period"
+        },
+        "comment": {
+          "$ref": "#/definitions/Comment"
+        }
+      }
     }
   },
 
   "type": "object",
+  "additionalProperties": false,
+  "maxProperties": 15,
   "properties": {
     "resourceType": {
       "type": "string",
-      "pattern": "^Practitioner$"
+      "pattern": "^Practitioner"
     },
     "id": {
       "type": "string"
@@ -372,6 +440,7 @@
     },
     "text": {
       "type": "object",
+      "maxProperties": 2,
       "properties": {
         "status": {
           "id": "status",
@@ -397,6 +466,9 @@
       "type": "array",
       "items":{
           "type": "object",
+          "required": ["url"],
+          "maxProperties": 2,
+          "additionalProperties": false,
           "properties": {
             "url": {
               "type": "string",
@@ -455,177 +527,150 @@
               "$ref": "#/definitions/Range"
             },
             "valuePeriod": {
-              "$ref": "#/definitions/HumanName/Period"
+              "$ref": "#/definitions/Period"
             },
             "valueRatio": {
-              "$ref": "#definitions/Ratio"
+              "$ref": "#/definitions/Ratio"
             },
             "valueHumanName": {
-              "$ref": "#definitions/HumanName"
+              "$ref": "#/definitions/HumanName"
             },
             "valueAddress":{
-              "$ref": "#definitions/Address"
+              "$ref": "#/definitions/Address"
             },
             "valueContactPoint": {
-              "$ref": "#definitions/ContactPoint"
+              "$ref": "#/definitions/ContactPoint"
+            },
+            "valueSchedule": {
+              "$ref": "#/definitions/Schedule"
             },
             "valueReference": {
-              "$ref": "#definitions/Identifier/assigner/Reference"
+              "$ref": "#/definitions/Reference"
             }
           }
         }
       },
-
-    "identifier": {
-      "type": "array",
-      "minItems": 1,
-      "uniqueItems": false,
-      "additionalItems": true,
-      "items": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "system": {
-            "type": "string"
-          },
-          "value": {
-            "type": "string"
-          },
-          "use": {
-            "type": "string"
-          },
-          "period": {
-            "properties": {
-              "start": "datetime",
-              "end": "datetime"
+      "modifierExtension": {
+        "$ref": "#/properties/extension"
+      },
+      "identifier": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Identifier"
+        }
+      },
+      "active": {
+        "$ref": "#/definitions/Active"
+      },
+      "name": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/HumanName"
+        }
+      },
+      "telecom": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/ContactPoint"
+        }
+      },
+      "address": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Address"
+        }
+      },
+      "gender": {
+        "type": "string",
+        "enum": ["male", "female", "other", "unknown"]
+      },
+      "birthDate": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "photo": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Attatchment"
+        }
+      },
+      "practitionerRole": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "organization": {
+                  "$ref": "#/definitions/Reference"
             },
-          "assigner": {
-            "type": "string"
-          }
-
-          }
-        }
-      }
-    },
-    "active": {
-      "$ref": "#/definitions/Active"
-    },
-    "name": {
-      "$ref": "#/definitions/HumanName"
-    },
-    "telecom": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ContactPoint"
-      }
-    },
-    "address": {
-      "type": "array",
-      "items": {
-        "$ref": "#definitions/Address"
-      }
-    },
-    "gender": {
-      "type": "string",
-      "enum": ["male", "female", "other", "unknown"]
-    },
-    "birthDate": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "photo": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Attatchment"
-      }
-    },
-    "practitionerRole": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "organization": {
-            "type": "object",
-            "properties": {
-              "Reference": {
-                "$ref": "#/definitions/Identifier/assigner/Reference"
-                }
-            }
-          },
-          "role": {
-            "type": "object",
-            "properties": {
-              "$ref": "#/definitions/CodeableConcept"
-            }
-          },
-          "specialty": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
+            "role": {
                 "$ref": "#/definitions/CodeableConcept"
+            },
+            "specialty": {
+              "type": "array",
+              "items": {
+                  "$ref": "#/definitions/CodeableConcept"
+              }
+            },
+            "identifier": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Identifier"
+              }
+            },
+            "telecom": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ContactPoint"
+              }
+            },
+            "period": {
+              "$ref": "#/definitions/Period"
+            },
+            "location": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Reference"
+              }
+            },
+            "healthcareService": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Reference"
+                }
               }
             }
-          },
-          "identifier": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Identifier"
-            }
-          },
-          "telecom": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/ContactPoint"
-            }
-          },
-          "period": {
-            "$ref": "#/definitions/Period"
-          },
-          "location": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Reference"
-            }
-          },
-          "healthcareService": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Reference"
+          }
+        },
+      "qualification": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["code"],
+          "properties": {
+            "identifier": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Identifier"
               }
+            },
+            "code": {
+              "$ref": "#/definitions/CodeableConcept"
+            },
+            "period": {
+              "$ref": "#/definitions/Period"
+            },
+            "issuer": {
+              "$ref": "#/definitions/Reference"
             }
           }
         }
       },
-    "qualification": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "identifier": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Identifier"
-            }
-          },
-          "code": {
-            "$ref": "#/definitions/CodeableConcept"
-          },
-          "period": {
-            "$ref": "#/definitions/Period"
-          },
-          "issuer": {
-            "$ref": "#/definitions/Reference"
-          }
+      "communication": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/CodeableConcept"
         }
-      }
-    },
-    "communication": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/CodeableConcept"
       }
     }
-  }
 
-}
+  }
