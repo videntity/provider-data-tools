@@ -292,6 +292,12 @@
       "type": "object",
       "maxProperties": 2,
       "additionalProperties": false,
+      "oneOf": [
+        {"required": ["numerator", "denominator"]},
+        {"not":{"enum": ["numerator", "denominator"]
+          }}
+
+      ],
       "properties": {
         "numerator": {
           "$ref": "#/definitions/Quantity"

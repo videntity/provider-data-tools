@@ -293,6 +293,11 @@
       "type": "object",
       "additionalProperties": false,
       "maxProperties": 2,
+      "oneOf": [
+        {"required": ["numerator", "denominator"]},
+        {"not":{"enum": ["numerator", "denominator"]
+          }}
+      ],
       "properties": {
         "numerator": {
           "$ref": "#/definitions/Quantity"
@@ -420,6 +425,10 @@
 
   "type": "object",
   "additionalProperties": false,
+  "anyOf": [
+        {"required": ["id"]},
+        {"required": ["name"]}
+    ],
   "properties": {
     "resourceType": {
       "type": "string",
