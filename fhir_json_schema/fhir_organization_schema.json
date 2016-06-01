@@ -355,6 +355,9 @@
     "ContactPoint": {
       "type": "object",
       "additionalProperties": false,
+      "dependencies": {
+        "value": ["system"]
+      },
       "properties": {
         "resourceType": {
           "type": "string",
