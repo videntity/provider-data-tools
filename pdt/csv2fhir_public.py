@@ -33,6 +33,7 @@ def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
     ps["text"] = { "status": "generated",
                    "div": "<div><p>%s</p></div>" % (text)
                  }
+    ps['extension'] = []
     ps['identifier'] = [
                     {
                       "use": "official",
@@ -74,6 +75,7 @@ def new_fhir_organization_stub(npi, organization_name):
     os["text"] = { "status": "generated",
                    "div": "<div><p>%s</p></div>" % (text)
                  }
+    os['extension'] = []
     os['identifier'] = [
                     {
                       "use": "official",
