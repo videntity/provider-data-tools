@@ -3,7 +3,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Written by Alan Viars - This software is public domain
 
-import os, sys, string, json, csv, time
+import os, sys, string, json, csv, time, codecs
 from pdt import json_schema_check
 from collections import OrderedDict
 from datetime import datetime
@@ -282,10 +282,9 @@ def publiccsv2fhir(csvfile, output_dir):
 
                     coding['system'] = "http://www.nucc.org/"
                     coding['code'] = str(row[i-3])
-                    with open('nucc_taxonomy_160.csv', 'r', encoding='iso-8859-1') as csvfile_tax:
+                    with codecs.open('nucc_taxonomy_160.csv', 'r', encoding='iso-8859-1') as csvfile_tax:
                         tax_reader = csv.reader(csvfile_tax)
                         for row_tax in tax_reader:
-
                             if coding['code'] == row_tax[0]:
                                 coding['display'] = row_tax[2]
 
@@ -324,11 +323,11 @@ def publiccsv2fhir(csvfile, output_dir):
             ofile.close()
 
             if row[1] == "1":
-                results = json_schema_check.json_schema_check('../fhir_json_schema/fhir_practitioner_schema.json', json_file)
+                results = json_schema_check.json_schema_check('fhir_json_schema/fhir_practitioner_schema.json', fp)
                 if results['errors'] != []:
                     response_dict['errors'] = results['errors']
             if row[2] == "2":
-                results = json_schema_check.json_schema_check('../fhir_json_schema/fhir_organization_schema.json', json_file)
+                results = json_schema_check.json_schema_check('fhir_json_schema/fhir_organization_schema.json', fp)
                 if results['errors'] != []:
                     response_dict['errors'] = results['errors']
             po_count += 1
