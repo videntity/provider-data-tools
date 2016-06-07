@@ -293,6 +293,11 @@
       "type": "object",
       "additionalProperties": false,
       "maxProperties": 2,
+      "oneOf": [
+        {"required": ["numerator", "denominator"]},
+        {"not":{"enum": ["numerator", "denominator"]
+          }}
+      ],
       "properties": {
         "numerator": {
           "$ref": "#/definitions/Quantity"
@@ -350,6 +355,9 @@
     "ContactPoint": {
       "type": "object",
       "additionalProperties": false,
+      "dependencies": {
+        "value": ["system"]
+      },
       "properties": {
         "resourceType": {
           "type": "string",
@@ -420,6 +428,10 @@
 
   "type": "object",
   "additionalProperties": false,
+  "anyOf": [
+        {"required": ["id"]},
+        {"required": ["name"]}
+    ],
   "properties": {
     "resourceType": {
       "type": "string",

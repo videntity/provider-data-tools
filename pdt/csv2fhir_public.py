@@ -3,7 +3,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Written by Alan Viars - This software is public domain
 
-import os, sys, string, json, csv, time
+import os, sys, string, json, csv, time, codecs
+from pdt import json_schema_check
 from collections import OrderedDict
 from datetime import datetime
 
@@ -33,6 +34,7 @@ def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
     ps["text"] = { "status": "generated",
                    "div": "<div><p>%s</p></div>" % (text)
                  }
+    ps['extension'] = []
     ps['identifier'] = [
                     {
                       "use": "official",
@@ -74,6 +76,7 @@ def new_fhir_organization_stub(npi, organization_name):
     os["text"] = { "status": "generated",
                    "div": "<div><p>%s</p></div>" % (text)
                  }
+    os['extension'] = []
     os['identifier'] = [
                     {
                       "use": "official",
@@ -183,7 +186,6 @@ def publiccsv2fhir(csvfile, output_dir):
             r['address'] = [a]
 
             #Mailing address --------------------
-            a = OrderedDict()
             if row[1] == "1":
                 a['use'] = 'home'
                 a['line'] = []
@@ -277,12 +279,25 @@ def publiccsv2fhir(csvfile, output_dir):
                     #Fill in url
                     coding = OrderedDict()
                     extension = OrderedDict()
-                    coding['system'] = "http://org.nucc.taxonomy/"
+
+                    coding['system'] = "http://www.nucc.org/"
                     coding['code'] = str(row[i-3])
+                    with codecs.open('nucc_taxonomy_160.csv', 'r', encoding='iso-8859-1') as csvfile_tax:
+                        tax_reader = csv.reader(csvfile_tax)
+                        for row_tax in tax_reader:
+                            if coding['code'] == row_tax[0]:
+                                coding['display'] = row_tax[2]
+
                     taxonomy['coding'] = [coding]
-                    extension['url'] = "http://gov.onc.fhir.extension.taxonomy"
+
+                    extension['url'] = "http://www.nucc.org/"
                     extension['valueCodeableConcept'] = taxonomy
+
                     r['extension'] = [extension]
+
+
+
+
 
 
             fn = "%s.json" % (row[0])
@@ -306,6 +321,15 @@ def publiccsv2fhir(csvfile, output_dir):
             ofile =  open(fp, 'w')
             ofile.writelines(json.dumps(r, indent =4))
             ofile.close()
+
+            if row[1] == "1":
+                results = json_schema_check.json_schema_check('fhir_json_schema/fhir_practitioner_schema.json', fp)
+                if results['errors'] != []:
+                    response_dict['errors'] = results['errors']
+            if row[2] == "2":
+                results = json_schema_check.json_schema_check('fhir_json_schema/fhir_organization_schema.json', fp)
+                if results['errors'] != []:
+                    response_dict['errors'] = results['errors']
             po_count += 1
 
             if po_count % 1000 == 0:
