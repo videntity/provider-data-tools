@@ -26,7 +26,7 @@ class TestCSV2FHIR_PUBLIC(unittest.TestCase):
         for x in range(1000,2000):
             if os.path.exists(os.path.join("fhir_test_output", "Practitioner", str(x))):
                 for files in os.listdir(os.path.join("fhir_test_output","Practitioner",str(x))):
-                    result = pdt.json_schema_check.json_schema_check(os.path.join( CURRENT_DIR, "..", "fhir_json_schema", "fhir_practitioner_schema.json"), os.path.join("fhir_test_output", "Practitioner", str(x), files))
+                    result = pdt.json_schema_check.json_schema_check(os.path.join( CURRENT_DIR, "..", "pdt", "fhir_json_schema", "Practitioner.json"), os.path.join("fhir_test_output", "Practitioner", str(x), files))
                     self.assertEqual(result['errors'], [])
                 # To test to make sure works when running from different directories, using nosetest.
                 # If not using a test runner, make sure to run tests from the project root.
@@ -35,7 +35,7 @@ class TestCSV2FHIR_PUBLIC(unittest.TestCase):
                     # print(x)
             if os.path.exists(os.path.join("fhir_test_output", "Organization", str(x))):
                 for files in os.listdir(os.path.join("fhir_test_output","Organization",str(x))):
-                    result = pdt.json_schema_check.json_schema_check(os.path.join( CURRENT_DIR, "..", "fhir_json_schema","fhir_organization_schema.json"), os.path.join("fhir_test_output", "Organization", str(x), files))
+                    result = pdt.json_schema_check.json_schema_check(os.path.join( CURRENT_DIR, "..", "pdt", "fhir_json_schema","Organization.json"), os.path.join("fhir_test_output", "Organization", str(x), files))
                     self.assertEqual(result['errors'], [])
                 # if x > 1200:
                 #     self.fail()
