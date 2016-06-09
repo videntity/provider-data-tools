@@ -17,8 +17,6 @@ def json_schema_check(json_schema_path, file_to_check_path):
     with open(json_schema_path) as json_schema:
         deserialized_json_schema = json.load(json_schema)
 
-    # Do I need to close the above files?
-
     v = jsonschema.Draft4Validator(deserialized_json_schema)
     errors = sorted(v.iter_errors(deserialized_json_file), key=lambda e: e.path)
     for error in errors:
