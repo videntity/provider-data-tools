@@ -322,12 +322,15 @@ def publiccsv2fhir(csvfile, output_dir):
             ofile.writelines(json.dumps(r, indent =4))
             ofile.close()
 
+            practitioner_path = os.path.join( os.path.dirname( __file__),  "fhir_json_schema", "Practitioner.json")
+            organization_path = os.path.join( os.path.dirname( __file__),  "fhir_json_schema", "Organization.json")
+            
             if row[1] == "1":
-                results = json_schema_check.json_schema_check('fhir_json_schema/fhir_practitioner_schema.json', fp)
+                results = json_schema_check.json_schema_check(practitioner_path, fp)
                 if results['errors'] != []:
                     response_dict['errors'] = results['errors']
             if row[2] == "2":
-                results = json_schema_check.json_schema_check('fhir_json_schema/fhir_organization_schema.json', fp)
+                results = json_schema_check.json_schema_check(organization_path, fp)
                 if results['errors'] != []:
                     response_dict['errors'] = results['errors']
             po_count += 1
