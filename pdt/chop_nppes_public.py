@@ -20,7 +20,7 @@ def chop_taxonomy(csvfile):
                            quoting=csv.QUOTE_MINIMAL)
     rowindex        = 0
 
-    print "Parsing", csvfile, "to create", output_file
+    print("Parsing", csvfile, "to create", output_file)
 
     for row in f:
         t = row[0:2] + row[4:7] + row[47:48] + row[54:56] + row[58:60] + row[62:64] \
@@ -32,7 +32,7 @@ def chop_taxonomy(csvfile):
         csvwriterb.writerow(t)
         rowindex+=1
 
-    print "Done. Iterated over", rowindex, "rows. "
+    print("Done. Iterated over", rowindex, "rows. ")
     fh.close()
     outputcsvfileb.close()
     return output_file
@@ -48,7 +48,7 @@ def flatten_taxonomy(csvfile):
                            quoting=csv.QUOTE_MINIMAL)
     rowindex         = 0
 
-    print "Parsing", csvfile, "to create", output_file
+    print("Parsing", csvfile, "to create", output_file)
     for row in f:
         #If header row.
         if rowindex==0:
@@ -77,7 +77,7 @@ def flatten_taxonomy(csvfile):
                 start+=2
                 finish+=2
                 rowindex+=1
-    print "Done. Iterated over", rowindex, "rows. "
+    print("Done. Iterated over", rowindex, "rows. ")
     fh.close()
     outputcsvfileb.close()
     return output_file
@@ -96,7 +96,7 @@ def chop_identifiers(csvfile):
                            quoting=csv.QUOTE_MINIMAL)
     rowindex=0
 
-    print "Parsing", csvfile, "to create", output_file
+    print("Parsing", csvfile, "to create", output_file)
 
     for row in f:
         t = row[0:2] + row[4:7] + row[107:307]
@@ -104,7 +104,7 @@ def chop_identifiers(csvfile):
         csvwriterb.writerow(t)
         rowindex+=1
 
-    print "Iterated over", rowindex, "rows."
+    print("Iterated over", rowindex, "rows.")
     fh.close()
     outputcsvfileb.close()
     return output_file
@@ -120,7 +120,7 @@ def flatten_identifiers(csvfile):
     csvwriterb = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex              = 0
-    print "Parsing", csvfile, "to create", output_file
+    print("Parsing", csvfile, "to create", output_file)
     for row in f:
         #If header row.
         if rowindex==0:
@@ -147,7 +147,7 @@ def flatten_identifiers(csvfile):
                 start+=4
                 finish+=4
                 rowindex+=1
-    print "Done. Iterated over", rowindex, "rows. "
+    print("Done. Iterated over", rowindex, "rows. ")
     fh.close()
     outputcsvfileb.close()
     return output_file
@@ -164,7 +164,7 @@ def chop_licenses(csvfile):
     csvwriterb = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex              = 0
-    print "Parsing", csvfile, "to create", output_file
+    print("Parsing", csvfile, "to create", output_file)
 
     for row in f:
         l = row[0:2] + row[4:7]  + row[48:50]+ row[52:54]+ row[56:58]+ row[60:62] + \
@@ -175,7 +175,7 @@ def chop_licenses(csvfile):
         csvwriterb.writerow(l)
         rowindex+=1
 
-    print "Done. Iterated over", rowindex, "rows. "
+    print("Done. Iterated over", rowindex, "rows. ")
 
     fh.close()
     outputcsvfileb.close()
@@ -195,7 +195,7 @@ def flatten_licenses(csvfile):
 
     rowindex              = 0
 
-    print "Parsing", csvfile, "to create", output_file
+    print("Parsing", csvfile, "to create", output_file)
     for row in f:
         #If header row.
         if rowindex==0:
@@ -222,7 +222,7 @@ def flatten_licenses(csvfile):
                 start+=2
                 finish+=2
                 rowindex+=1
-    print "Done. Iterated over", rowindex, "rows. "
+    print("Done. Iterated over", rowindex, "rows. ")
     fh.close()
     outputcsvfileb.close()
     return output_file
@@ -240,7 +240,7 @@ def chop_other_names(csvfile):
     csvwriterb      = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex        = 0
-    print "Parsing", csvfile, "to create", output_file
+    print("Parsing", csvfile, "to create", output_file)
 
 
     for row in f:
@@ -250,7 +250,7 @@ def chop_other_names(csvfile):
             csvwriterb.writerow(l)
         rowindex+=1
 
-    print "Done. Iterated over", rowindex, "rows."
+    print("Done. Iterated over", rowindex, "rows.")
     fh.close()
     outputcsvfileb.close()
     return output_file
@@ -266,7 +266,7 @@ def chop_addresses(csvfile):
     csvwriterb      = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex        = 0
-    print "Parsing", csvfile, "to create", output_file
+    print("Parsing", csvfile, "to create", output_file)
 
 
     for row in f:
@@ -274,7 +274,7 @@ def chop_addresses(csvfile):
         csvwriterb.writerow(l)
         rowindex+=1
 
-    print "Done. Iterated over", rowindex, "rows."
+    print ("Done. Iterated over", rowindex, "rows.")
     fh.close()
     outputcsvfileb.close()
     return output_file
@@ -294,7 +294,7 @@ def flatten_addresses(csvfile):
 
     rowindex = 0
 
-    print "Parsing", csvfile, "to create", output_file
+    print ("Parsing", csvfile, "to create", output_file)
     for row in f:
         #If header row.
         if rowindex==0:
@@ -329,7 +329,7 @@ def flatten_addresses(csvfile):
 
 
 
-    print "Done. Iterated over", rowindex, "rows. "
+    print("Done. Iterated over", rowindex, "rows. ")
     fh.close()
     outputcsvfileb.close()
     return output_file
@@ -349,12 +349,12 @@ def chop_basic(csvfile):
     rowindex = 0
     """#skip the first row """
     """#next(csvfile)"""
-    print "start file iteration"
+    print("start file iteration")
     for row in f:
         csvwriterb.writerow(row[0:20] + row[36:47] +row[307:314])
         rowindex+=1
 
-    print "Done. Iterated over", rowindex, "rows."
+    print("Done. Iterated over", rowindex, "rows.")
     fh.close()
     outputcsvfileb.close()
     return output_file

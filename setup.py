@@ -8,14 +8,14 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(name="pdt",
-      version="0.7.0",
+      version="0.7.4",
       description="Provider Data Tools",
       long_description="""A collection of scripts and APIs for working with health care provider data and beyond. Many tools are generic utilities.""",
       author="Alan Viars",
       author_email="sales@videntity.com",
       url="https://github.com/hhsidealab/provider-data-tools",
       download_url="https://github.com/hhsidealab/provider-data-tools/tarball/master",
-      install_requires=['validate_email', 'beautifulsoup4', 'baluhn', 'jdt', ],
+      install_requires=['validate_email', 'beautifulsoup4', 'baluhn', 'jdt', 'jsonschema'],
       packages= ['pdt', 'pdt.pjson', 'tests'],
       package_data={'':['taxonomy-license-crosswalk.csv','fiftythousand.csv']},
       scripts=['pdt/chop_nppes_public',

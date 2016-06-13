@@ -18,14 +18,14 @@ if __name__ == "__main__":
     
     
     if len(sys.argv)!=2:
-        print "Usage:"
-        print "vnpi.py [NPI]"
-        print "Example:"
-        print "vnpi.py "
+        print("Usage:")
+        print("vnpi.py [NPI]")
+        print("Example:")
+        print("vnpi.py ")
         sys.exit(1)
 
     #Get the file from the command line
     result = verify_npi(sys.argv[1])
     jresult = {"number": sys.argv[1], "valid": result}
-    print json.dumps(jresult, indent = 4 )
+    print(json.dumps(jresult, indent = 4 ))
     
