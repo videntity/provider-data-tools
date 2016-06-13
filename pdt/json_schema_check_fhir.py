@@ -9,16 +9,17 @@ from collections import OrderedDict
 
 
 
-def json_schema_check(json_schema_path, file_to_check_path):
+def json_schema_check_fhir(fhir_key_word_schema, json_string):
 
-    with open(file_to_check_path) as json_file:
-        deserialized_json_file = json.load(json_file)
+    input_json_string = json.loads(json_string)
+    fhir_json_schema = os.path.join( os.path.dirname( __file__), 'fhir_json_schema', '%s.json' % (fhir_key_word_schema))
 
-    with open(json_schema_path) as json_schema:
+    with open(fhir_json_schema) as json_schema:
         deserialized_json_schema = json.load(json_schema)
 
+
     v = jsonschema.Draft4Validator(deserialized_json_schema)
-    errors = sorted(v.iter_errors(deserialized_json_file), key=lambda e: e.path)
+    errors = sorted(v.iter_errors(input_json_string), key=lambda e: e.path)
     for error in errors:
         print(error.message)
 
@@ -40,11 +41,11 @@ if __name__ == "__main__":
 
     if len(sys.argv)!=3:
         print("Usage:")
-        print("json_schema_check.py [JSON SCHEMA] [JSON FILE TO CHECK]")
+        print("json_schema_check_fhir.py [FHIR JSON SCHEMA] [JSON STRING]")
         sys.exit(1)
 
-    json_schema_path   = sys.argv[1]
-    file_to_check_path = sys.argv[2]
+    fhir_key_word_schema   = sys.argv[1]
+    json_string = sys.argv[2]
 
-    result = json_schema_check(json_schema_path, file_to_check_path)
+    result = json_schema_check_fhir(fhir_key_word_schema, json_string)
     print(json.dumps(result, indent =4))
