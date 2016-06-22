@@ -122,6 +122,9 @@ def publiccsv2fhir(csvfile, output_dir):
     except:
         pass
 
+
+    #Make variable for nucc_taxonomy codes
+    nucc_tax = os.path.join( os.path.dirname( __file__),  "nucc_taxonomy_160.csv")
     response_dict = OrderedDict()
     fh = open(csvfile, 'r')
     csvhandle = csv.reader(fh, delimiter=',')
@@ -282,7 +285,7 @@ def publiccsv2fhir(csvfile, output_dir):
 
                     coding['system'] = "http://www.nucc.org/"
                     coding['code'] = str(row[i-3])
-                    with codecs.open('nucc_taxonomy_160.csv', 'r', encoding='iso-8859-1') as csvfile_tax:
+                    with codecs.open(nucc_tax, 'r', encoding='iso-8859-1') as csvfile_tax:
                         tax_reader = csv.reader(csvfile_tax)
                         for row_tax in tax_reader:
                             if coding['code'] == row_tax[0]:
@@ -324,7 +327,7 @@ def publiccsv2fhir(csvfile, output_dir):
 
             practitioner_path = os.path.join( os.path.dirname( __file__),  "fhir_json_schema", "Practitioner.json")
             organization_path = os.path.join( os.path.dirname( __file__),  "fhir_json_schema", "Organization.json")
-            
+
             if row[1] == "1":
                 results = json_schema_check.json_schema_check(practitioner_path, fp)
                 if results['errors'] != []:
