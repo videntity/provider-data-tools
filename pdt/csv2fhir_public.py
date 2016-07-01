@@ -123,8 +123,13 @@ def publiccsv2fhir(csvfile, output_dir):
         pass
 
 
-    #Make variable for nucc_taxonomy codes
+    #Make variable/paths for nucc_taxonomy and schema checker, open file
     nucc_tax = os.path.join( os.path.dirname( __file__),  "nucc_taxonomy_160.csv")
+    csvfile_tax = codecs.open(nucc_tax, 'r', encoding='iso-8859-1')
+    tax_reader = csv.reader(csvfile_tax)
+    practitioner_path = os.path.join( os.path.dirname( __file__),  "fhir_json_schema", "Practitioner.json")
+    organization_path = os.path.join( os.path.dirname( __file__),  "fhir_json_schema", "Organization.json")
+
     response_dict = OrderedDict()
     fh = open(csvfile, 'r')
     csvhandle = csv.reader(fh, delimiter=',')
@@ -285,11 +290,9 @@ def publiccsv2fhir(csvfile, output_dir):
 
                     coding['system'] = "http://www.nucc.org/"
                     coding['code'] = str(row[i-3])
-                    with codecs.open(nucc_tax, 'r', encoding='iso-8859-1') as csvfile_tax:
-                        tax_reader = csv.reader(csvfile_tax)
-                        for row_tax in tax_reader:
-                            if coding['code'] == row_tax[0]:
-                                coding['display'] = row_tax[2]
+                    for row_tax in tax_reader:
+                        if coding['code'] == row_tax[0]:
+                            coding['display'] = row_tax[2]
 
                     taxonomy['coding'] = [coding]
 
@@ -325,8 +328,7 @@ def publiccsv2fhir(csvfile, output_dir):
             ofile.writelines(json.dumps(r, indent =4))
             ofile.close()
 
-            practitioner_path = os.path.join( os.path.dirname( __file__),  "fhir_json_schema", "Practitioner.json")
-            organization_path = os.path.join( os.path.dirname( __file__),  "fhir_json_schema", "Organization.json")
+
 
             if row[1] == "1":
                 results = json_schema_check.json_schema_check(practitioner_path, fp)
@@ -358,6 +360,7 @@ def publiccsv2fhir(csvfile, output_dir):
 
                 response_dict['message']="Completed with errors."
     fh.close()
+    csvfile_tax.close()
     return response_dict
 
 if __name__ == "__main__":

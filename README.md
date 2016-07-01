@@ -1,7 +1,7 @@
 pdt - Provider Data Tools
 =========================
 
-Version: 0.7.4
+Version: 0.7.5
 
 This repository contains a number of command-line utilities and related code libraries for
 parsing, creating, and validating US-based health provider data.  These tools are:
