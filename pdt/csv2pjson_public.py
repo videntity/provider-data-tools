@@ -175,7 +175,6 @@ def publiccsv2pjson(csvfile, output_dir):
                 #Load basic
                 for i in range(0, len(row)):
                     if row[i]:
-                        # row[i] = row[i].decode('ascii', 'ignore')
                         row[i] = six.u(row[i])
                     else:
                          row[i] = ""
