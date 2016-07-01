@@ -8,12 +8,11 @@ parsing, creating, and validating US-based health provider data.  These tools ar
 
 * chop-nppes-public   - Parse the npi public data dissemination into flattened files.
 * csv2pjson_public.py - Parse the npi public data dissemination into ProviderJSON files.
-* csv2fhir_public.py  - Parse the npi public data dissemination to FHIR Practitioner and Organiation Resources.
+* csv2fhir_public.py  - Parse the npi public data dissemination to FHIR Practitioner and Organization Resources.
 * validate-pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
 * validate-pjson-dir  - Bulk validation of the output of csv2pjson-public.py.
-* create-provider-indexes - Create default MongoDB indexes on Provides JSON data to support public search on common fields.
+* create-provider-indexes - Create default MongoDB indexes on Provider JSON data to support public search on common fields.
 * loadnppes.py        - Download public, parse to JSON, and load to MongoDB in one step.
-* csv2fhir.py         - Parse the npi public data dissemination into FHIR Resource files
 
 
 Please note the utilities `csv2json`, `json2mongo`, and `jsondir2mongo` have been
