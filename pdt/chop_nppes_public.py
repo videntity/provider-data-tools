@@ -11,11 +11,20 @@ import hashlib
 
 def chop_taxonomy(csvfile):
     """"Chop taxonomy up into its own file. Not flattened."""
-    fh              = open(csvfile, 'rb')
+    if sys.version_info[0] < 3:
+        fh = open(csvfile, 'rb')
+    else:
+        fh = open(csvfile, 'r', newline='', encoding='iso-8859-1')
     f               = csv.reader(fh, delimiter=',')
     output_file     = csvfile[:-4]
     output_file     = "%s_taxonomy.csv" % (output_file)
     outputcsvfileb  = open(output_file,'wb')
+
+    if sys.version_info >= (3,0,0):
+        outputcsvfileb = open(output_file, 'w', newline='')
+    else:
+        outputcsvfileb = open(output_file, 'wb')
+
     csvwriterb      = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex        = 0
@@ -39,11 +48,19 @@ def chop_taxonomy(csvfile):
 
 def flatten_taxonomy(csvfile):
     """"Flatten the taxonomy output file."""
-    fh              = open(csvfile, 'rb')
+    if sys.version_info[0] < 3:
+        fh = open(csvfile, 'rb')
+    else:
+        fh = open(csvfile, 'r', newline='', encoding='iso-8859-1')
     f               = csv.reader(fh, delimiter=',')
     output_file     = csvfile[:-4]
     output_file     = "%s_flat.csv" % (output_file)
-    outputcsvfileb  = open(output_file,'wb')
+
+    if sys.version_info >= (3,0,0):
+        outputcsvfileb = open(output_file, 'w', newline='')
+    else:
+        outputcsvfileb = open(output_file, 'wb')
+
     csvwriterb      = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex         = 0
@@ -87,11 +104,19 @@ def flatten_taxonomy(csvfile):
 def chop_identifiers(csvfile):
     """"Chop identifiers up into its own file. Not flattened."""
 
-    fh = open(csvfile, 'rb')
+    if sys.version_info[0] < 3:
+        fh = open(csvfile, 'rb')
+    else:
+        fh = open(csvfile, 'r', newline='', encoding='iso-8859-1')
     f = csv.reader(fh, delimiter=',')
     output_file = csvfile[:-4]
     output_file = "%s_identifiers.csv" % (output_file)
-    outputcsvfileb = open(output_file,'wb')
+
+    if sys.version_info >= (3,0,0):
+        outputcsvfileb = open(output_file, 'w', newline='')
+    else:
+        outputcsvfileb = open(output_file, 'wb')
+
     csvwriterb = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex=0
@@ -112,11 +137,19 @@ def chop_identifiers(csvfile):
 
 def flatten_identifiers(csvfile):
     """"Flatten the identifiers output file."""
-    fh = open(csvfile, 'rb')
+    if sys.version_info[0] < 3:
+        fh = open(csvfile, 'rb')
+    else:
+        fh = open(csvfile, 'r', newline='', encoding='iso-8859-1')
     f = csv.reader(fh, delimiter=',')
     output_file = csvfile[:-4]
     output_file = "%s_flat.csv" % (output_file)
-    outputcsvfileb = open(output_file,'wb')
+
+    if sys.version_info >= (3,0,0):
+        outputcsvfileb = open(output_file, 'w', newline='')
+    else:
+        outputcsvfileb = open(output_file, 'wb')
+
     csvwriterb = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex              = 0
@@ -156,11 +189,19 @@ def flatten_identifiers(csvfile):
 
 def chop_licenses(csvfile):
     """Chop license up into its own file. Not flattened."""
-    fh = open(csvfile, 'rb')
+    if sys.version_info[0] < 3:
+        fh = open(csvfile, 'rb')
+    else:
+        fh = open(csvfile, 'r', newline='', encoding='iso-8859-1')
     f = csv.reader(fh, delimiter=',')
     output_file = csvfile[:-4]
     output_file = "%s_licenses.csv" % (output_file)
-    outputcsvfileb = open(output_file,'wb')
+
+    if sys.version_info >= (3,0,0):
+        outputcsvfileb = open(output_file, 'w', newline='')
+    else:
+        outputcsvfileb = open(output_file, 'wb')
+
     csvwriterb = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex              = 0
@@ -185,11 +226,19 @@ def chop_licenses(csvfile):
 
 def flatten_licenses(csvfile):
     """"Flatten the licenses output file."""
-    fh = open(csvfile, 'rb')
+    if sys.version_info[0] < 3:
+        fh = open(csvfile, 'rb')
+    else:
+        fh = open(csvfile, 'r', newline='', encoding='iso-8859-1')
     f = csv.reader(fh, delimiter=',')
     output_file = csvfile[:-4]
     output_file = "%s_flat.csv" % (output_file)
-    outputcsvfileb = open(output_file,'wb')
+
+    if sys.version_info >= (3,0,0):
+        outputcsvfileb = open(output_file, 'w', newline='')
+    else:
+        outputcsvfileb = open(output_file, 'wb')
+
     csvwriterb = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
 
@@ -232,11 +281,19 @@ def chop_other_names(csvfile):
     """Chop other names up into its own file.
     No need toflatten because only one item is in the public file
     """
-    fh              = open(csvfile, 'rb')
+    if sys.version_info[0] < 3:
+        fh = open(csvfile, 'rb')
+    else:
+        fh = open(csvfile, 'r', newline='', encoding='iso-8859-1')
     f               = csv.reader(fh, delimiter=',')
     output_file     = csvfile[:-4]
     output_file     = "%s_other_names.csv" % (output_file)
-    outputcsvfileb  = open(output_file,'wb')
+
+    if sys.version_info >= (3,0,0):
+        outputcsvfileb = open(output_file, 'w', newline='')
+    else:
+        outputcsvfileb = open(output_file, 'wb')
+
     csvwriterb      = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex        = 0
@@ -258,11 +315,19 @@ def chop_other_names(csvfile):
 
 def chop_addresses(csvfile):
     """Chop addresses up into its own file. Not flattened."""
-    fh              = open(csvfile, 'rb')
+    if sys.version_info[0] < 3:
+        fh = open(csvfile, 'rb')
+    else:
+        fh = open(csvfile, 'r', newline='', encoding='iso-8859-1')
     f               = csv.reader(fh, delimiter=',')
     output_file     = csvfile[:-4]
     output_file     = "%s_addresses.csv" % (output_file)
-    outputcsvfileb  = open(output_file,'wb')
+
+    if sys.version_info >= (3,0,0):
+        outputcsvfileb = open(output_file, 'w', newline='')
+    else:
+        outputcsvfileb = open(output_file, 'wb')
+
     csvwriterb      = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
     rowindex        = 0
@@ -284,11 +349,19 @@ def chop_addresses(csvfile):
 
 def flatten_addresses(csvfile):
     """"Flatten the addresses output file."""
-    fh = open(csvfile, 'rb')
+    if sys.version_info[0] < 3:
+        fh = open(csvfile, 'rb')
+    else:
+        fh = open(csvfile, 'r', newline='', encoding='iso-8859-1')
     f = csv.reader(fh, delimiter=',')
     output_file = csvfile[:-4]
     output_file = "%s_flat.csv" % (output_file)
-    outputcsvfileb = open(output_file,'wb')
+
+    if sys.version_info >= (3,0,0):
+        outputcsvfileb = open(output_file, 'w', newline='')
+    else:
+        outputcsvfileb = open(output_file, 'wb')
+
     csvwriterb = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
 
@@ -338,11 +411,19 @@ def flatten_addresses(csvfile):
 def chop_basic(csvfile):
     """Chop basic info into its own file."""
 
-    fh = open(csvfile, 'rb')
+    if sys.version_info[0] < 3:
+        fh = open(csvfile, 'rb')
+    else:
+        fh = open(csvfile, 'r', newline='', encoding='iso-8859-1')
     f = csv.reader(fh, delimiter=',')
     output_file = csvfile[:-4]
     output_file = "%s_basic.csv" % (output_file)
-    outputcsvfileb = open(output_file,'wb')
+
+    if sys.version_info >= (3,0,0):
+        outputcsvfileb = open(output_file, 'w', newline='')
+    else:
+        outputcsvfileb = open(output_file, 'wb')
+        
     csvwriterb = csv.writer(outputcsvfileb, delimiter=',',
                            quoting=csv.QUOTE_MINIMAL)
 
