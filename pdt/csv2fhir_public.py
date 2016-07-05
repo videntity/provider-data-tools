@@ -3,17 +3,16 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Written by Alan Viars - This software is public domain
 
-import os, sys, string, json, csv, time, codecs
+import os, sys, string, json, csv, time
 from pdt import json_schema_check
 from collections import OrderedDict
 from datetime import datetime
 
 
-
 def newfhir_deactive_stub():
     ps = OrderedDict()
 
-    #ProviderJSON stub
+    # ProviderJSON stub
     ps["resourceType"] = "Practitioner"
     ps['identifier'] = [
                     {
@@ -90,20 +89,15 @@ def new_fhir_organization_stub(npi, organization_name):
     return os
 
 
-
-
-
 def publiccsv2fhir(csvfile, output_dir):
 
     """Return a response_dict with summary of  publiccsv2fhir transaction."""
-
 
     process_start_time = time.time()
 
     pdir = 1
 
-
-    #make the output dir
+    # make the output dir
     try:
         os.mkdir(output_dir)
     except:
@@ -122,14 +116,21 @@ def publiccsv2fhir(csvfile, output_dir):
     except:
         pass
 
+    # Make variable/paths for nucc_taxonomy and schema checker, open file
+    nucc_tax = os.path.join(os.path.dirname(__file__),
+                            "nucc_taxonomy_160.csv")
+    # Check which version of Python, and open csv accordingly
+    if sys.version_info[0] < 3:
+        csvfile_tax = open(nucc_tax, 'rb')
+    else:
+        csvfile_tax = open(nucc_tax, 'r', newline='', encoding='iso-8859-1')
+    tax_reader = csv.reader(csvfile_tax, delimiter=',')
+    practitioner_path = os.path.join(os.path.dirname(__file__),
+                                     "fhir_json_schema", "Practitioner.json")
+    organization_path = os.path.join(os.path.dirname(__file__),
+                                     "fhir_json_schema", "Organization.json")
 
-    #Make variable/paths for nucc_taxonomy and schema checker, open file
-    nucc_tax = os.path.join( os.path.dirname( __file__),  "nucc_taxonomy_160.csv")
-    csvfile_tax = codecs.open(nucc_tax, 'r', encoding='iso-8859-1')
-    tax_reader = csv.reader(csvfile_tax)
-    practitioner_path = os.path.join( os.path.dirname( __file__),  "fhir_json_schema", "Practitioner.json")
-    organization_path = os.path.join( os.path.dirname( __file__),  "fhir_json_schema", "Organization.json")
-
+    # Start of opening of csv file to convert and test
     response_dict = OrderedDict()
     fh = open(csvfile, 'r')
     csvhandle = csv.reader(fh, delimiter=',')
@@ -137,51 +138,50 @@ def publiccsv2fhir(csvfile, output_dir):
     po_count = 0
     error_list = []
 
-    for row in csvhandle :
-        if rowindex==0:
+    for row in csvhandle:
+        if rowindex == 0:
 
             rowindex += 1
             column_headers = row
 
             cleaned_headers = []
             for c in column_headers:
-                c= c.replace(".", "")
-                c= c.replace("(", "")
-                c= c.replace(")", "")
-                c =c.replace("$", "-")
-                c =c.replace(" ", "_")
+                c = c.replace(".", "")
+                c = c.replace("(", "")
+                c = c.replace(")", "")
+                c = c.replace("$", "-")
+                c = c.replace(" ", "_")
                 cleaned_headers.append(c)
         else:
 
-            #If the records is not redacted (because its inactive)
+            # If the records is not redacted (because its inactive)
 
             zip_record = list(zip(cleaned_headers, row))
             record = dict(list(zip(cleaned_headers, row)))
 
-            #get rid of blanks
+            # get rid of blanks
             no_blank_zip = []
             for i in zip_record:
                 if i[1]:
                     no_blank_zip.append(i)
 
-            #start our object off with a stub.
+            # start our object off with a stub.
 
             if row[1] == "1":
-                r =  new_fhir_practitioner_stub(row[0], row[8],  row[6], row[5], row[9])
+                r = new_fhir_practitioner_stub(row[0], row[8],  row[6], row[5],
+                                               row[9])
 
             elif row[1] == "2":
-                r =  new_fhir_organization_stub(row[0], row[4])
+                r = new_fhir_organization_stub(row[0], row[4])
 
             else:
                 r = newfhir_deactive_stub()
 
-
-
-            #Practice Address
+            # Practice Address
 
             a = OrderedDict()
-            r['address']=[]
-            a["use"]  = "work"
+            r['address'] = []
+            a["use"] = "work"
             a["line"] = []
             a["line"].append(row[28].upper())
             if row[29]:
@@ -193,7 +193,7 @@ def publiccsv2fhir(csvfile, output_dir):
 
             r['address'] = [a]
 
-            #Mailing address --------------------
+            # Mailing address --------------------
             if row[1] == "1":
                 a['use'] = 'home'
                 a['line'] = []
@@ -206,7 +206,7 @@ def publiccsv2fhir(csvfile, output_dir):
                 a["country"] = row[25].upper()
                 r['address'].append(a)
 
-            #Gender
+            # Gender
             if row[1] == "1":
                 if row[41] == "M":
                     r["gender"] = "male"
@@ -217,7 +217,7 @@ def publiccsv2fhir(csvfile, output_dir):
                 else:
                     r["gender"] = "unknown"
 
-            #Organization Contact
+            # Organization Contact
 
             if row[43]:
                 contact_list = list()
@@ -227,64 +227,66 @@ def publiccsv2fhir(csvfile, output_dir):
                 contact['purpose'] = purpose
                 name = OrderedDict()
                 name["family"] = [row[42]]
-                name["given"]= [row[43]]
-                name["suffix"]= [row[312]]
-                name["prefix"]= [row[311]]
+                name["given"] = [row[43]]
+                name["suffix"] = [row[312]]
+                name["prefix"] = [row[311]]
                 contact['name'] = name
 
                 contact['telecom'] = [
-                            {
-                                "system": "phone",
-                                "value": "%s-%s-%s" % (row[46][0:3], row[46][3:6], row[46][6:12]),
-                                "use" : "work"
-                            }
-                          ]
+                    {
+                        "system": "phone",
+                        "value": "%s-%s-%s" % (row[46][0:3],
+                                               row[46][3:6],
+                                               row[46][6:12]),
+                        "use": "work"
+                    }
+                ]
                 contact_list.append(contact)
                 r['contact'] = contact_list
-            #Provider Business Practice Location Address Telephone Number
+            # Provider Business Practice Location Address Telephone Number
 
             t = OrderedDict()
             if row[34]:
                 t['system'] = "phone"
-                t['value'] =  "%s-%s-%s" % (row[34][0:3], row[34][3:6], row[34][6:12])
+                t['value'] = "%s-%s-%s" % (row[34][0:3], row[34][3:6],
+                                           row[34][6:12])
                 t['use'] = "work"
                 r['telecom'] = [t]
-            #Provider Business Practice Location Address Fax Number
+            # Provider Business Practice Location Address Fax Number
             if row[35]:
                 t = OrderedDict()
                 t['system'] = "fax"
-                t['value'] =  "%s-%s-%s" % (row[35][0:3], row[35][3:6], row[35][6:12])
+                t['value'] = "%s-%s-%s" % (row[35][0:3], row[35][3:6],
+                                           row[35][6:12])
                 t['use'] = "work"
                 r['telecom'].append(t)
 
-
-
-            #Mailing Phone and Fax numbers for Practitioners
+            # Mailing Phone and Fax numbers for Practitioners
             if row[1] == "1":
                 if row[26]:
                     t = OrderedDict()
                     t['system'] = "phone"
-                    t['value'] =  "%s-%s-%s" % (row[26][0:3], row[26][3:6], row[26][6:12])
+                    t['value'] = "%s-%s-%s" % (row[26][0:3], row[26][3:6],
+                                               row[26][6:12])
                     t['use'] = 'home'
                     r['telecom'].append(t)
-
 
                 if row[27]:
                     t = OrderedDict()
                     t['system'] = "fax"
-                    t['value'] =  "%s-%s-%s" % (row[27][0:3], row[27][3:6], row[27][6:12])
+                    t['value'] = "%s-%s-%s" % (row[27][0:3], row[27][3:6],
+                                               row[27][6:12])
                     t['use'] = 'home'
                     r['telecom'].append(t)
 
-            #Extension, specifically taxonomy codes
+            # Extension, specifically taxonomy codes
             # Getting taxonomy codes
 
-
-            for i in range(50,107,4):
+            for i in range(50, 107, 4):
                 if row[i] == "Y":
 
                     taxonomy = OrderedDict()
-                    #Fill in url
+                    # Fill in url
                     coding = OrderedDict()
                     extension = OrderedDict()
 
@@ -301,74 +303,66 @@ def publiccsv2fhir(csvfile, output_dir):
 
                     r['extension'] = [extension]
 
-
-
-
-
-
             fn = "%s.json" % (row[0])
 
             if not r['resourceType']:
-                subdir = os.path.join(output_dir, "Deactive",  str(row[0])[0:4])
-            elif r['resourceType']=="Practitioner":
-                subdir = os.path.join(output_dir, "Practitioner",  str(row[0])[0:4])
-            elif r['resourceType']=="Organization":
-                subdir = os.path.join(output_dir, "Organization",  str(row[0])[0:4])
-
-
+                subdir = os.path.join(output_dir, "Deactive",
+                                      str(row[0])[0:4])
+            elif r['resourceType'] == "Practitioner":
+                subdir = os.path.join(output_dir, "Practitioner",
+                                      str(row[0])[0:4])
+            elif r['resourceType'] == "Organization":
+                subdir = os.path.join(output_dir, "Organization",
+                                      str(row[0])[0:4])
 
             try:
                 os.mkdir(subdir)
             except:
                 pass
 
-
             fp = os.path.join(subdir, fn)
-            ofile =  open(fp, 'w')
-            ofile.writelines(json.dumps(r, indent =4))
+            ofile = open(fp, 'w')
+            ofile.writelines(json.dumps(r, indent=4))
             ofile.close()
 
-
-
             if row[1] == "1":
-                results = json_schema_check.json_schema_check(practitioner_path, fp)
+                results = json_schema_check.json_schema_check(
+                    practitioner_path, fp)
                 if results['errors'] != []:
                     response_dict['errors'] = results['errors']
             if row[2] == "2":
-                results = json_schema_check.json_schema_check(organization_path, fp)
+                results = json_schema_check.json_schema_check(
+                    organization_path, fp)
                 if results['errors'] != []:
                     response_dict['errors'] = results['errors']
             po_count += 1
 
             if po_count % 1000 == 0:
-               pdir += 1
-               out  = "%s files created. Total time is %s seconds." % (po_count ,(time.time() - process_start_time) )
-               print((out))
-
-
+                pdir += 1
+                out = "%s files created. Total time is %s seconds." % (
+                    po_count, (time.time() - process_start_time))
+                print((out))
 
             rowindex += 1
 
-
         try:
 
-                response_dict['num_files_created']=rowindex -1
-                response_dict['num_csv_rows']=rowindex -1
-                response_dict['code']=200
-                response_dict['message']="Completed without errors."
+                response_dict['num_files_created'] = rowindex - 1
+                response_dict['num_csv_rows'] = rowindex - 1
+                response_dict['code'] = 200
+                response_dict['message'] = "Completed without errors."
         except:
 
-                response_dict['message']="Completed with errors."
+                response_dict['message'] = "Completed with errors."
     fh.close()
     csvfile_tax.close()
     return response_dict
 
 if __name__ == "__main__":
 
-
-    if len(sys.argv)!=3:
+    if len(sys.argv) != 3:
         print("Usage:")
-        print("csv2fhir-public.py [CSVFILE] [OUTPUT_DIRECTORY]")
+        print("csv2fhir_public.py [CSVFILE] [OUTPUT_DIRECTORY]")
         sys.exit(1)
 
     csv_file   = sys.argv[1]
@@ -376,5 +370,5 @@ if __name__ == "__main__":
 
     result = publiccsv2fhir(csv_file, output_dir)
 
-    #output the JSON transaction summary
-    print((json.dumps(result, indent =4)))
+    # output the JSON transaction summary
+    print((json.dumps(result, indent=4)))
