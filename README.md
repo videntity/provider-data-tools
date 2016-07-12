@@ -1,7 +1,7 @@
 pdt - Provider Data Tools
 =========================
 
-Version: 0.7.5
+Version: 0.7.6
 
 This repository contains a number of command-line utilities and related code libraries for
 parsing, creating, and validating US-based health provider data.  These tools are:
@@ -33,7 +33,7 @@ To install with pip just type:
 Note: If you use `sudo`, the scripts  will be installed at the system level and used by all users.
 Add  `--upgrade` to the above install instructions to ensure you fetch the newest version.
 
-These scripts are both Python 2 & 3 compatible.
+__These scripts are both Python 2 & 3 compatible.__
 
 chop_nppes_public
 -----------------
