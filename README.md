@@ -12,6 +12,7 @@ parsing, creating, and validating US-based health provider data.  These tools ar
 * validate-pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
 * validate-pjson-dir  - Bulk validation of the output of csv2pjson-public.py.
 * create-provider-indexes - Create default MongoDB indexes on Provider JSON data to support public search on common fields.
+* pull_pecos.py       - Download all or pieces of the PECOS Database in CSV format.
 * loadnppes.py        - Download public, parse to JSON, and load to MongoDB in one step.
 
 
@@ -32,6 +33,7 @@ To install with pip just type:
 Note: If you use `sudo`, the scripts  will be installed at the system level and used by all users.
 Add  `--upgrade` to the above install instructions to ensure you fetch the newest version.
 
+These scripts are both Python 2 & 3 compatible.
 
 chop_nppes_public
 -----------------
@@ -138,8 +140,37 @@ Example Output:
     ]
     }
 
+  pull_pecos.py
+  ------------
 
-loadnppes.py
+The script will download all or individual Public Provider Enrollment Files
+from https://data.cms.gov/public-provider-enrollment in CSV format. Note that
+`wget` is a requirement for this script.
+
+  Usage:
+
+      pull_pecos.py [DOWNLOAD ALL Y/N] [DOWNLOAD BASE Y/N] [DOWNLOAD REASSIGNMENT Y/N]  [DOWNLOAD ADDRESS Y/N]
+
+  Example:
+
+      pull_pecos.py y n n n
+
+  Example Output:
+
+
+          Downloading Address CSV file
+        --2016-07-12 10:39:00--  https://data.cms.gov/api/views/je57-c47h/rows.csv?accessType=DOWNLOAD
+        Resolving data.cms.gov (data.cms.gov)... 216.227.229.148
+        Connecting to data.cms.gov (data.cms.gov)|216.227.229.148|:443... connected.
+        HTTP request sent, awaiting response... 200 OK
+        Length: unspecified [text/csv]
+        Saving to: ‘pecos_address.csv’
+
+        pecos_address.csv
+          [                  <=>              ]   3.14M   914KB/s   
+
+
+  loadnppes.py
 ------------
 
 By streamlining several of the pdt utilities, the script loadnppes.py combines functionalty

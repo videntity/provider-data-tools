@@ -21,6 +21,7 @@ def pull_pecos(download_all=True, Base=False,
     file_names = ['Base-Provider-Enrollment-File', 'Reassignment-Sub-File',
                   'Address-Sub-File']
 
+    # Identify file links and parse into a list of strings
     soup = BeautifulSoup(html_page, "html.parser")
     file_links = []
     for file_name in file_names:
@@ -31,7 +32,9 @@ def pull_pecos(download_all=True, Base=False,
     csv_prefix = 'https://data.cms.gov/api/views/'
     # Possible feature to add is allowing people to name the output file.
     # Currently it supplants the downloaded file supplants a file that is
-    # already named that.
+    # already named the default value.
+
+    # Download files according to user input
     if download_all:
         print("Downloading Base, Address and Reassignment CSV files")
         for csv_link in file_links:
@@ -61,7 +64,7 @@ if __name__ == '__main__':
               "[DOWNLOAD BASE Y/N] [DOWNLOAD REASSIGNMENT Y/N] "
               " [DOWNLOAD ADDRESS Y/N]")
         print("Example:")
-        print("loadnppes.py Y N N N")
+        print("pull_pecos.py Y N N N")
         sys.exit(1)
 
     if sys.argv[1] in ("Y", "y", "T", True):
