@@ -8,10 +8,9 @@ from pdt import csv2fhir_public
 class TestCSV2FHIR_PUBLIC(unittest.TestCase):
 
     def test_run_CSV2FHIR_PUBLIC(self):
-
         """Run CSV2FHIR should return results """
         CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-        csvfile = os.path.join(CURRENT_DIR,  "fiftythousand.csv")
+        csvfile = os.path.join(CURRENT_DIR,  "first10.csv")
         output_dir = "fhir_test_output"
         with open(csvfile):
 
@@ -19,7 +18,6 @@ class TestCSV2FHIR_PUBLIC(unittest.TestCase):
             self.assertTrue(os.path.exists("fhir_test_output"))
 
     def test_FHIR_results(self):
-
         """Put newly created files through json_schema to check"""
         CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 

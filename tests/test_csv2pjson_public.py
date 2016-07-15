@@ -1,7 +1,6 @@
-import unittest, os
+import unittest
+import os
 from pdt import csv2pjson_public
-
-
 
 
 class TestCSV2PJSONPublic(unittest.TestCase):
@@ -15,10 +14,9 @@ class TestCSV2PJSONPublic(unittest.TestCase):
         csv2pjson_public.new_pjson_stub
 
     def test_publiccsv2pjson(self):
-
         """Run CSV2pjson_public should return results """
 
-        csvfile = os.path.join( os.path.dirname( __file__),  "fiftythousand.csv")
+        csvfile = os.path.join(os.path.dirname(__file__),  "fiftythousand.csv")
         output_dir = "test_output"
         number_processed = 50000
 

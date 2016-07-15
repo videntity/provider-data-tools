@@ -140,8 +140,11 @@ Example Output:
     ]
     }
 
-  pull_pecos.py
-  ------------
+
+
+
+pull_pecos.py
+------------
 
 The script will download all or individual Public Provider Enrollment Files
 from https://data.cms.gov/public-provider-enrollment in CSV format. Note that

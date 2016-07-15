@@ -3,7 +3,12 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Written by Alan Viars - This software is public domain
 
-import os, sys, string, json, csv, time
+import os
+import sys
+import string
+import json
+import csv
+import time
 from pdt import json_schema_check
 from collections import OrderedDict
 from datetime import datetime
@@ -15,56 +20,55 @@ def newfhir_deactive_stub():
     # ProviderJSON stub
     ps["resourceType"] = "Practitioner"
     ps['identifier'] = [
-                    {
-                      "use": "official",
-                      "system": "http://hl7.org/fhir/sid/us-npi",
+        {
+            "use": "official",
+            "system": "http://hl7.org/fhir/sid/us-npi",
                       "value": "",
-                    }
-                  ]
+        }
+    ]
     ps['active'] = bool(False)
     return ps
 
-def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
 
+def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
 
     text = "%s %s %s %s %s" % (npi, prefix, first_name, last_name, suffix)
     ps = OrderedDict()
     ps["resourceType"] = "Practitioner"
-    ps["text"] = { "status": "generated",
-                   "div": "<div><p>%s</p></div>" % (text)
-                 }
+    ps["text"] = {"status": "generated",
+                  "div": "<div><p>%s</p></div>" % (text)
+                  }
     ps['extension'] = []
     ps['identifier'] = [
-                    {
-                      "use": "official",
-                      "system": "http://hl7.org/fhir/sid/us-npi",
+        {
+            "use": "official",
+            "system": "http://hl7.org/fhir/sid/us-npi",
                       "value": str(npi)
-                    }
-                  ]
+        }
+    ]
     ps['active'] = bool(True)
     ps['name'] = [
-                {
-                  "family": [
-                    last_name
-                  ],
-                  "given": [
-                    first_name
-                  ],
-                  "suffix": [
-                    suffix
-                  ],
-                  "prefix": [
-                    prefix
-                  ]
+        {
+            "family": [
+                last_name
+            ],
+            "given": [
+                first_name
+            ],
+            "suffix": [
+                suffix
+            ],
+            "prefix": [
+                prefix
+            ]
 
 
-                }
-              ]
-    ps["address"]= []
+        }
+    ]
+    ps["address"] = []
     ps['telecom'] = []
 
     return ps
-
 
 
 def new_fhir_organization_stub(npi, organization_name):
@@ -72,25 +76,24 @@ def new_fhir_organization_stub(npi, organization_name):
     text = "NPI %s for %s" % (npi, organization_name)
     os = OrderedDict()
     os["resourceType"] = "Organization"
-    os["text"] = { "status": "generated",
-                   "div": "<div><p>%s</p></div>" % (text)
-                 }
+    os["text"] = {"status": "generated",
+                  "div": "<div><p>%s</p></div>" % (text)
+                  }
     os['extension'] = []
     os['identifier'] = [
-                    {
-                      "use": "official",
-                      "system": "http://hl7.org/fhir/sid/us-npi",
+        {
+            "use": "official",
+            "system": "http://hl7.org/fhir/sid/us-npi",
                       "value": str(npi)
-                    }
-                  ]
+        }
+    ]
     os['name'] = organization_name
-    os["address"]= []
+    os["address"] = []
     os['telecom'] = []
     return os
 
 
 def publiccsv2fhir(csvfile, output_dir):
-
     """Return a response_dict with summary of  publiccsv2fhir transaction."""
 
     process_start_time = time.time()
@@ -186,10 +189,10 @@ def publiccsv2fhir(csvfile, output_dir):
             a["line"].append(row[28].upper())
             if row[29]:
                 a["line"].append(row[29].upper())
-            a["city"]        = row[30].upper()
-            a["state"]       = row[31].upper()
-            a["postalCode"]  = row[32].upper()
-            a["country"]     = row[33].upper()
+            a["city"] = row[30].upper()
+            a["state"] = row[31].upper()
+            a["postalCode"] = row[32].upper()
+            a["country"] = row[33].upper()
 
             r['address'] = [a]
 
@@ -200,9 +203,9 @@ def publiccsv2fhir(csvfile, output_dir):
                 a['line'].append(row[20].upper())
                 if row[21]:
                     a['line'].append(row[21].upper())
-                a["city"]                            =  row[22].upper()
-                a["state"]                           =  row[23].upper()
-                a["postalCode"]                       =  row[24].upper()
+                a["city"] = row[22].upper()
+                a["state"] = row[23].upper()
+                a["postalCode"] = row[24].upper()
                 a["country"] = row[25].upper()
                 r['address'].append(a)
 
@@ -291,7 +294,7 @@ def publiccsv2fhir(csvfile, output_dir):
                     extension = OrderedDict()
 
                     coding['system'] = "http://www.nucc.org/"
-                    coding['code'] = str(row[i-3])
+                    coding['code'] = str(row[i - 3])
                     for row_tax in tax_reader:
                         if coding['code'] == row_tax[0]:
                             coding['display'] = row_tax[2]
@@ -347,13 +350,13 @@ def publiccsv2fhir(csvfile, output_dir):
 
         try:
 
-                response_dict['num_files_created'] = rowindex - 1
-                response_dict['num_csv_rows'] = rowindex - 1
-                response_dict['code'] = 200
-                response_dict['message'] = "Completed without errors."
+            response_dict['num_files_created'] = rowindex - 1
+            response_dict['num_csv_rows'] = rowindex - 1
+            response_dict['code'] = 200
+            response_dict['message'] = "Completed without errors."
         except:
 
-                response_dict['message'] = "Completed with errors."
+            response_dict['message'] = "Completed with errors."
     fh.close()
     csvfile_tax.close()
     return response_dict
@@ -365,7 +368,7 @@ if __name__ == "__main__":
         print("csv2fhir_public.py [CSVFILE] [OUTPUT_DIRECTORY]")
         sys.exit(1)
 
-    csv_file   = sys.argv[1]
+    csv_file = sys.argv[1]
     output_dir = sys.argv[2]
 
     result = publiccsv2fhir(csv_file, output_dir)
