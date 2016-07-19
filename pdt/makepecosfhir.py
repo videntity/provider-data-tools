@@ -55,8 +55,7 @@ def makepecos_fhir_db(database_name="pecos"):
         # **extension for entire stript **
         extension = []
         description = OrderedDict()
-        description[
-            'url'] = 'https://data.cms.gov/public-provider-enrollment'
+        description['url'] = 'https://data.cms.gov/public-provider-enrollment'
         description['valueString'] = bdoc['PROVIDER_TYPE_DESC']
         extension.append(description)
 
@@ -90,7 +89,7 @@ def makepecos_fhir_db(database_name="pecos"):
                 value_codeable_concept = OrderedDict()
                 value_codeable_concept['coding'] = [npi_coding, enrollmentid_coding]
                 if d['resourceType'] == "Organization":
-                    value_codeable_concept['text'] = a['ORG_NAME'] + ',' + a['PROVIDER_TYPE_DESC'])
+                    value_codeable_concept['text'] = a['ORG_NAME'] + ',' + a['PROVIDER_TYPE_DESC']
                 elif d['resourceType'] == "Practitioner":
                     value_codeable_concept['text'] = a['FIRST_NAME'] + ',' + a['LAST_NAME'] + ',' + a['PROVIDER_TYPE_DESC']
 
@@ -98,7 +97,7 @@ def makepecos_fhir_db(database_name="pecos"):
                 affiliation = OrderedDict()
                 affiliation['url'] = 'https://data.cms.gov/public-provider-enrollment'
                 # print(value_codeable_concept['text'])
-                affiliation['valueCodeableConcept'] = affiliation
+                affiliation['valueCodeableConcept'] = value_codeable_concept
                 # wrap in list
                 # affiliation = [affiliation]
                 extension_works_for.append([affiliation])
@@ -124,7 +123,7 @@ def makepecos_fhir_db(database_name="pecos"):
                 value_codeable_concept = OrderedDict()
                 value_codeable_concept['coding'] = [npi_coding, enrollmentid_coding]
                 if d['resourceType'] == "Organization":
-                    value_codeable_concept['text'] = a['ORG_NAME'] + ',' + a['PROVIDER_TYPE_DESC'])
+                    value_codeable_concept['text'] = a['ORG_NAME'] + ',' + a['PROVIDER_TYPE_DESC']
                 elif d['resourceType'] == "Practitioner":
                     value_codeable_concept['text'] = a['FIRST_NAME'] + ',' + a['LAST_NAME'] + ',' + a['PROVIDER_TYPE_DESC']
 
@@ -132,7 +131,7 @@ def makepecos_fhir_db(database_name="pecos"):
                 affiliation = OrderedDict()
                 affiliation['url'] = 'https://data.cms.gov/public-provider-enrollment'
                 # print(value_codeable_concept['text'])
-                affiliation['valueCodeableConcept'] = affiliation
+                affiliation['valueCodeableConcept'] = value_codeable_concept
                 # wrap in list
                 affiliation = [affiliation]
                 extension_has_providers.append(affiliation)
