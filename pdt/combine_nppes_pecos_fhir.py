@@ -20,7 +20,7 @@ MONGO_HOST = "127.0.0.1"
 MONGO_PORT = 27017
 
 
-def makepecos_fhirnppes_docs(database_name="fhir"):
+def make _pecos_nppes_fhir_docs(database_name="fhir"):
 
     i = 0
     # try:
@@ -57,11 +57,10 @@ def makepecos_fhirnppes_docs(database_name="fhir"):
                 # I don't think that text is exactly meant for this purpose, but
                 # we're using it here for now.
                 address['text'] = 'PECOS data practice location'
-                # Append address
-                # fhir_practitioner.update_one(bdoc,
-                #                               {"$push": {"address": address}})
+                # Append address and remove duplicates
                 if address not in m_addresses:
                     m_addresses.append(address)
+
             # Other Identifiers: ENRLMT_ID, PECOS_ASCT_CNTL_ID
             enrlmt_id = OrderedDict()
             enrlmt_id['use'] = 'official'
@@ -113,11 +112,10 @@ def makepecos_fhirnppes_docs(database_name="fhir"):
             affiliation['url'] = 'https://data.cms.gov/public-provider-enrollment'
             # print(value_codeable_concept['text'])
             affiliation['valueCodeableConcept'] = value_codeable_concept
-            # wrap in list
+            # wrap in list, and remove duplicates
             if affiliation not in extensions:
                 extensions.append(affiliation)
 
-        # Remove duplicates in addresses,extensions and identifiers
 
 
         fhir_practitioner.update_one(bdoc, {"$pushAll": {"extension": extensions, "address": m_addresses, "identifier": identifiers}}, upsert=True)
@@ -140,8 +138,8 @@ if __name__ == "__main__":
 
     if len(sys.argv) != 1:
         print("Usage:")
-        print("makepecos_fhirnppes_docs.py")
+        print("make_pecos_nppes_fhir_docs.py")
         sys.exit(1)
 
     # Run it
-    makepecos_fhirnppes_docs()
+    make_pecos_nppes_fhir_docs()
