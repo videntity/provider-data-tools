@@ -13,6 +13,7 @@ import pprint
 from datetime import datetime
 from pymongo import MongoClient
 from collections import OrderedDict
+from more_itertools import unique_everseen
 
 
 MONGO_HOST = "127.0.0.1"
@@ -59,7 +60,8 @@ def makepecos_fhirnppes_docs(database_name="fhir"):
                 # Append address
                 # fhir_practitioner.update_one(bdoc,
                 #                               {"$push": {"address": address}})
-                m_addresses.append(address)
+                if address not in m_addresses:
+                    m_addresses.append(address)
             # Other Identifiers: ENRLMT_ID, PECOS_ASCT_CNTL_ID
             enrlmt_id = OrderedDict()
             enrlmt_id['use'] = 'official'
@@ -68,7 +70,8 @@ def makepecos_fhirnppes_docs(database_name="fhir"):
             enrlmt_id['type'] = enrlmt_id_cc
             enrlmt_id['system'] = 'https://data.cms.gov/public-provider-enrollment'
             enrlmt_id['value'] = matches['ENRLMT_ID']
-            identifiers.append(enrlmt_id)
+            if enrlmt_id not in identifiers:
+                identifiers.append(enrlmt_id)
 
             # PECOS_ASCT_CNTL_ID
             pecosAsctCntlId = OrderedDict()
@@ -78,7 +81,8 @@ def makepecos_fhirnppes_docs(database_name="fhir"):
             pecosAsctCntlId['type'] = pecosAsctCntlId_cc
             pecosAsctCntlId['system'] = 'https://data.cms.gov/public-provider-enrollment'
             pecosAsctCntlId['value'] = matches['PECOS_ASCT_CNTL_ID']
-            identifiers.append(pecosAsctCntlId)
+            if pecosAsctCntlId not in identifiers:
+                identifiers.append(pecosAsctCntlId)
 # --------------------------------------------------------------
 # INCORPORATE AFFILIATIONS
 # --------------------------------------------------------------
@@ -110,7 +114,11 @@ def makepecos_fhirnppes_docs(database_name="fhir"):
             # print(value_codeable_concept['text'])
             affiliation['valueCodeableConcept'] = value_codeable_concept
             # wrap in list
-            extensions.append(affiliation)
+            if affiliation not in extensions:
+                extensions.append(affiliation)
+
+        # Remove duplicates in addresses,extensions and identifiers
+
 
         fhir_practitioner.update_one(bdoc, {"$pushAll": {"extension": extensions, "address": m_addresses, "identifier": identifiers}}, upsert=True)
         # if d['resourceType'] == "Organization":
