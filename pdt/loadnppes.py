@@ -76,8 +76,8 @@ def do_update(process_full=True, download=True):
         # Now import the file
         print("Import", main_file_to_import)
         # first convert to json, and fhir respectively
-        json_output_dir = "json-output"
-        fhir_output_dir = "fhir-nppes-output"
+        json_output_dir = "json-output/"
+        fhir_output_dir = "fhir-nppes-output/"
         call(["csv2pjson-public.py", main_file_to_import, json_output_dir])
         call(["csv2fhir_public.py", main_file_to_import, fhir_output_dir])
         # now upload to mongo
