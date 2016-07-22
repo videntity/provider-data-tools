@@ -10,7 +10,7 @@ from subprocess import call
 from datetime import datetime
 
 def do_update(process_full=True, download=True):
-    months = ["Jan","Feb","Mar","Apr", "May", "June", "Sept", "Oct", "Nov", "Dec"]
+    months = ["Jan","Feb","Mar","Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
     #Get just the html page
     html_page = urllib2.urlopen("http://download.cms.gov/nppes/NPI_Files.html")
     link_prefix = "http://download.cms.gov/nppes/"
@@ -25,7 +25,7 @@ def do_update(process_full=True, download=True):
         #get just zips
         if link.get('href', "").endswith(".zip"):
             zipfilelinks.append(link.get('href', ""))
-    
+    print(zipfilelinks)
     #determine full v/s weekly
     weeklylinks = []
     full_link =""
