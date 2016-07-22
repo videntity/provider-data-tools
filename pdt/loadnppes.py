@@ -75,15 +75,28 @@ def do_update(process_full=True, download=True):
 
         # Now import the file
         print("Import", main_file_to_import)
-        # first convert to json
+        # first convert to json, and fhir respectively
         json_output_dir = "json-output"
+        fhir_output_dir = "fhir-nppes-output"
         call(["csv2pjson-public.py", main_file_to_import, json_output_dir])
+        call(["csv2fhir_public.py", main_file_to_import, fhir_output_dir])
         # now upload to mongo
         call(["jsondir2mongo", json_output_dir, "nppes", "pjson", "T",
               "127.0.0.1", "27017"])
 
+        call(["jsondir2mongo", fhir_output_dir + "/Organization/", "fhir", "Organization", "T",
+              "127.0.0.1", "27017"])
+
+        call(["jsondir2mongo", fhir_output_dir + "/Practitioner/", "fhir", "Practitioner", "T",
+              "127.0.0.1", "27017"])
+
+        call(["jsondir2mongo", fhir_output_dir + "/Organization/", "pecos_nppes", "Organization", "T",
+              "127.0.0.1", "27017"])
+
+        call(["jsondir2mongo", fhir_output_dir + "/Practitioner/", "pecos_nppes", "Practitioner", "T",
+              "127.0.0.1", "27017"])
         # now create indexes
-        call(["create-provider-indexes", "nppes", "pjson", "127.0.0.1",
+        call(["create-provider-indexes.py", "nppes", "pjson", "127.0.0.1",
               "27017", "Y"])
     # Download weekly files
         # for link in weeklylinks:
