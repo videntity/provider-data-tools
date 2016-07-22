@@ -38,7 +38,7 @@ def pull_pecos(download_all=True, Base=False,
     if download_all:
         print("Downloading Base, Address and Reassignment CSV files")
         for csv_link in file_links:
-            call(["wget", "--output-document=pecos.csv",
+            call(["wget", "--output-document=" + csv_link[-2] + ".csv",
                   csv_prefix + csv_link[-1] + '/rows.csv?accessType=DOWNLOAD'])
 
     if Base:
