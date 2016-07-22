@@ -18,11 +18,9 @@ from datetime import datetime
 
 
 def do_update(process_full=True, download=True):
-
-    months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "Sept", "Oct",
-              "Nov", "Dec"]
-    # Get just the html page
-    html_page = urlopen("http://download.cms.gov/nppes/NPI_Files.html")
+    months = ["Jan","Feb","Mar","Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+    #Get just the html page
+    html_page = urllib2.urlopen("http://download.cms.gov/nppes/NPI_Files.html")
     link_prefix = "http://download.cms.gov/nppes/"
 
     soup = BeautifulSoup(html_page, "html.parser")
@@ -36,7 +34,8 @@ def do_update(process_full=True, download=True):
         if link.get('href', "").endswith(".zip"):
             zipfilelinks.append(link.get('href', ""))
 
-    # determine full v/s weekly
+    print(zipfilelinks)
+    #determine full v/s weekly
     weeklylinks = []
     full_link = ""
     for link in zipfilelinks:
