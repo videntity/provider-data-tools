@@ -20,7 +20,7 @@ MONGO_HOST = "127.0.0.1"
 MONGO_PORT = 27017
 
 
-def make_pecos_nppes_fhir_docs(database_name="pecos_nppes"):
+def make_pecos_nppes_fhir_docs(database_name="pecos"):
 
     i = 0
     try:
