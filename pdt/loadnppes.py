@@ -21,7 +21,7 @@ def do_update(process_full=True, download=True):
     months = ["Jan","Feb","Mar","Apr", "May", "June", "July", "Aug",
               "Sept", "Oct", "Nov", "Dec"]
     # Get just the html page
-    html_page = urllib2.urlopen("http://download.cms.gov/nppes/NPI_Files.html")
+    html_page = urlopen("http://download.cms.gov/nppes/NPI_Files.html")
     link_prefix = "http://download.cms.gov/nppes/"
 
     soup = BeautifulSoup(html_page, "html.parser")
@@ -122,7 +122,7 @@ def do_update(process_full=True, download=True):
 
         call(["makepecosdocs.py", "pecos"])
 
-        # Index compiled pecos 
+        # Index compiled pecos
 
         call(["create_pecos_compiled_individuals_indexes.py", "pecos", "compiled_individuals", "127.0.0.1",
               "27017", "Y"])
