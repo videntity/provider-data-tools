@@ -19,7 +19,7 @@ setup(name="pdt",
       download_url="https://github.com/hhsidealab/provider-data-tools/"
                    "tarball/master",
       install_requires=['validate_email', 'beautifulsoup4', 'luhn', 'jdt',
-                        'jsonschema'],
+                        'jsonschema', 'six'],
       packages=['pdt', 'pdt.pjson', 'tests', 'pdt.fhir_json_schema'],
       package_data={'': ['taxonomy-license-crosswalk.csv', 'fiftythousand.csv',
                          'first10.csv', 'Practitioner.json',
