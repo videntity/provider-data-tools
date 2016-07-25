@@ -100,7 +100,7 @@ def makepecos_fhir_db(database_name="pecos"):
                 affiliation['valueCodeableConcept'] = value_codeable_concept
                 # wrap in list
                 # affiliation = [affiliation]
-                extension_works_for.append([affiliation])
+                extension_works_for.append(affiliation)
 
         for rdoc in reassignments_collection.find({"RCV_BNFT_ENRLMT_ID": bdoc['ENRLMT_ID']}):
 
@@ -133,7 +133,7 @@ def makepecos_fhir_db(database_name="pecos"):
                 # print(value_codeable_concept['text'])
                 affiliation['valueCodeableConcept'] = value_codeable_concept
                 # wrap in list
-                affiliation = [affiliation]
+                affiliation = affiliation
                 extension_has_providers.append(affiliation)
 
         if extension_has_providers == []:
