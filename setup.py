@@ -38,7 +38,7 @@ setup(name="pdt",
                'pdt/create_pract_nppes_pecos_fhir_indexes.py',
                'pdt/create_provider_indexes.py',
                'pdt/create_org_nppes_pecos_fhir_indexes.py',
-               'pdt/create_org_nppes_fhir_indexes.py'
+               'pdt/create_org_nppes_fhir_indexes.py',
                'pdt/csv2mlvs.py',
                'pdt/csv2pjson_public.py',
                'pdt/csv2fhir_public.py',
@@ -51,7 +51,7 @@ setup(name="pdt",
                'pdt/pjson/validate_pjson_affiliations',
                'pdt/pjson/validate_pjson_dir',
                'pdt/pull_pecos.py',
-               'pdt/pull_new_files_ready.py'
-               'pdt/vnpi.py',
+               'pdt/pull_new_files_ready.py',
+               'pdt/vnpi.py'
                ]
       )
