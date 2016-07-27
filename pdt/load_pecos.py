@@ -130,7 +130,7 @@ def do_update(process_full=True, download=True, delete=False):
         if delete:
             # Delete loaded files
             call(["rm -rf", fhir_output_dir])
-            call(["rm -rf *.csv])
+            call(["rm -rf *.csv"])
             call(["rm -rf *.zip"])
 
 

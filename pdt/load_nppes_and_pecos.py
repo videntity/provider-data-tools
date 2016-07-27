@@ -5,6 +5,7 @@
 
 from subprocess import call
 
+
 def load_nppes_and_pecos():
     call(["loadnppes.py", "y", "y", "y"])
     call(["load_pecos.py", "y", "y", "y"])
