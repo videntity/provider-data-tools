@@ -17,8 +17,8 @@ from subprocess import call
 from datetime import datetime
 
 
-def do_update(process_full=True, download=True):
-    months = ["Jan","Feb","Mar","Apr", "May", "June", "July", "Aug",
+def do_update(process_full=True, download=True, delete=False):
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug",
               "Sept", "Oct", "Nov", "Dec"]
     # Get just the html page
     html_page = urlopen("http://download.cms.gov/nppes/NPI_Files.html")
@@ -75,21 +75,11 @@ def do_update(process_full=True, download=True):
 
         # Now import the file
         print("Import", main_file_to_import)
-        # first convert to json, and fhir respectively
-        json_output_dir = "json-output/"
+        # first convert fhir
         fhir_output_dir = "fhir-nppes-output/"
-        call(["csv2pjson-public.py", main_file_to_import, json_output_dir])
         call(["csv2fhir_public.py", main_file_to_import, fhir_output_dir])
         call(["pull_pecos.py", "y", "n", "n", "n"])
         # now upload to mongo
-        call(["jsondir2mongo", json_output_dir, "nppes", "pjson", "T",
-              "127.0.0.1", "27017"])
-
-        call(["jsondir2mongo", fhir_output_dir + "/Organization/", "fhir", "Organization", "T",
-              "127.0.0.1", "27017"])
-
-        call(["jsondir2mongo", fhir_output_dir + "/Practitioner/", "fhir", "Practitioner", "T",
-              "127.0.0.1", "27017"])
 
         call(["csv2mongo", "Base-Provider-Enrollment-File.csv", "pecos", "base", "T", "127.0.0.1", "27017"])
 
@@ -98,19 +88,15 @@ def do_update(process_full=True, download=True):
         call(["csv2mongo", "Addresses-Sub-File.csv", "pecos", "addresses", "T", "127.0.0.1", "27017"])
 
 
+
         call(["jsondir2mongo", fhir_output_dir + "/Organization/", "pecos", "fhir-organization", "T",
               "127.0.0.1", "27017"])
 
         call(["jsondir2mongo", fhir_output_dir + "/Practitioner/", "pecos", "fhir-practitioner", "T",
               "127.0.0.1", "27017"])
 
-        # Index what we have so far
-        call(["create-provider-indexes.py", "nppes", "pjson", "127.0.0.1",
-              "27017", "Y"])
-        call(["create_pract_nppes_fhir_indexes.py", "fhir", "Practitioner", "127.0.0.1",
-              "27017", "Y"])
-        call(["create_org_nppes_fhir_indexes.py", "fhir", "Organization", "127.0.0.1",
-              "27017", "Y"])
+
+        # Index basic PECOS info
         call(["create_pecos_addresses_indexes.py", "pecos", "addresses", "127.0.0.1",
               "27017", "Y"])
         call(["create_pecos_reassignments_indexes.py", "pecos", "reassignments", "127.0.0.1",
@@ -131,23 +117,31 @@ def do_update(process_full=True, download=True):
 
         # Combine pecos and fhir indviduals/organizations and create indexes
 
-        call(["combine_nppes_pecos_fhir.py"])
+        call(["combine_nppes_pecos_pract_fhir.py"])
+
+        call(["combine_nppes_pecos_org_fhir.py"])
 
         call(["create_pract_nppes_pecos_fhir_indexes.py", "pecos", "fhir-practitioner", "127.0.0.1",
               "27017", "Y"])
-    # Download weekly files
-        # for link in weeklylinks:
-        #    print "weekly", link
+
+        call(["create_org_nppes_pecos_fhir_indexes.py", "pecos", "fhir-organization", "127.0.0.1",
+              "27017", "Y"])
+
+        if delete:
+            # Delete loaded files
+            call(["rm -rf", fhir_output_dir])
+            call(["rm -rf *.csv])
+            call(["rm -rf *.zip"])
 
 
 if __name__ == "__main__":
 
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print("Usage:")
-        print("loadnppes.py [PROCESS_FULL Y/N] "
-              "[DOWNLOAD_FROM_PUBLIC_FILE Y/N]")
+        print("load_pecos.py [PROCESS_FULL Y/N] "
+              "[DOWNLOAD_FROM_PUBLIC_FILE Y/N] [DELETE AFTER IMPORTING TO MONGO?]")
         print("Example:")
-        print("loadnppes.py Y Y")
+        print("loadnppes.py Y Y Y")
         sys.exit(1)
 
     if sys.argv[1] in ("Y", "y", "T", True):
@@ -160,5 +154,10 @@ if __name__ == "__main__":
     else:
         download = False
 
+    if sys.argv[3] in ("Y", "y", "T", True):
+        delete = True
+    else:
+        delete = False
+
     # Get the file from the command line
-    do_update(process_full, download)
+    do_update(process_full, download, delete)
