@@ -21,7 +21,7 @@ MONGO_PORT = 27017
 
 def ensure_provider_indexes(database_name, collection_name, host=MONGO_HOST,
                             port=MONGO_PORT, background=True):
-    """Apply suiteable indexes to pecos reassignments collection."""
+    """Apply suiteable indexes to pract nppes/pecos fhir collection."""
 
     response_dict = {}
     try:
@@ -30,20 +30,38 @@ def ensure_provider_indexes(database_name, collection_name, host=MONGO_HOST,
         db = mc[database_name]
         collection = db[collection_name]
 
-        collection.create_index([("REASGN_BNFT_ENRLMT_ID", ASCENDING)],
+        collection.create_index([("identifier.value", ASCENDING)],
                                 background=background)
 
-
-        collection.create_index([("RCV_BNFT_ENRLMT_ID", ASCENDING)],
+        collection.create_index([("telecom.value", ASCENDING)],
+                                background=background)
+        collection.create_index([("contact.telecom.value", ASCENDING)],
                                 background=background)
 
-        collection.create_index([("RCV_BNFT_ENRLMT_ID", ASCENDING),
-                                 ("REASGN_BNFT_ENRLMT_ID", ASCENDING)],
+        collection.create_index([("address.postalCode", ASCENDING)],
+                                background=background)
+        collection.create_index([("address.state", ASCENDING)],
+                                background=background)
+        collection.create_index([("address.city", ASCENDING)],
+                                background=background)
+        collection.create_index([("address.line", ASCENDING)],
+                                background=background)
+        collection.create_index([("name", ASCENDING)],
+                                background=background)
+        collection.create_index([("contact.name.prefix", ASCENDING)],
+                                background=background)
+        collection.create_index([("contact.name.given", ASCENDING)],
+                                background=background)
+        collection.create_index([("contact.name.family", ASCENDING)],
                                 background=background)
 
-        collection.create_index([("REASGN_BNFT_ENRLMT_ID", ASCENDING),
-                                 ("RCV_BNFT_ENRLMT_ID", ASCENDING)],
+        collection.create_index([("contact.name.suffix", ASCENDING)],
                                 background=background)
+
+        collection.create_index([("extension.valueCodeableConcept.coding.code",
+                                  ASCENDING)],
+                                background=background)
+
 
         response_dict['created_indexes'] = True
         response_dict['background'] = background
@@ -61,7 +79,7 @@ if __name__ == "__main__":
     if len(sys.argv) != 6:
         print("Usage:")
         print(
-            "create_pecos_reassignments_indexes.py [DATABASE] [COLLECTION] [HOST] [PORT] [BACKGROUND Y/N]")
+            "create_org_nppes_pecos_fhir_indexes.py [DATABASE] [COLLECTION] [HOST] [PORT] [BACKGROUND Y/N]")
         sys.exit(1)
 
     database = sys.argv[1]
