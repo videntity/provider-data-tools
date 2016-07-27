@@ -26,7 +26,7 @@ def do_update(process_full=True, download=True, delete=False):
     #get all links
     zipfilelinks = []
     for link in soup.findAll('a'):
-        print link
+        print(link)
         #get just zips
         if link.get('href', "").endswith(".zip"):
             zipfilelinks.append(link.get('href', ""))
@@ -50,13 +50,13 @@ def do_update(process_full=True, download=True, delete=False):
     if process_full:
 
         if download:
-            print "Downloading", full_link
+            print("Downloading", full_link)
             call(["wget", full_link])
 
         #Get filename and unzip
         filename = full_link.split("/")
         zipfilename = filename[-1]
-        print "Unzip", zipfilename
+        print("Unzip", zipfilename)
 
         call(["unzip",zipfilename])
 
