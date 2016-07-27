@@ -92,7 +92,7 @@ def do_update(process_full=True, download=True, delete=False):
             # Delete loaded files
             call(["rm -rf", json_output_dir])
             call(["rm -rf", fhir_output_dir])
-            call(["rm -rf *.csv])
+            call(["rm -rf *.csv"])
             call(["rm -rf *.zip"])
 
 
