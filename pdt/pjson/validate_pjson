@@ -13,16 +13,16 @@ if __name__ == "__main__":
 
     #Get the file from the command line
     if len(sys.argv)<3:
-        print "You must supply a a ProviderJSON file to validate and an action"
-        print "Usage: validate-pjson [ProivderJSON] [update|create|public]"
+        print("You must supply a a ProviderJSON file to validate and an action")
+        print("Usage: validate-pjson [ProivderJSON] [update|create|public]")
         sys.exit(1)
     else:
         pjson_file = sys.argv[1]
         action       = sys.argv[2]
 
     if action.lower() not in ("create", "update", "public"):
-        print "You must supply an action of either create or update."
-        print "Usage: validate-pjson [ProivderJSON] [update|create|public]"
+        print("You must supply an action of either create or update.")
+        print("Usage: validate-pjson [ProivderJSON] [update|create|public]")
         sys.exit(1)
 
     #Try to open the file
@@ -34,7 +34,7 @@ if __name__ == "__main__":
         errors = validate_pjson(j, action)
         #Print the errors and warnings as JSON to stout.
         errors_json =  json.dumps(errors, indent =4)
-        print errors_json
+        print(errors_json)
     except IOError:
-        print "Could not open file %s." % (pjson_file)
+        print("Could not open file %s." % (pjson_file))
         sys.exit(1)
