@@ -26,6 +26,12 @@ def makepecosdb(database_name="pecos"):
 
         mc = MongoClient(host=MONGO_HOST, port=MONGO_PORT)
         db = mc[database_name]
+        # Drop old collections
+        try:
+            db.drop_collection('compiled_individuals')
+            db.drop_collection('compiled_organizations')
+        except:
+            print(sys.exc_info)
         base_collection = db['base']
         addresses_collection = db['addresses']
         reassignments_collection = db['reassignments']
