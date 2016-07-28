@@ -26,7 +26,7 @@ def ensure_provider_indexes(database_name, collection1, collection2, host=MONGO_
     db = mc[database_name]
 
     response_dict = {}
-        try:
+    try:
 
         collection = db[collection1]
 
