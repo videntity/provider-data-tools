@@ -79,14 +79,12 @@ def do_update(process_full=True, download=True, delete=False):
 
         #now upload to mongo
         call(["jsondir2mongo", json_output_dir, "nppes", "pjson", "T", "127.0.0.1", "27017" ])
-        call(["jsondir2mongo", fhir_output_dir + "/Practitioner", "nppes", "fhir-pracitioner", "T", "127.0.0.1", "27017" ])
-        call(["jsondir2mongo", fhir_output_dir + "/Organization", "nppes", "fhir-organization", "T", "127.0.0.1", "27017" ])
+        call(["jsondir2mongo", fhir_output_dir + "/Practitioner", "nppes", "fhir_practitioner", "T", "127.0.0.1", "27017" ])
+        call(["jsondir2mongo", fhir_output_dir + "/Organization", "nppes", "fhir_organization", "T", "127.0.0.1", "27017" ])
 
 
         #now create indexes
-        call(["create_provider_indexes", "nppes", "pjson", "127.0.0.1", "27017", "Y" ])
-        call(["create_pract_nppes_fhir_indexes", "nppes", "fhir-practitioner", "127.0.0.1", "27017", "Y"])
-        call(["create_org_nppes_fhir_indexes", "nppes", "fhir-organization", "127.0.0.1", "27017", "Y"])
+        call(["create_provider_indexes.py", "nppes", "pjson", "fhir_practitioner", "fhir_organization", "127.0.0.1", "27017", "Y" ])
 
         if delete:
             # Delete loaded files

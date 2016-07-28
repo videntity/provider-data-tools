@@ -89,20 +89,17 @@ def do_update(process_full=True, download=True, delete=False):
 
 
 
-        call(["jsondir2mongo", fhir_output_dir + "/Organization/", "pecos", "fhir-organization", "T",
+        call(["jsondir2mongo", fhir_output_dir + "/Organization/", "pecos", "fhir_organization", "T",
               "127.0.0.1", "27017"])
 
-        call(["jsondir2mongo", fhir_output_dir + "/Practitioner/", "pecos", "fhir-practitioner", "T",
+        call(["jsondir2mongo", fhir_output_dir + "/Practitioner/", "pecos", "fhir_practitioner", "T",
               "127.0.0.1", "27017"])
 
 
         # Index basic PECOS info
-        call(["create_pecos_addresses_indexes.py", "pecos", "addresses", "127.0.0.1",
+        call(["create_pecos_indexes.py", "pecos", "base", "reassignments", "addresses" "127.0.0.1",
               "27017", "Y"])
-        call(["create_pecos_reassignments_indexes.py", "pecos", "reassignments", "127.0.0.1",
-              "27017", "Y"])
-        call(["create_pecos_base_indexes.py", "pecos", "base", "127.0.0.1",
-              "27017", "Y"])
+
 
         # Make compiled pecos
 
@@ -110,10 +107,9 @@ def do_update(process_full=True, download=True, delete=False):
 
         # Index compiled pecos
 
-        call(["create_pecos_compiled_individuals_indexes.py", "pecos", "compiled_individuals", "127.0.0.1",
+        call(["create_pecos_compiled_indexes.py", "pecos", "compiled_individuals", "compiled_organizations", "127.0.0.1",
               "27017", "Y"])
-        call(["create_pecos_compiled_organizations_indexes.py", "pecos", "compiled_organizations", "127.0.0.1",
-              "27017", "Y"])
+
 
         # Combine pecos and fhir indviduals/organizations and create indexes
 
@@ -121,11 +117,9 @@ def do_update(process_full=True, download=True, delete=False):
 
         call(["combine_nppes_pecos_org_fhir.py"])
 
-        call(["create_pract_nppes_pecos_fhir_indexes.py", "pecos", "fhir-practitioner", "127.0.0.1",
+        call(["create_combined_indexes.py", "pecos", "fhir_practitioner", "fhir_organization", "127.0.0.1",
               "27017", "Y"])
 
-        call(["create_org_nppes_pecos_fhir_indexes.py", "pecos", "fhir-organization", "127.0.0.1",
-              "27017", "Y"])
 
         if delete:
             # Delete loaded files
