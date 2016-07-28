@@ -27,6 +27,11 @@ def make_pecos_nppes_fhir_docs(database_name="pecos"):
 
         mc = MongoClient(host=MONGO_HOST, port=MONGO_PORT)
         db = mc[database_name]
+        # Drop old collections
+        try:
+            db.drop_collection('compiled_organizations')
+        except:
+            print(sys.exc_info)
         fhir_organization = db['fhir_organization']
         addresses = db['addresses']
         base_pecos = db['base']
