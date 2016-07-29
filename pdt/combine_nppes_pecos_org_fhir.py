@@ -127,7 +127,7 @@ def make_pecos_nppes_fhir_docs(database_name="pecos"):
 
 
 
-            fhir_organization.update_one(bdoc, {"$pushAll": {"extension": extensions, "address": m_addresses, "identifier": identifiers}})
+            fhir_organization.update_one({"_id":bdoc['_id']}, {"$pushAll": {"extension": extensions, "address": m_addresses, "identifier": identifiers}}, upsert=True)
             # if d['resourceType'] == "Organization":
             #     compiled_organizations_collection.insert(d)
             # elif d['resourceType'] == "Practitioner":

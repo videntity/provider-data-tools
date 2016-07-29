@@ -93,7 +93,7 @@ def ensure_provider_indexes(database_name, collection1, collection2, collection3
     except:
         response_dict['collection2'] = collection2
         response_dict['code2'] = 500
-        response_dict['errors'] = [str(sys.exc_info()), ]
+        response_dict['errors2'] = [str(sys.exc_info()), ]
         response_dict['message2'] = str(sys.exc_info())
 
     # PECOS Addresses

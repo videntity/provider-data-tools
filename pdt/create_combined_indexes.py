@@ -107,13 +107,13 @@ def ensure_provider_indexes(database_name, collection1, collection2, host=MONGO_
                                 background=background)
 
         response_dict['collection2'] = collection2
-        response_dict['created_indexes'] = True
-        response_dict['background'] = background
+        response_dict['created_indexes2'] = True
+        response_dict['background2'] = background
     except:
         response_dict['collection2'] = collection2
-        response_dict['code'] = 500
-        response_dict['errors'] = [str(sys.exc_info()), ]
-        response_dict['message'] = str(sys.exc_info())
+        response_dict['code2'] = 500
+        response_dict['errors2'] = [str(sys.exc_info()), ]
+        response_dict['message2'] = str(sys.exc_info())
 
     return response_dict
 
