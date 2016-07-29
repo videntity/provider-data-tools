@@ -113,9 +113,9 @@ def do_update(process_full=True, download=True, delete=False):
 
         # Combine pecos and fhir indviduals/organizations and create indexes
 
-        call(["combine_nppes_pecos_pract_fhir.py"])
+        call(["combine_nppes_pecos_pract_fhir.py", "pecos"])
 
-        call(["combine_nppes_pecos_org_fhir.py"])
+        call(["combine_nppes_pecos_org_fhir.py", "pecos"])
 
         call(["create_combined_indexes.py", "pecos", "fhir_practitioner", "fhir_organization", "127.0.0.1",
               "27017", "Y"])

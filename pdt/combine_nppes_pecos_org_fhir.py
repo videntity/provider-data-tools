@@ -13,7 +13,6 @@ import pprint
 from datetime import datetime
 from pymongo import MongoClient
 from collections import OrderedDict
-from more_itertools import unique_everseen
 
 
 MONGO_HOST = "127.0.0.1"
