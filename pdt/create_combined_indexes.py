@@ -23,7 +23,7 @@ def ensure_provider_indexes(database_name, collection1, collection2, host=MONGO_
                             port=MONGO_PORT, background=True):
     """Apply suiteable indexes to combined nppes/pecos fhir collection."""
 
-    response_dict = {}
+    response_dict = OrderedDict()
     mc = MongoClient(host=host, port=port)
     db = mc[database_name]
     try:
@@ -119,7 +119,7 @@ def ensure_provider_indexes(database_name, collection1, collection2, host=MONGO_
 
 if __name__ == "__main__":
 
-    if len(sys.argv) != 6:
+    if len(sys.argv) != 7:
         print("Usage:")
         print(
             "create_combined_indexes.py [DATABASE] [COMBINED PRACTITIONER COLLECTION NAME] [COMBINED ORGANIZATION COLLECTION NAME] [HOST] [PORT] [BACKGROUND Y/N]")

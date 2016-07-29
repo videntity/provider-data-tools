@@ -25,7 +25,7 @@ def ensure_provider_indexes(database_name, collection1, collection2, host=MONGO_
     mc = MongoClient(host=host, port=port)
     db = mc[database_name]
 
-    response_dict = {}
+    response_dict = OrderedDict()
     try:
 
         collection = db[collection1]

@@ -24,7 +24,7 @@ def ensure_provider_indexes(database_name, collection1, collection2,
                             port=MONGO_PORT, background=True):
     """Apply suiteable indexes to nppes (aka provider regisitry) collections."""
 
-    response_dict = {}
+    response_dict = OrderedDict()
     mc = MongoClient(host=host, port=port)
     db = mc[database_name]
 

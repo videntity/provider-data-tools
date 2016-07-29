@@ -23,7 +23,7 @@ def ensure_provider_indexes(database_name, collection1, collection2, collection3
                             host=MONGO_HOST, port=MONGO_PORT, background=True):
     """Apply suiteable indexes to pecos Base collection."""
 
-    response_dict = {}
+    response_dict = OrderedDict()
     mc = MongoClient(host=host, port=port)
     db = mc[database_name]
     # PECOS Base
