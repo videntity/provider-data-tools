@@ -68,25 +68,25 @@ def ensure_provider_indexes(database_name, collection1, collection2, host=MONGO_
 
         collection.create_index([("NPI", ASCENDING)],
                                 background=background)
-        collection.create_index([("works_for.NAME", ASCENDING)],
+        collection.create_index([("has_providers.NAME", ASCENDING)],
                                 background=background)
-        collection.create_index([("works_for.NPI", ASCENDING)],
+        collection.create_index([("has_providers.NPI", ASCENDING)],
                                 background=background)
-        collection.create_index([("works_for.ENRLMT_ID", ASCENDING)],
+        collection.create_index([("has_providers.ENRLMT_ID", ASCENDING)],
                                 background=background)
-        collection.create_index([("works_for.DESCRIPTION", ASCENDING)],
+        collection.create_index([("has_providers.DESCRIPTION", ASCENDING)],
                                 background=background)
 
-        response_dict['collection2'] = collection
+        response_dict['collection2'] = collection2
         response_dict['created_indexes2'] = True
         response_dict['background2'] = background
     except:
-        response_dict['collection2'] = collection
+        response_dict['collection2'] = collection2
         response_dict['code2'] = 500
         response_dict['errors2'] = [str(sys.exc_info()), ]
         response_dict['message2'] = str(sys.exc_info())
 
-    return response_dict
+    return dict(response_dict)
 
 if __name__ == "__main__":
 

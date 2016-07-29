@@ -80,11 +80,11 @@ def ensure_provider_indexes(database_name, collection1, collection2,
         collection.create_index([("addresses.state", ASCENDING),
                                  ("addresses.purpose", ASCENDING), ],
                                 background=background)
-        response_dict['collection1'] = collection
+        response_dict['collection1'] = collection1
         response_dict['created_indexes1'] = True
         response_dict['background1'] = background
     except:
-        response_dict['collection1'] = collection
+        response_dict['collection1'] = collection1
         response_dict['code1'] = 500
         response_dict['errors1'] = [str(sys.exc_info()), ]
         response_dict['message1'] = str(sys.exc_info())
@@ -119,11 +119,11 @@ def ensure_provider_indexes(database_name, collection1, collection2,
                                 background=background)
 
 
-        response_dict['collection2'] = collection
+        response_dict['collection2'] = collection2
         response_dict['created_indexes2'] = True
         response_dict['background2'] = background
     except:
-        response_dict['collection2'] = collection
+        response_dict['collection2'] = collection2
         response_dict['code2'] = 500
         response_dict['errors2'] = [str(sys.exc_info()), ]
         response_dict['message2'] = str(sys.exc_info())
@@ -167,11 +167,11 @@ def ensure_provider_indexes(database_name, collection1, collection2,
                                   ASCENDING)],
                                 background=background)
 
-        response_dict['collection3'] = collection
+        response_dict['collection3'] = collection3
         response_dict['created_indexes3'] = True
         response_dict['background3'] = background
     except:
-        response_dict['collection3'] = collection
+        response_dict['collection3'] = collection3
         response_dict['code3'] = 500
         response_dict['errors3'] = [str(sys.exc_info()), ]
         response_dict['message3'] = str(sys.exc_info())
