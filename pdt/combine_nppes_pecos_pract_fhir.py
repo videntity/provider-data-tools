@@ -37,11 +37,17 @@ def make_pecos_nppes_fhir_docs(database_name="pecos"):
     # ----------------------------------------------------
     # INCORPORATE ADDRESSES and other ID's
     # ----------------------------------------------------
-            match_bases = base_pecos.find({'NPI': bdoc['identifier'][0]['value']})
+            try:
+                match_bases = base_pecos.find({'NPI': bdoc['identifier'][0]['value']})
+            except KeyError:
+                continue
             m_addresses = []
             identifiers = []
             for matches in match_bases:
-                match_addresses = addresses.find({'ENRLMT_ID': matches['ENRLMT_ID']})
+                try:
+                    match_addresses = addresses.find({'ENRLMT_ID': matches['ENRLMT_ID']})
+                except KeyError:
+                    continue
                 for ma in match_addresses:
                     # Create fhir address from pecos addresses
                     address = OrderedDict()
@@ -82,8 +88,11 @@ def make_pecos_nppes_fhir_docs(database_name="pecos"):
     # INCORPORATE AFFILIATIONS
     # --------------------------------------------------------------
             # Match up npi numbers between pecos and nppes
-            match_compiled_individuals = compiled_individuals_collection.find(
+            try:
+                match_compiled_individuals = compiled_individuals_collection.find(
                 {'NPI': bdoc['identifier'][0]['value']})
+            except KeyError:
+                continue
             extensions = []
             for mci in match_compiled_individuals:
                 # Create Codings
