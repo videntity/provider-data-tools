@@ -92,6 +92,7 @@ def do_update(process_full=True, download=True, delete=False):
             call(["rm -rf", fhir_output_dir])
             call(["rm -rf *.csv"])
             call(["rm -rf *.zip"])
+            call(["rm -rf *.pdf"])
 
 
 
