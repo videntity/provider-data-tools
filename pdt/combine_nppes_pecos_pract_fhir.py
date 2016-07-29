@@ -95,32 +95,34 @@ def make_pecos_nppes_fhir_docs(database_name="pecos"):
                 continue
             extensions = []
             for mci in match_compiled_individuals:
-                # Create Codings
-                npi_coding = OrderedDict()
-                npi_coding['system'] = 'https://nppes.cms.hhs.gov/NPPES/Welcome.do'
-                npi_coding['code'] = mci['works_for'][0]['NPI']
-                npi_coding['display'] = 'NPI number of affiliation'
-                # Leaving off the 'userSelected' category for now.
+                try:
+                    # Create Codings
+                    npi_coding = OrderedDict()
+                    npi_coding['system'] = 'https://nppes.cms.hhs.gov/NPPES/Welcome.do'
+                    npi_coding['code'] = mci['works_for'][0]['NPI']
+                    npi_coding['display'] = 'NPI number of affiliation'
+                    # Leaving off the 'userSelected' category for now.
 
-                enrollmentid_coding = OrderedDict()
-                enrollmentid_coding['system'] = 'https://data.cms.gov/public-provider-enrollment'
-                enrollmentid_coding['code'] = mci['works_for'][0]['ENRLMT_ID']
-                enrollmentid_coding['display'] = 'PECOS Enrollment ID of affiliation'
+                    enrollmentid_coding = OrderedDict()
+                    enrollmentid_coding['system'] = 'https://data.cms.gov/public-provider-enrollment'
+                    enrollmentid_coding['code'] = mci['works_for'][0]['ENRLMT_ID']
+                    enrollmentid_coding['display'] = 'PECOS Enrollment ID of affiliation'
 
-                # Create Codeable concept
-                value_codeable_concept = OrderedDict()
-                value_codeable_concept['coding'] = [npi_coding, enrollmentid_coding]
-                value_codeable_concept['text'] = mci['works_for'][0]['NAME'] + ', ' + mci['works_for'][0]['DESCRIPTION']
+                    # Create Codeable concept
+                    value_codeable_concept = OrderedDict()
+                    value_codeable_concept['coding'] = [npi_coding, enrollmentid_coding]
+                    value_codeable_concept['text'] = mci['works_for'][0]['NAME'] + ', ' + mci['works_for'][0]['DESCRIPTION']
 
-                # Create fhir affiliation from compiled_individuals
-                affiliation = OrderedDict()
-                affiliation['url'] = 'https://data.cms.gov/public-provider-enrollment'
-                # print(value_codeable_concept['text'])
-                affiliation['valueCodeableConcept'] = value_codeable_concept
-                # wrap in list, and remove duplicates
-                if affiliation not in extensions:
-                    extensions.append(affiliation)
-
+                    # Create fhir affiliation from compiled_individuals
+                    affiliation = OrderedDict()
+                    affiliation['url'] = 'https://data.cms.gov/public-provider-enrollment'
+                    # print(value_codeable_concept['text'])
+                    affiliation['valueCodeableConcept'] = value_codeable_concept
+                    # wrap in list, and remove duplicates
+                    if affiliation not in extensions:
+                        extensions.append(affiliation)
+                except KeyError:
+                    continue
 
 
             fhir_practitioner.update_one(bdoc, {"$pushAll": {"extension": extensions, "address": m_addresses, "identifier": identifiers}})
