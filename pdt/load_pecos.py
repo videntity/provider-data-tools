@@ -78,6 +78,7 @@ def do_update(process_full=True, download=True, delete=False):
         # first convert fhir
         fhir_output_dir = "fhir-nppes-output/"
         call(["csv2fhir_public.py", main_file_to_import, fhir_output_dir])
+        # Pull new PECOS files
         call(["pull_pecos.py", "y", "n", "n", "n"])
         # now upload to mongo
 
