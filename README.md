@@ -3,15 +3,17 @@ pdt - Provider Data Tools
 
 Version: 0.7.8
 
+__These scripts are both Python 2 & 3 compatible.__
+
 This repository contains a number of command-line utilities and related code libraries for
 parsing, creating, and validating US-based health provider data.  These tools are:
 
-* chop-nppes-public   - Parse the npi public data dissemination into flattened files.
+* chop-nppes-public.py   - Parse the npi public data dissemination into flattened files.
 * csv2pjson_public.py - Parse the npi public data dissemination into ProviderJSON files.
 * csv2fhir_public.py  - Parse the npi public data dissemination to FHIR Practitioner and Organization Resources.
 * validate-pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
 * validate-pjson-dir  - Bulk validation of the output of csv2pjson-public.py.
-* create-provider-indexes - Create default MongoDB indexes on Provider JSON data to support public search on common fields.
+* create-provider-indexes.py - Create default MongoDB indexes on Provider JSON data to support public search on common fields.
 * pull_pecos.py       - Download all or pieces of the PECOS Database in CSV format.
 * loadnppes.py        - Download public, parse to JSON, and load to MongoDB in one step.
 
@@ -33,22 +35,20 @@ To install with pip just type:
 Note: If you use `sudo`, the scripts  will be installed at the system level and used by all users.
 Add  `--upgrade` to the above install instructions to ensure you fetch the newest version.
 
-__These scripts are both Python 2 & 3 compatible.__
-
-chop_nppes_public
+chop_nppes_public.py
 -----------------
 
 
 To make use of this script you need first fecth the "NPPES Data Dissemination" file.
 
-To obtain the "NPPES Data Dissemination", go to  http://nppes.viva-it.com/NPI_Files.html.
+To obtain the "NPPES Data Dissemination", go to  http://download.cms.gov/nppes/NPI_Files.html.
 Get the "Full Replacement Monthly" zip file.  Unzip the file with the unzip tool of your choice.
 
 
 
 To run the utility simply call it on a command line and provide one command line argument, the csv file to parse:
 
-    ~$ chop_nppes_public npidata_20050523-20140413.csv
+    ~$ chop_nppes_public.py npidata_20050523-20140413.csv
 
 The file name `npidata_20050523-20140413.csv` will vary depending on the date.
 
@@ -182,7 +182,7 @@ to MongoDB in one step. Note this script requires `unzip` and `wget` to be insta
 
 Usage:
 
-    loadnppes.py [PROCESS_FULL Y/N] [DOWNLOAD_FROM_PUBLIC_FILE Y/N]"
+    loadnppes.py [PROCESS_FULL Y/N] [DOWNLOAD_FROM_PUBLIC_FILE Y/N] [DELETE FILES AFTER UPLOADED TO MONGO?]"
 
 Example:
 
