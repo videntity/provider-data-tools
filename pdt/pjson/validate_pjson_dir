@@ -16,9 +16,9 @@ from pdt.pjson.validate_pjson import validate_pjson
 def validate_pjsondir(json_dir, action, json_error_dir, error_dir):
     """Check all files in the subdirectory.  Copy files with errors to thir own folder."""
 
-    
-    print "Start validation of the directory", json_dir, "."
-    
+
+    print("Start validation of the directory", json_dir, ".")
+
     #Initialize some things...
     fileindex = 0
     validationindex= 0
@@ -26,55 +26,55 @@ def validate_pjsondir(json_dir, action, json_error_dir, error_dir):
     error_list =[]
     response_dict = OrderedDict()
     onlyfiles = []
-    
+
     #make the error_json_dir
     try:
         os.mkdir(error_json_dir)
     except:
         pass
-    
+
     #make the error_dir
     try:
         os.mkdir(error_dir)
     except:
         pass
-    
-    
+
+
     try:
 
         #get the files in the specified directory
-        print "Getting a list of all files for valiation from", json_dir
+        print("Getting a list of all files for valiation from", json_dir)
         for root, dirs, files in os.walk(json_dir):
             for file in files:
                 if file.endswith(".json") or file.endswith(".js"):
                     onlyfiles.append(os.path.join(root, file))
-        
-        print "Done creating file list. Begin file validation."    
+
+        print("Done creating file list. Begin file validation.")
         for f in onlyfiles:
             j = None
-            error_message = ""    
+            error_message = ""
             fh = open(f, 'rU')
             fileindex += 1
             j = fh.read()
             fh.close()
-            
+
             try:
                 #cleanj = str(j).encode('ascii', 'ignore').decode('ascii')
                 #if not j:
                 jl = json.loads(j)
-                print jl['number']
+                print(jl['number'])
                 if type(jl) != type({}):
                     error_message = "File " + f +  " did not contain a JSON object, i.e. {}."
                     error_list.append(error_message)
             except :
                 error_message = "File " + f +  " did not contain valid JSON."
                 error_list.append(error_message)
-                    
-            if not error_message:  
-                
-                
+
+            if not error_message:
+
+
                 #Now do the validation
-                
+
                 result = validate_pjson(j, action)
                 #parse the result
                 #If errors, copy file f to error_json_dir and copy result to error_dir
@@ -82,12 +82,12 @@ def validate_pjsondir(json_dir, action, json_error_dir, error_dir):
                     validation_error_count +=1
                     shutil.move(f, json_error_dir)
                     error_report = os.path.join(error_dir, os.path.basename(f))
-                    
+
                     #Add some infor to our error result
                     result['number'] = jl['number']
                     result['enumeration_type'] = jl['enumeration_type']
                     result['title'] = jl['title']
-                    
+
                     eh = open(error_report, 'w')
                     eh.writelines(json.dumps(result, indent = 4))
                     eh.close()
@@ -124,10 +124,10 @@ def validate_pjsondir(json_dir, action, json_error_dir, error_dir):
 
 if __name__ == "__main__":
 
-    
+
     if len(sys.argv)!=5:
-        print "Usage:"
-        print "validate-pjson-dir [IN_JSON_DIR] [ACTION] [REJECT_JSON_DIR] [ERRORS_DIR]"
+        print("Usage:")
+        print("validate-pjson-dir [IN_JSON_DIR] [ACTION] [REJECT_JSON_DIR] [ERRORS_DIR]")
         sys.exit(1)
 
     json_dir = sys.argv[1]
@@ -135,4 +135,4 @@ if __name__ == "__main__":
     error_json_dir = sys.argv[3]
     error_dir = sys.argv[4]
     result = validate_pjsondir(json_dir, action,error_json_dir, error_dir)
-    print json.dumps(result, indent =4)
+    print(json.dumps(result, indent=4))

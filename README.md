@@ -1,23 +1,59 @@
 pdt - Provider Data Tools
 =========================
 
-Version: 0.7.6
+Version: 0.7.8
+
+
 
 This repository contains a number of command-line utilities and related code libraries for
-parsing, creating, and validating US-based health provider data.  These tools are:
+parsing, creating, and validating US-based health provider data.  These tools are:  
 
-* chop-nppes-public   - Parse the npi public data dissemination into flattened files.
+  __Parsing Scripts__  
+
+* chop_nppes_public.py   - Parse the npi public data dissemination into flattened files.
 * csv2pjson_public.py - Parse the npi public data dissemination into ProviderJSON files.
 * csv2fhir_public.py  - Parse the npi public data dissemination to FHIR Practitioner and Organization Resources.
-* validate-pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
-* validate-pjson-dir  - Bulk validation of the output of csv2pjson-public.py.
-* create-provider-indexes - Create default MongoDB indexes on Provider JSON data to support public search on common fields.
-* loadnppes.py        - Download public, parse to JSON, and load to MongoDB in one step.
+* validate_pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
+* validate_pjson_dir  - Bulk validation of the output of csv2pjson-public.py.  
+* makepecosdocs.py    - Creates affiliations from initial PECOS data sets within MongoDB.
+* combine_nppes_pecos_org_fhir.py - Combines NPPES and PECOS organization data within MongoDB, based on NPI's.
+* combine_nppes_pecos_pract_fhir.py - Combines NPPES and PECOS practitioner data within MongoDB, based on NPI's.
 
+__Indexing Scripts__  
+
+Note: These scripts are only meant to be run after the data/files to be indexed have already been loaded into MongoDB.
+
+* create_provider_indexes.py - Create default MongoDB indexes on Provider JSON data to support public       search on common fields.   
+
+* create_pecos_indexes.py - Create default MongoDB indexes on PECOS data (Base, Reassignments, Addresses)
+
+* create_pecos_compiled_indexes.py - Create default MongoDB indexes on PECOS compiled data (after running makepecosdocs.py)
+
+* create_combined_indexes.py - Create default MongoDB indexes on combined PECOS and NPPES data (after running the combine* scripts)
+
+
+__Pulling/Loading Scripts__  
+
+* pull_pecos.py       - Download all or pieces of the PECOS Database in CSV format.
+* loadnppes.py        - Download public NPPES file, parse to JSON, and load to MongoDB in one step.
+* load_pecos.py       - Download public PECOS csv file(s) and NPPES data, parse, load and combine in MongoDB in one step.
+* load_nppes_and_pecos.py - loadnppes.py and load_pecos.py in one step.
+
+__Utility Scripts__
+
+* json_schema_check_fhir.py - A FHIR resource specific JSON schema validator.
+* json_schema_check.py - Generic JSON schema validation against a JSON file.
 
 Please note the utilities `csv2json`, `json2mongo`, and `jsondir2mongo` have been
 moved from `pdt` and placed in their own package called `jdt`. These tools are generic
 and have utility outside health provider data.
+
+
+Requirements
+------------
+These scripts are both Python 2 & 3 compatible.
+
+In order to utilize all of the scripts that Provider Data Tools provides, you will need to have MongoDB Installed and running. See [MongoDB](https://docs.mongodb.com/manual/installation/) Docs for reference on installation.
 
 
 Installation
@@ -32,21 +68,20 @@ To install with pip just type:
 Note: If you use `sudo`, the scripts  will be installed at the system level and used by all users.
 Add  `--upgrade` to the above install instructions to ensure you fetch the newest version.
 
-
-chop_nppes_public
+chop_nppes_public.py
 -----------------
 
 
 To make use of this script you need first fecth the "NPPES Data Dissemination" file.
 
-To obtain the "NPPES Data Dissemination", go to  http://nppes.viva-it.com/NPI_Files.html.
+To obtain the "NPPES Data Dissemination", go to  http://download.cms.gov/nppes/NPI_Files.html.
 Get the "Full Replacement Monthly" zip file.  Unzip the file with the unzip tool of your choice.
 
 
 
 To run the utility simply call it on a command line and provide one command line argument, the csv file to parse:
 
-    ~$ chop_nppes_public npidata_20050523-20140413.csv
+    ~$ chop_nppes_public.py npidata_20050523-20140413.csv
 
 The file name `npidata_20050523-20140413.csv` will vary depending on the date.
 
@@ -139,7 +174,39 @@ Example Output:
     }
 
 
-loadnppes.py
+
+
+pull_pecos.py
+------------
+
+The script will download all or individual Public Provider Enrollment Files
+from https://data.cms.gov/public-provider-enrollment in CSV format. Note that
+`wget` is a requirement for this script.
+
+  Usage:
+
+      pull_pecos.py [DOWNLOAD ALL Y/N] [DOWNLOAD BASE Y/N] [DOWNLOAD REASSIGNMENT Y/N]  [DOWNLOAD ADDRESS Y/N]
+
+  Example:
+
+      pull_pecos.py y n n n
+
+  Example Output:
+
+
+          Downloading Address CSV file
+        --2016-07-12 10:39:00--  https://data.cms.gov/api/views/je57-c47h/rows.csv?accessType=DOWNLOAD
+        Resolving data.cms.gov (data.cms.gov)... 216.227.229.148
+        Connecting to data.cms.gov (data.cms.gov)|216.227.229.148|:443... connected.
+        HTTP request sent, awaiting response... 200 OK
+        Length: unspecified [text/csv]
+        Saving to: ‘pecos_address.csv’
+
+        pecos_address.csv
+          [                  <=>              ]   3.14M   914KB/s   
+
+
+  loadnppes.py
 ------------
 
 By streamlining several of the pdt utilities, the script loadnppes.py combines functionalty
@@ -148,7 +215,7 @@ to MongoDB in one step. Note this script requires `unzip` and `wget` to be insta
 
 Usage:
 
-    loadnppes.py [PROCESS_FULL Y/N] [DOWNLOAD_FROM_PUBLIC_FILE Y/N]"
+    loadnppes.py [PROCESS_FULL Y/N] [DOWNLOAD_FROM_PUBLIC_FILE Y/N] [DELETE FILES AFTER UPLOADED TO MONGO?]"
 
 Example:
 

@@ -84,8 +84,8 @@ if __name__ == "__main__":
 
     #Get the file from the command line
     if len(sys.argv)<2:
-        print "You must supply a a ProviderJSON file to validate"
-        print "Usage: validate_pjson_affiliations [ProivderJSON]"
+        print("You must supply a a ProviderJSON file to validate")
+        print("Usage: validate_pjson_affiliations [ProivderJSON]")
         sys.exit(1)
     else:
         pjson_file = sys.argv[1]
@@ -101,7 +101,7 @@ if __name__ == "__main__":
         errors = validate_pjson(j)
         #Print the errors and warnings as JSON to stout.
         errors_json =  json.dumps(errors, indent =4)
-        print errors_json
+        print(errors_json)
     except IOError:
-        print "Could not open file %s." % (pjson_file)
+        print("Could not open file %s." % (pjson_file))
         sys.exit(1)
