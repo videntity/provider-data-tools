@@ -14,6 +14,7 @@ import re, glob, sys
 from subprocess import call
 from datetime import datetime
 
+
 def do_update(process_full=True, download=True, delete=False):
     months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
     #Get just the html page
@@ -26,11 +27,11 @@ def do_update(process_full=True, download=True, delete=False):
     #get all links
     zipfilelinks = []
     for link in soup.findAll('a'):
-        print(link)
+        # print(link)
         #get just zips
         if link.get('href', "").endswith(".zip"):
             zipfilelinks.append(link.get('href', ""))
-    print(zipfilelinks)
+    # print(zipfilelinks)
     #determine full v/s weekly
     weeklylinks = []
     full_link =""
@@ -42,20 +43,25 @@ def do_update(process_full=True, download=True, delete=False):
                 month = m
         if link.__contains__("Report"):
             deactivation_link = link
+
         else:
             weeklylinks.append(link)
 
 
     #Download full file
     if process_full:
+        filename = full_link
+    else:
+        filename = link_prefix+ weeklylinks[-1]
 
+        print(filename)
         if download:
-            print("Downloading", full_link)
-            call(["wget", full_link])
+            print("Downloading", filename)
+            call(["wget", filename])
 
         #Get filename and unzip
-        filename = full_link.split("/")
-        zipfilename = filename[-1]
+
+        zipfilename = 'NPPES*.zip'
         print("Unzip", zipfilename)
 
         call(["unzip",zipfilename])
@@ -68,9 +74,9 @@ def do_update(process_full=True, download=True, delete=False):
                 header_file = f
             else:
                 main_file_to_import = f
+                #Now import the file
+                print("Import", main_file_to_import)
 
-        #Now import the file
-        print("Import", main_file_to_import)
         #first convert to json
         json_output_dir = "json-output"
         fhir_output_dir = "fhir-output"
@@ -86,13 +92,17 @@ def do_update(process_full=True, download=True, delete=False):
         #now create indexes
         call(["create_provider_indexes.py", "nppes", "pjson", "fhir_practitioner", "fhir_organization", "127.0.0.1", "27017", "Y" ])
 
-        if delete:
-            # Delete loaded files
-            call(["rm -rf", json_output_dir])
-            call(["rm -rf", fhir_output_dir])
-            call(["rm -rf *.csv"])
-            call(["rm -rf *.zip"])
-            call(["rm -rf *.pdf"])
+
+
+
+
+    if delete:
+        # Delete loaded files
+        call(["rm -rf", json_output_dir])
+        call(["rm -rf", fhir_output_dir])
+        call(["rm -rf *.csv"])
+        call(["rm -rf *.zip"])
+        call(["rm -rf *.pdf"])
 
 
 
