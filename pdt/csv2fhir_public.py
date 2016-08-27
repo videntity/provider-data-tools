@@ -9,7 +9,7 @@ import string
 import json
 import csv
 import time
-from pdt import json_schema_check
+import json_schema_check
 from collections import OrderedDict
 from datetime import datetime
 
