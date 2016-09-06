@@ -1,7 +1,8 @@
 pdt - Provider Data Tools
 =========================
 
-Version: 0.7.8
+Version: 0.7.8  
+[![Build Status](https://travis-ci.org/flowersw/provider-data-tools.svg?branch=master)](https://travis-ci.org/flowersw/provider-data-tools)
 
 
 
@@ -51,7 +52,7 @@ and have utility outside health provider data.
 
 Requirements
 ------------
-These scripts are both Python 2 & 3 compatible.
+These scripts require Python >= 2.7 or Python >= 3.3
 
 In order to utilize all of the scripts that Provider Data Tools provides, you will need to have MongoDB Installed and running. See [MongoDB](https://docs.mongodb.com/manual/installation/) Docs for reference on installation.
 
