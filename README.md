@@ -1,7 +1,7 @@
 pdt - Provider Data Tools
 =========================
 
-Version: 0.7.9  
+Version: 0.8.0  
 [![Build Status](https://travis-ci.org/HHSIDEAlab/provider-data-tools.svg?branch=master)](https://travis-ci.org/HHSIDEAlab/provider-data-tools)
 
 
