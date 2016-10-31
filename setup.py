@@ -8,7 +8,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(name="pdt",
-      version="0.8.0",
+      version="0.8.2.1tye",
       description="Provider Data Tools",
       long_description="""A collection of scripts and APIs for working with"""
                        """health care provider data and beyond. Many tools"""
