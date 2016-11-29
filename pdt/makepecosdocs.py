@@ -13,11 +13,27 @@ import string
 import json
 import csv
 from collections import OrderedDict
-
+import random
+from random import randint
 
 MONGO_HOST = "127.0.0.1"
 MONGO_PORT = 27017
 
+
+STATUS_CHOICES = ("Y", "Y","Y", "Y","N")
+TIN_TYPE_CHOICES = ("S", "S", "S", "S", "S", "S", "E", "E" "I")
+
+TIN_CHOICES = ( "560611570"
+                "560611571",
+                "560611572",
+                "560611573",
+                "560611574",
+                "560611575")
+
+APM_PROGRAM_NAME_CHOICES = ('SSP','Nextgen')
+
+
+PART_B_CHOICES = ("Y", "N")
 
 def makepecosdb(database_name="pecos", collection_name="compiled"):
 
@@ -30,6 +46,7 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
         try:
             db.drop_collection('compiled_individuals')
             db.drop_collection('compiled_organizations')
+            db.drop_collection('compiled')
         except:
             print(sys.exc_info)
         base_collection = db['base']
@@ -47,35 +64,41 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
             d['pecos_id'] = bdoc['PECOS_ASCT_CNTL_ID']
             d['enrollment_id'] = bdoc['ENRLMT_ID']
             d['npi'] = bdoc['NPI']
-            d['tin'] = "SCRUBBED"
-            d['tin_type'] = ""
+            
+            d['tin'] = str(randint(560611570, 560700000))
+            
             if bdoc['ENRLMT_ID'].startswith('O'):
                 d['enrollment_type'] = "O"
                 d['entity_type'] = "2"
+                d['tin_type'] = random.choice(TIN_TYPE_CHOICES)
             elif bdoc['ENRLMT_ID'].startswith('I'):
                 d['enrollment_type'] = "I"
                 d['entity_type'] = "1"
-
             d['first_name'] = bdoc['FIRST_NAME']
             d['last_name'] = bdoc['LAST_NAME']
             d['organization_name'] = bdoc['ORG_NAME']
-        
+            
+            
+            d['apm_program_name'] = random.choice(STATUS_CHOICES)
+            d['apm_entity_name'] = "Some APN Entity Name"
+            d['status'] =  random.choice(STATUS_CHOICES)
+            d['number_patiens_seen'] =  randint(1, 999)
+            d['part_b_allowed_charges'] =  randint(0, 15000)
+            
+            
             if bdoc['FIRST_NAME']:
                 d['name'] = "%s %s" % (bdoc['FIRST_NAME'], bdoc['LAST_NAME'])
             else:
                 d['name'] = bdoc['ORG_NAME']
 
-
-
-            d['first_approved_date'] = "1980-01-01"
-            d['last_approved_date'] = "1980-01-01"
-
-            #d['DESCRIPTION'] = bdoc['PROVIDER_TYPE_DESC']
+            d['first_approved_date'] = "2000-01-01"
+            d['last_approved_date'] = "2016-11-11"
             
             d['reassignments'] = []
+            d['addresses'] = []
             d['specialties'] = []
             d['addresses'] = []
-            
+            d["note"] = "This API is powered by Djmongo. http://videntity.com"
             
             if d['entity_type'] == "1":
                 
@@ -119,7 +142,7 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
                             assignee['name'] = a['ORG_NAME']
                             
                         assignee['pecos_id'] = a['PECOS_ASCT_CNTL_ID']
-                        assignee['npi'] = a['npi']
+                        assignee['npi'] = a['NPI']
                         assignee['enrollment_id'] = a['ENRLMT_ID']
                         assignee['tin'] = "SCRUBBED"
                         assignee['tin_type'] = ""
@@ -147,13 +170,14 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
             for s in specialties_collection.find({"ENRLMT_ID": bdoc['ENRLMT_ID']}):
                 specialty = OrderedDict()
                 specialty['code'] = s['PROVIDER_TYPE_CD'][3:]
-                specialty['decription'] = "PROVIDER_TYPE_DESC"
+                specialty['decription'] = s["PROVIDER_TYPE_DESC"]
+                specialty['mips_eligible_clinician'] = random.choice(('Y','N'))
                 d["specialties"].append(specialty)
             
             
             if i % 1000 == 0:
                 print(i)
-            #print json.dumps(d, indent =4)
+            # print json.dumps(d, indent =4)
             compiled_collection.insert(d)
 
             
