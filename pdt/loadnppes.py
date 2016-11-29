@@ -50,7 +50,6 @@ def do_update(process_full=True, download=True, delete=False):
 
         else:
             weeklylinks.append(link)
-    print month
 
     #Download full file
     if process_full:
@@ -95,9 +94,6 @@ def do_update(process_full=True, download=True, delete=False):
 
     #now create indexes
     call(["create_provider_indexes.py", "nppes", "pjson", "fhir_practitioner", "fhir_organization", "127.0.0.1", "27017", "Y" ])
-
-
-
 
 
     if delete:
