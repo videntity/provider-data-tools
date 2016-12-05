@@ -10,7 +10,7 @@ class TestCSV2FHIR_PUBLIC(unittest.TestCase):
     def test_run_CSV2FHIR_PUBLIC(self):
         """Run CSV2FHIR should return results """
         CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-        csvfile = os.path.join(CURRENT_DIR,  "fiftythousand.csv")
+        csvfile = os.path.join(CURRENT_DIR, "fiftythousand.csv")
         output_dir = "fhir_test_output"
         with open(csvfile):
 

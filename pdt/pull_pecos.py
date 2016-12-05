@@ -44,8 +44,8 @@ def pull_pecos(download_all=True, Base=False,
 
         if Base:
             print("Downloading Base CSV file")
-            call(["wget", "--output-document=pecos_base.csv",
-                  csv_prefix + file_links[0][-1] + '/rows.csv?accessType=DOWNLOAD'])
+            call(["wget", "--output-document=pecos_base.csv", csv_prefix +
+                  file_links[0][-1] + '/rows.csv?accessType=DOWNLOAD'])
 
         if Reassignment:
             print("Downloading Reassignment CSV file")
@@ -54,8 +54,8 @@ def pull_pecos(download_all=True, Base=False,
 
         if Address:
             print("Downloading Address CSV file")
-            call(["wget", "--output-document=pecos_address.csv",
-                  csv_prefix + file_links[2][-1] + "/rows.csv?accessType=DOWNLOAD"])
+            call(["wget", "--output-document=pecos_address.csv", csv_prefix +
+                  file_links[2][-1] + "/rows.csv?accessType=DOWNLOAD"])
 
     except:
         print(sys.exc_info)

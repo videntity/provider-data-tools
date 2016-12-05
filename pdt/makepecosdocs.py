@@ -20,20 +20,21 @@ MONGO_HOST = "127.0.0.1"
 MONGO_PORT = 27017
 
 
-STATUS_CHOICES = ("Y", "Y","Y", "Y","N")
+STATUS_CHOICES = ("Y", "Y", "Y", "Y", "N")
 TIN_TYPE_CHOICES = ("S", "S", "S", "S", "S", "S", "E", "E" "I")
 
-TIN_CHOICES = ( "560611570"
-                "560611571",
-                "560611572",
-                "560611573",
-                "560611574",
-                "560611575")
+TIN_CHOICES = ("560611570"
+               "560611571",
+               "560611572",
+               "560611573",
+               "560611574",
+               "560611575")
 
-APM_PROGRAM_NAME_CHOICES = ('SSP','Nextgen')
+APM_PROGRAM_NAME_CHOICES = ('SSP', 'Nextgen')
 
 
 PART_B_CHOICES = ("Y", "N")
+
 
 def makepecosdb(database_name="pecos", collection_name="compiled"):
 
@@ -64,9 +65,9 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
             d['pecos_id'] = bdoc['PECOS_ASCT_CNTL_ID']
             d['enrollment_id'] = bdoc['ENRLMT_ID']
             d['npi'] = bdoc['NPI']
-            
+
             d['tin'] = str(randint(560611570, 560700000))
-            
+
             if bdoc['ENRLMT_ID'].startswith('O'):
                 d['enrollment_type'] = "O"
                 d['entity_type'] = "2"
@@ -77,15 +78,13 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
             d['first_name'] = bdoc['FIRST_NAME']
             d['last_name'] = bdoc['LAST_NAME']
             d['organization_name'] = bdoc['ORG_NAME']
-            
-            
+
             d['apm_program_name'] = random.choice(STATUS_CHOICES)
             d['apm_entity_name'] = "Some APN Entity Name"
-            d['status'] =  random.choice(STATUS_CHOICES)
-            d['number_patiens_seen'] =  randint(1, 999)
-            d['part_b_allowed_charges'] =  randint(0, 15000)
-            
-            
+            d['status'] = random.choice(STATUS_CHOICES)
+            d['number_patiens_seen'] = randint(1, 999)
+            d['part_b_allowed_charges'] = randint(0, 15000)
+
             if bdoc['FIRST_NAME']:
                 d['name'] = "%s %s" % (bdoc['FIRST_NAME'], bdoc['LAST_NAME'])
             else:
@@ -93,25 +92,27 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
 
             d['first_approved_date'] = "2000-01-01"
             d['last_approved_date'] = "2016-11-11"
-            
+
             d['reassignments'] = []
             d['addresses'] = []
             d['specialties'] = []
             d['addresses'] = []
             d["note"] = "This API is powered by Djmongo. http://videntity.com"
-            
-            if d['entity_type'] == "1":
-                
-            
-                for rdoc in reassignments_collection.find({"REASGN_BNFT_ENRLMT_ID": bdoc['ENRLMT_ID']}):
 
-                    ac = base_collection.find({'ENRLMT_ID': rdoc["RCV_BNFT_ENRLMT_ID"]})
-                    
+            if d['entity_type'] == "1":
+
+                for rdoc in reassignments_collection.find(
+                        {"REASGN_BNFT_ENRLMT_ID": bdoc['ENRLMT_ID']}):
+
+                    ac = base_collection.find(
+                        {'ENRLMT_ID': rdoc["RCV_BNFT_ENRLMT_ID"]})
+
                     for a in ac:
                         reassigned_to = OrderedDict()
-    
+
                         if a['FIRST_NAME']:
-                            reassigned_to['name'] = "%s %s" % ( a['FIRST_NAME'], a['LAST_NAME'])
+                            reassigned_to['name'] = "%s %s" % (
+                                a['FIRST_NAME'], a['LAST_NAME'])
                         else:
                             reassigned_to['name'] = a['ORG_NAME']
                         reassigned_to['pecos_id'] = a['PECOS_ASCT_CNTL_ID']
@@ -119,74 +120,76 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
                         reassigned_to['enrollment_id'] = a['ENRLMT_ID']
                         reassigned_to['tin'] = "SCRUBBED"
                         reassigned_to['tin_type'] = ""
-                                                
+
                         if str(a['ENRLMT_ID']).startswith("O"):
-                            
+
                             reassigned_to['entity_type'] = "2"
                         else:
                             reassigned_to['entity_type'] = "1"
-                        
-                        d["reassignments"].append({"reassigned_to":reassigned_to, "effective_date": "1980-01-01"})
+
+                        d["reassignments"].append(
+                            {"reassigned_to": reassigned_to, "effective_date": "1980-01-01"})
 
             elif d['entity_type'] == "2":
-                for rdoc in reassignments_collection.find({"RCV_BNFT_ENRLMT_ID": bdoc['ENRLMT_ID']}):
-            
+                for rdoc in reassignments_collection.find(
+                        {"RCV_BNFT_ENRLMT_ID": bdoc['ENRLMT_ID']}):
+
                     ac = base_collection.find(
                         {'ENRLMT_ID': rdoc["REASGN_BNFT_ENRLMT_ID"]})
                     for a in ac:
-                        assignee =OrderedDict()
+                        assignee = OrderedDict()
                         if a['FIRST_NAME']:
                             assignee['name'] = "%s %s" % (
                                 a['FIRST_NAME'], a['LAST_NAME'])
                         else:
                             assignee['name'] = a['ORG_NAME']
-                            
+
                         assignee['pecos_id'] = a['PECOS_ASCT_CNTL_ID']
                         assignee['npi'] = a['NPI']
                         assignee['enrollment_id'] = a['ENRLMT_ID']
                         assignee['tin'] = "SCRUBBED"
                         assignee['tin_type'] = ""
                         if str(a['ENRLMT_ID']).startswith("O"):
-                            
+
                             assignee['entity_type'] = "2"
                         else:
                             assignee['entity_type'] = "1"
-        
-                        d["reassignments"].append({"assignee": assignee, "effective_date": "1980-01-01"})
-                       
+
+                        d["reassignments"].append(
+                            {"assignee": assignee, "effective_date": "1980-01-01"})
 
             # Get addresses
-            for a in addresses_collection.find({"ENRLMT_ID": bdoc['ENRLMT_ID']}):
+            for a in addresses_collection.find(
+                    {"ENRLMT_ID": bdoc['ENRLMT_ID']}):
                 address = OrderedDict()
                 address['address_type'] = "P"
                 address['line_1'] = "123 Fake Street"
                 address['line_2'] = ""
                 address['city'] = a["CITY_NAME"]
                 address['state'] = a["ZIP_CD"]
-                address['zip_code'] =  a["STATE_CD"]
+                address['zip_code'] = a["STATE_CD"]
                 d["addresses"].append(address)
 
             # Get specialties
-            for s in specialties_collection.find({"ENRLMT_ID": bdoc['ENRLMT_ID']}):
+            for s in specialties_collection.find(
+                    {"ENRLMT_ID": bdoc['ENRLMT_ID']}):
                 specialty = OrderedDict()
                 specialty['code'] = s['PROVIDER_TYPE_CD'][3:]
                 specialty['decription'] = s["PROVIDER_TYPE_DESC"]
-                specialty['mips_eligible_clinician'] = random.choice(('Y','N'))
+                specialty['mips_eligible_clinician'] = random.choice(
+                    ('Y', 'N'))
                 d["specialties"].append(specialty)
-            
-            
+
             if i % 1000 == 0:
                 print(i)
             # print json.dumps(d, indent =4)
             compiled_collection.insert(d)
 
-            
-
         # Walk through base
 
     except:
         print(sys.exc_info())
-        print json.dumps(d, indent =4)
+        print json.dumps(d, indent=4)
 
     print(i, "Processed")
 

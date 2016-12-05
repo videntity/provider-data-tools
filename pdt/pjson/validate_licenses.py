@@ -26,7 +26,12 @@ def validate_license_list(l, enumeration_type, action):
 
         for k in max_values.keys():
             if d.get(k):
-                if max_values[k] < len(d.get(k, "").encode('ascii', 'ignore').decode('ascii')):
+                if max_values[k] < len(
+                    d.get(
+                        k,
+                        "").encode(
+                        'ascii',
+                        'ignore').decode('ascii')):
                     error = "%s : %s max allowable length %s." % (
                         d.get['code'], max_values[k])
                     errors.append(error)

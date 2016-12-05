@@ -3,11 +3,12 @@
 # vim: ai ts=4 sts=4 et sw=4
 # Written by Alan Viars  - This software is public domain
 
-import json, sys
+import json
+import sys
 from baluhn import verify
 from pdt.pjson.validate_affiliations import validate_affiliation_list
 
-LUHN_PREFIX ="80840"
+LUHN_PREFIX = "80840"
 
 
 def validate_pjson(j):
@@ -16,62 +17,61 @@ def validate_pjson(j):
     is empty then the file is valid.
     """
 
-    errors =[]
-    warnings =[]
-    response = { "errors": [], "warnings": [] }
+    errors = []
+    warnings = []
+    response = {"errors": [], "warnings": []}
 
     # Does the string contain JSON
     try:
         d = json.loads(j)
     except:
-        error ="The string did not contain valid JSON."
+        error = "The string did not contain valid JSON."
         errors.append(error)
         response["errors"] = errors
         return response
 
     # Is it a dict {} (JSON object equiv)?
-    if type(d)!=type({}):
-        error ="The JSON string did not contain a JSON object i.e. {}."
+    if not isinstance(d, type({})):
+        error = "The JSON string did not contain a JSON object i.e. {}."
         errors.append(error)
         response["errors"] = errors
         return response
 
     # Does it contain the top-level enumeration_type
-    if not d.has_key("enumeration_type"):
-        error ="The JSON object does not contain an enumeration_type."
+    if "enumeration_type" not in d:
+        error = "The JSON object does not contain an enumeration_type."
         errors.append(error)
         response["errors"] = errors
         return response
 
-    #Check for enumeration number
-    if not d.has_key("number"):
-        error ="The JSON object does not contain an enumeration number."
+    # Check for enumeration number
+    if "number" not in d:
+        error = "The JSON object does not contain an enumeration number."
         errors.append(error)
         response["errors"] = errors
         return response
 
     # Is the enumeration_type a valid?
     if d["enumeration_type"] not in ("NPI-1", "NPI-2", "OEID", "HPID"):
-        error ="enumeration_type must be one of these: ('NPI-1', 'NPI-2', 'OEID', 'HPID')"
+        error = "enumeration_type must be one of these: ('NPI-1', 'NPI-2', 'OEID', 'HPID')"
         errors.append(error)
         response["errors"] = errors
         return response
 
-
-    #Check if the Luhn checkdigit makes is correcense.
+    # Check if the Luhn checkdigit makes is correcense.
     if d['enumeration_type'] in ('NPI-1', 'NPI-2'):
 
         prefixed_number = "%s%s" % (LUHN_PREFIX, d['number'])
         luhn_verified = verify(prefixed_number)
         if not luhn_verified:
-            error ="The number %s did not pass Luhn algorithm check digit sanitiy check." % (d['number'])
+            error = "The number %s did not pass Luhn algorithm check digit sanitiy check." % (d[
+                                                                                              'number'])
             errors.append(error)
             response["errors"] = errors
             return response
 
-
-    affiliation_errors, affiliation_warnings = validate_affiliation_list(d.get('affiliations',[]),
-                                                      d.get('enumeration_type'))
+    affiliation_errors, affiliation_warnings = validate_affiliation_list(
+        d.get('affiliations', []), d.get('enumeration_type'))
 
     errors = errors + affiliation_errors
     warnings = warnings + affiliation_warnings
@@ -82,25 +82,24 @@ def validate_pjson(j):
 
 if __name__ == "__main__":
 
-    #Get the file from the command line
-    if len(sys.argv)<2:
+    # Get the file from the command line
+    if len(sys.argv) < 2:
         print("You must supply a a ProviderJSON file to validate")
         print("Usage: validate_pjson_affiliations [ProivderJSON]")
         sys.exit(1)
     else:
         pjson_file = sys.argv[1]
 
-
-    #Try to open the file
+    # Try to open the file
     try:
         fh = open(pjson_file, 'r')
 
         j = fh.read()
 
-        #Validate the provider JSON content
+        # Validate the provider JSON content
         errors = validate_pjson(j)
-        #Print the errors and warnings as JSON to stout.
-        errors_json =  json.dumps(errors, indent =4)
+        # Print the errors and warnings as JSON to stout.
+        errors_json = json.dumps(errors, indent=4)
         print(errors_json)
     except IOError:
         print("Could not open file %s." % (pjson_file))

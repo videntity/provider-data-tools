@@ -19,7 +19,7 @@ from datetime import datetime
 
 def do_update(process_full=True, download=True):
     try:
-        months = ["Jan","Feb","Mar","Apr", "May", "June", "July", "Aug",
+        months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug",
                   "Sept", "Oct", "Nov", "Dec"]
         # Get just the html page
         html_page = urlopen("http://download.cms.gov/nppes/NPI_Files.html")
@@ -37,7 +37,7 @@ def do_update(process_full=True, download=True):
                 zipfilelinks.append(link.get('href', ""))
 
         print(zipfilelinks)
-        #determine full v/s weekly
+        # determine full v/s weekly
         weeklylinks = []
         full_link = ""
         for link in zipfilelinks:

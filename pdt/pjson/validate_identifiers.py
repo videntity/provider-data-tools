@@ -27,13 +27,36 @@ def validate_identifier_list(l, enumeration_type):
 
         for k in max_values.keys():
             if d.get(k):
-                if max_values[k] < len(d.get(k, "").encode('ascii', 'ignore').decode('ascii')):
+                if max_values[k] < len(
+                    d.get(
+                        k,
+                        "").encode(
+                        'ascii',
+                        'ignore').decode('ascii')):
                     error = "%s : %s exceeds max allowable length of %s." % (
                         identifer_string, k, max_values[k])
                     errors.append(error)
 
         # check for required information
-        if str(d.get('code', '')) not in ("", "01", "02", "04", "05", "06", "07", "08", "1", "2", "4", "5", "6", "7", "8"):
+        if str(
+            d.get(
+                'code',
+                '')) not in (
+            "",
+            "01",
+            "02",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "1",
+            "2",
+            "4",
+            "5",
+            "6",
+            "7",
+                "8"):
             error = "%s : identifier code is not in ['', '01', '02', '04','05', '06', '07', '08']" % d.get(
                 'code')
             errors.append(error)
