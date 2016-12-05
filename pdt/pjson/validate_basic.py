@@ -162,7 +162,9 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
 
     # validate phone numbers
 
-    if d.get('contact_person_telephone_number') and not re.match(r'^[0-9]{3}-[0-9]{3}-[0-9]{4}$', d.get('contact_person_telephone_number')):
+    if d.get('contact_person_telephone_number') and not re.match(
+        r'^[0-9]{3}-[0-9]{3}-[0-9]{4}$',
+            d.get('contact_person_telephone_number')):
         error = "contact_person_telephone_number must be in XXX-XXX-XXXX format."
         errors.append(error)
 
@@ -177,7 +179,8 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
         warning = "The mode should be set to A when using the API."
         warnings.append(warning)
 
-    if d.get("status") and d.get("status").upper() not in ('E', 'P', 'A', 'D', 'R'):
+    if d.get("status") and d.get(
+            "status").upper() not in ('E', 'P', 'A', 'D', 'R'):
 
         # Note: NPPES will ignore this since status is decided by NPPES.
         error = "status must be in ('E', 'P', 'A', 'D', 'R')."
@@ -206,8 +209,8 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
             error = "last_name is required."
             errors.append(error)
 
-        if d.get("name_suffix") and d.get("name_suffix").upper() not in ('JR.', 'SR.', 'I', 'II', 'III', 'IV',
-                                                                         'V', 'VI', 'VII', 'VIII', 'IX', 'X'):
+        if d.get("name_suffix") and d.get("name_suffix").upper() not in (
+                'JR.', 'SR.', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'):
             error = """name_suffix must be in ['Jr.', 'Sr.', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']'
             """
             errors.append(error)
@@ -282,8 +285,9 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
             warnings.append(warning)
 
         # Validate the interdependecies
-        if d.get('country_of_birth') and d.get('country_of_birth') and \
-                (d.get('country_of_birth')) != "US" and (d.get('state_of_birth') != "ZZ"):
+        if d.get('country_of_birth') and d.get('country_of_birth') and (
+                d.get('country_of_birth')) != "US" and (
+                d.get('state_of_birth') != "ZZ"):
             error = """country_of_birth and state_of_birth mismatch. A person cannot be born in both a foreign contry and a US state at the same time."""
             errors.append(error)
 
@@ -333,8 +337,8 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
 
         # Validate the not required items NPI-1
 
-        if d.get("name_prefix") and d.get("name_prefix").upper() not in ('MS.', 'MR.', 'MISS',
-                                                                         'MRS.', 'DR.', 'PROF.'):
+        if d.get("name_prefix") and d.get("name_prefix").upper() not in (
+                'MS.', 'MR.', 'MISS', 'MRS.', 'DR.', 'PROF.'):
             error = "name_prefix  must be one of the following: 'MS.', 'MR.', 'MISS', 'MRS.', 'DR.', 'PROF.'"
             errors.append(error)
 
@@ -357,7 +361,8 @@ def validate_basic_dict(d, enumeration_type, action, number=None):
             error = "EIN must be 9 digits."
             errors.append(error)
 
-        if d.get('authorized_official_telephone_number') and not re.match(r'^[0-9]{3}-[0-9]{3}-[0-9]{4}$', d.get('authorized_official_telephone_number')):
+        if d.get('authorized_official_telephone_number') and not re.match(
+                r'^[0-9]{3}-[0-9]{3}-[0-9]{4}$', d.get('authorized_official_telephone_number')):
             error = "authorized_official_telephone_number must be in XXX-XXX-XXXX format."
             errors.append(error)
 

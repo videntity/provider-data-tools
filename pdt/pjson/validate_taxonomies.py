@@ -41,11 +41,11 @@ def validate_taxonomy_list(taxonomies, enumeration_type, licenses,
                 error = "%s : code (taxonomy) is not a valid taxonomy code. See http://www.wpc-edi.com/taxonomy" % t.get('code')
                 errors.append(error)
 
-        if type(t.get('primary')) != type(True):
+        if not isinstance(t.get('primary'), type(True)):
             error = "%s : primay must be true or false." % (d.get('code'))
             errors.append(error)
 
-        if t.get('primary') == True:
+        if t.get('primary'):
             primary_count += 1
     # check that only one taxonomy is marked as primary
     if primary_count != 1:
@@ -70,7 +70,8 @@ def validate_taxonomy_list(taxonomies, enumeration_type, licenses,
 
             # print code , requires_license
             if action != "public":
-                if cw[0] == "I" and enumeration_type != "NPI-1" and sole_proprietor == "NO":
+                if cw[
+                        0] == "I" and enumeration_type != "NPI-1" and sole_proprietor == "NO":
                     error = "Taxonomy %s is only for for individuals / NPI-1." % (
                         t.get('code'))
                     errors.append(error)

@@ -54,21 +54,23 @@ def validate_pjson(j, action):
         return response
 
     # Is it a dict {} (JSON object equiv)?
-    if type(d) != type({}):
+    if not isinstance(d, type({})):
         error = "The JSON string did not contain a JSON object i.e. {}."
         errors.append(error)
         response["errors"] = errors
         return response
 
     # Does it contain the top-level enumeration_type
-    if not d.has_key("enumeration_type") and action != "public":
+    if "enumeration_type" not in d and action != "public":
         error = "The JSON object does not contain an enumeration_type."
         errors.append(error)
         response["errors"] = errors
         return response
 
     # Check for deactivation
-    if d.has_key("number") and not d.get("enumeration_type", "") and action == "public":
+    if "number" in d and not d.get(
+        "enumeration_type",
+            "") and action == "public":
         warning = "This appears to be a deactivated NPI. No information is available for deactivated NPIs."
         warnings.append(warning)
         response["warnings"] = warnings
@@ -82,7 +84,7 @@ def validate_pjson(j, action):
         return response
 
     # If a number is present we assume this is an update.
-    if not d.has_key("number"):
+    if "number" not in d:
         number = None
     else:
         number = d['number']
@@ -117,25 +119,28 @@ def validate_pjson(j, action):
 
     # Check for errors in the license section
 
-    if d.has_key('licenses'):
-        license_errors = validate_license_list(d.get('licenses', []),
-                                               d.get('enumeration_type'), action)
+    if 'licenses' in d:
+        license_errors = validate_license_list(
+            d.get('licenses', []), d.get('enumeration_type'), action)
     else:
         license_errors = []
 
-    taxonomy_errors = validate_taxonomy_list(d.get('taxonomies', ()),
-                                             d.get('enumeration_type', ()),
-                                             d.get('licenses', []), d.get(
-                                                 'taxonomy_licenses', []),
-                                             d.get('basic', {}).get('sole_proprietor', "NO"), action)
+    taxonomy_errors = validate_taxonomy_list(
+        d.get(
+            'taxonomies', ()), d.get(
+            'enumeration_type', ()), d.get(
+                'licenses', []), d.get(
+                    'taxonomy_licenses', []), d.get(
+                        'basic', {}).get(
+                            'sole_proprietor', "NO"), action)
 
-    if d.has_key('identifiers'):
+    if 'identifiers' in d:
         identifier_errors = validate_identifier_list(
             d.get('identifiers', []), d.get('enumeration_type'))
     else:
         identifier_errors = []
 
-    if d.has_key('other_names'):
+    if 'other_names' in d:
         other_names_errors = validate_other_name_list(d.get('other_names', []),
                                                       d.get(
                                                           'enumeration_type'),
@@ -143,11 +148,11 @@ def validate_pjson(j, action):
     else:
         other_names_errors = []
 
-    affiliation_errors, affiliation_warnings = validate_affiliation_list(d.get('affiliations', []),
-                                                                         d.get('enumeration_type'))
+    affiliation_errors, affiliation_warnings = validate_affiliation_list(
+        d.get('affiliations', []), d.get('enumeration_type'))
 
-    errors = errors + basic_errors + other_names_errors + address_errors + license_errors + \
-        taxonomy_errors + identifier_errors + affiliation_errors
+    errors = errors + basic_errors + other_names_errors + address_errors + \
+        license_errors + taxonomy_errors + identifier_errors + affiliation_errors
     warnings = warnings + basic_warnings
     response["errors"] = errors
     response["warnings"] = warnings
