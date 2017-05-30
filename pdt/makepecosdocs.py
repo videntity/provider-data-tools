@@ -58,7 +58,7 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
         compiled_organizations_collection = db['compiled_organizations']
         compiled_collection = db['compiled']
 
-        for bdoc in base_collection.find():
+        for bdoc in base_collection.find().batch_size(1000):
             i += 1
             d = OrderedDict()
 
