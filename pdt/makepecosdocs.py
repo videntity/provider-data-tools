@@ -189,7 +189,7 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
 
     except:
         print(sys.exc_info())
-        print json.dumps(d, indent=4)
+        print(json.dumps(d, indent=4))
 
     print(i, "Processed")
 
