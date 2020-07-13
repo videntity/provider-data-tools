@@ -8,30 +8,23 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(name="pdt",
-      version="0.8.2.3",
+      version="0.8.2.4",
       description="Provider Data Tools",
       long_description="""A collection of scripts and APIs for working with"""
                        """health care provider data and beyond. Many tools"""
                        """are generic utilities.""",
       author="Alan Viars",
       author_email="sales@videntity.com",
-      url="https://github.com/hhsidealab/provider-data-tools",
+      url="https://github.com/transparenthealth/provider-data-tools",
       download_url="https://github.com/hhsidealab/provider-data-tools/"
                    "tarball/master",
       install_requires=['validate_email', 'beautifulsoup4', 'luhn', 'jdt',
                         'jsonschema', 'six'],
       packages=['pdt', 'pdt.pjson', 'tests', 'pdt.fhir_json_schema'],
       include_package_data=True,
-      #py_modules=['pdt', 'pdt.pjson', 'tests', 'pdt.fhir_json_schema'],
-      #package_dir={'pdt': '', 'pdt.pjson': 'pdt', 'tests': '', 'pdt.fhir_json_schema': 'pdt'},
       package_data={'tests': ['fifty_thousand.csv', 'first10.csv'],
                     'pjson': ['taxonomy-license-crosswalk.csv'],
                     'fhir_json_schema': ['Practitioner.json', 'Organization.json']},
-      # data_files = [('bin', ['pdt/nucc_taxonomy_160.csv','pdt/fhir_json_schema/Practitioner.json',
-      #                       'pdt/fhir_json_schema/Organization.json',
-      #                       'tests/first10.csv', 'tests/fiftythousand.csv']),
-      #              ('bin/fhir_json_schema', ['pdt/fhir_json_schema/Practitioner.json',
-      #                                        'pdt/fhir_json_schema/Organization.json'])],
       scripts=['pdt/build-cdn.sh',
                'pdt/chop_nppes_public.py',
                'pdt/combine_nppes_pecos_pract_fhir.py',
