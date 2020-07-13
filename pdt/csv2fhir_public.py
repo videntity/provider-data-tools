@@ -67,6 +67,7 @@ def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
     ]
     ps["address"] = []
     ps['telecom'] = []
+    ps['qualification'] = []
 
     return ps
 
@@ -90,6 +91,7 @@ def new_fhir_organization_stub(npi, organization_name):
     os['name'] = organization_name
     os["address"] = []
     os['telecom'] = []
+    os['qualification'] = []
     return os
 
 
@@ -121,13 +123,30 @@ def publiccsv2fhir(csvfile, output_dir):
 
     # Make variable/paths for nucc_taxonomy and schema checker, open file
     nucc_tax = os.path.join(os.path.dirname(__file__),
-                            "nucc_taxonomy_160.csv")
+                            "nucc_taxonomy_201.csv")
     # Check which version of Python, and open csv accordingly
     if sys.version_info[0] < 3:
         csvfile_tax = open(nucc_tax, 'rb')
     else:
         csvfile_tax = open(nucc_tax, 'r', newline='', encoding='iso-8859-1')
+    
     tax_reader = csv.reader(csvfile_tax, delimiter=',')
+    
+    # Load taxonomy
+    # read csv file as a list of lists
+    list_of_rows = []
+    with open(os.path.join(os.path.dirname(__file__),"nucc_taxonomy_201.csv"), 'r', newline='', encoding='iso-8859-1') as read_obj:
+        # pass the file object to reader() to get the reader object
+        csv_reader = csv.reader(read_obj)
+        # Pass reader object to list() to get a list of lists
+        list_of_rows = list(csv_reader)
+    tax_display = OrderedDict()
+    for row in list_of_rows:
+        tax_display[row[0]] = "%s, %s, %s" % (row[1], row[2], row[3],)
+        
+        tax_display[row[0]] = tax_display[row[0]].strip().strip(',')
+
+    
     practitioner_path = os.path.join(os.path.dirname(__file__),
                                      "fhir_json_schema", "Practitioner.json")
     organization_path = os.path.join(os.path.dirname(__file__),
@@ -289,22 +308,28 @@ def publiccsv2fhir(csvfile, output_dir):
                 if row[i] == "Y":
 
                     taxonomy = OrderedDict()
+                    taxonomy["code"] = OrderedDict()
                     # Fill in url
+                    #
                     coding = OrderedDict()
-                    extension = OrderedDict()
+                    #extension = OrderedDict()
 
                     coding['system'] = "http://www.nucc.org/"
                     coding['code'] = str(row[i - 3])
+                    coding['display'] = tax_display[coding['code']]
+                    
+                    
                     for row_tax in tax_reader:
+                        print(row_tax)
                         if coding['code'] == row_tax[0]:
                             coding['display'] = row_tax[2]
 
-                    taxonomy['coding'] = [coding]
+                    taxonomy['code']['coding'] = [coding]
 
-                    extension['url'] = "http://www.nucc.org/"
-                    extension['valueCodeableConcept'] = taxonomy
+                    #extension['url'] = "http://www.nucc.org/"
+                    #extension['valueCodeableConcept'] = taxonomy
 
-                    r['extension'] = [extension]
+                    r['qualification'].append(taxonomy)
 
             fn = "%s.json" % (row[0])
 
@@ -349,13 +374,11 @@ def publiccsv2fhir(csvfile, output_dir):
             rowindex += 1
 
         try:
-
             response_dict['num_files_created'] = rowindex - 1
             response_dict['num_csv_rows'] = rowindex - 1
             response_dict['code'] = 200
             response_dict['message'] = "Completed without errors."
         except:
-
             response_dict['message'] = "Completed with errors."
     fh.close()
     csvfile_tax.close()
