@@ -66,12 +66,12 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
             d['enrollment_id'] = bdoc['ENRLMT_ID']
             d['npi'] = bdoc['NPI']
 
-            d['tin'] = str(randint(560611570, 560700000))
+            # d['tin'] = str(randint(560611570, 560700000))
 
             if bdoc['ENRLMT_ID'].startswith('O'):
                 d['enrollment_type'] = "O"
                 d['entity_type'] = "2"
-                d['tin_type'] = random.choice(TIN_TYPE_CHOICES)
+                # d['tin_type'] = random.choice(TIN_TYPE_CHOICES)
             elif bdoc['ENRLMT_ID'].startswith('I'):
                 d['enrollment_type'] = "I"
                 d['entity_type'] = "1"
@@ -82,22 +82,27 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
             d['apm_program_name'] = random.choice(STATUS_CHOICES)
             d['apm_entity_name'] = "Some APN Entity Name"
             d['status'] = random.choice(STATUS_CHOICES)
-            d['number_patiens_seen'] = randint(1, 999)
-            d['part_b_allowed_charges'] = randint(0, 15000)
+            # d['number_patiens_seen'] = randint(1, 999)
+            # d['part_b_allowed_charges'] = randint(0, 15000)
 
             if bdoc['FIRST_NAME']:
                 d['name'] = "%s %s" % (bdoc['FIRST_NAME'], bdoc['LAST_NAME'])
             else:
                 d['name'] = bdoc['ORG_NAME']
 
-            d['first_approved_date'] = "2000-01-01"
-            d['last_approved_date'] = "2016-11-11"
+            # d['first_approved_date'] = "2000-01-01"
+            # d['last_approved_date'] = "2016-11-11"
 
             d['reassignments'] = []
             d['addresses'] = []
-            d['specialties'] = []
+            base_specialty = OrderedDict()
+            base_specialty['code'] = bdoc['PROVIDER_TYPE_CD'][3:]
+            base_specialty['decription'] = bdoc["PROVIDER_TYPE_DESC"]
+            d['specialties'] = [base_specialty,]
+            
+            
             d['addresses'] = []
-            d["note"] = "This API is powered by Djmongo. http://videntity.com"
+            d["ad"] = "This API is powered by Djmongo. http://videntity.com"
 
             if d['entity_type'] == "1":
 
@@ -176,8 +181,8 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
                 specialty = OrderedDict()
                 specialty['code'] = s['PROVIDER_TYPE_CD'][3:]
                 specialty['decription'] = s["PROVIDER_TYPE_DESC"]
-                specialty['mips_eligible_clinician'] = random.choice(
-                    ('Y', 'N'))
+                # specialty['mips_eligible_clinician'] = random.choice(
+                #   ('Y', 'N'))
                 d["specialties"].append(specialty)
 
             if i % 1000 == 0:
