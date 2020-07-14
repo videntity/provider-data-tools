@@ -12,7 +12,7 @@ import time
 import json_schema_check
 from collections import OrderedDict
 from datetime import datetime
-
+import ndjson
 
 def newfhir_deactive_stub():
     ps = OrderedDict()
@@ -74,7 +74,7 @@ def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
 
 def new_fhir_organization_stub(npi, organization_name):
 
-    text = "NPI %s for %s" % (npi, organization_name)
+    text = "%s: NPI= %s (Type 2-Organization/Facility/Pharmacy)" % (organization_name, npi,)
     os = OrderedDict()
     os["resourceType"] = "Organization"
     os["text"] = {"status": "generated",
@@ -84,8 +84,13 @@ def new_fhir_organization_stub(npi, organization_name):
     os['identifier'] = [
         {
             "use": "official",
-            "system": "http://hl7.org/fhir/sid/us-npi",
-                      "value": str(npi)
+             "coding": [
+                { "system": "http://hl7.org/fhir/v2/0203i",
+                  "value": str(npi),
+                  "display": "National provider identifier"
+                },
+                ],
+             "text": "US National Provider Identifier"
         }
     ]
     os['name'] = organization_name
@@ -95,11 +100,11 @@ def new_fhir_organization_stub(npi, organization_name):
     return os
 
 
-def publiccsv2fhir(csvfile, output_dir):
+def publiccsv2fhir(csvfile, output_dir, schema_check=False,
+                   include_state_list=[], include_npi_list=[]):
     """Return a response_dict with summary of  publiccsv2fhir transaction."""
 
     process_start_time = time.time()
-
     pdir = 1
 
     # make the output dir
@@ -125,6 +130,7 @@ def publiccsv2fhir(csvfile, output_dir):
     nucc_tax = os.path.join(os.path.dirname(__file__),
                             "nucc_taxonomy_201.csv")
     # Check which version of Python, and open csv accordingly
+    # TODO remove Python2 support
     if sys.version_info[0] < 3:
         csvfile_tax = open(nucc_tax, 'rb')
     else:
@@ -158,7 +164,17 @@ def publiccsv2fhir(csvfile, output_dir):
     csvhandle = csv.reader(fh, delimiter=',')
     rowindex = 0
     po_count = 0
+    practitioner_count = 0
+    organization_count = 0
+    deactive_count = 0
     error_list = []
+
+    # Create the NDJSON writers.
+    out_fh1 = open("Organization.ndjson", 'w')
+    organization_writer = ndjson.writer(out_fh1)
+    
+    out_fh2 = open("Practitioner.ndjson", 'w')
+    practitioner_writer = ndjson.writer(out_fh2)
 
     for row in csvhandle:
         if rowindex == 0:
@@ -240,7 +256,6 @@ def publiccsv2fhir(csvfile, output_dir):
                     r["gender"] = "unknown"
 
             # Organization Contact
-
             if row[43]:
                 contact_list = list()
                 contact = OrderedDict()
@@ -265,8 +280,8 @@ def publiccsv2fhir(csvfile, output_dir):
                 ]
                 contact_list.append(contact)
                 r['contact'] = contact_list
+                
             # Provider Business Practice Location Address Telephone Number
-
             t = OrderedDict()
             if row[34]:
                 t['system'] = "phone"
@@ -274,6 +289,7 @@ def publiccsv2fhir(csvfile, output_dir):
                                            row[34][6:12])
                 t['use'] = "work"
                 r['telecom'] = [t]
+            
             # Provider Business Practice Location Address Fax Number
             if row[35]:
                 t = OrderedDict()
@@ -301,9 +317,8 @@ def publiccsv2fhir(csvfile, output_dir):
                     t['use'] = 'home'
                     r['telecom'].append(t)
 
-            # Extension, specifically taxonomy codes
-            # Getting taxonomy codes
 
+            # Getting taxonomy codes to store in qualifications
             for i in range(50, 107, 4):
                 if row[i] == "Y":
 
@@ -314,7 +329,7 @@ def publiccsv2fhir(csvfile, output_dir):
                     coding = OrderedDict()
                     #extension = OrderedDict()
 
-                    coding['system'] = "http://www.nucc.org/"
+                    coding['system'] = "http://taxonomy.nucc.org/"
                     coding['code'] = str(row[i - 3])
                     coding['display'] = tax_display[coding['code']]
                     
@@ -331,55 +346,129 @@ def publiccsv2fhir(csvfile, output_dir):
 
                     r['qualification'].append(taxonomy)
 
+            # identifiers----------------
+            # starting at row 107
+
+            identifier_position = 107
+            identifier_code_position = 108
+            identifier_state_position = 109
+            identifier_issuer_position = 110
+
+            for i in range(1, 50):
+
+                if row[identifier_position]:
+                    identifier = OrderedDict()
+                    identifier['use']="official"
+                    
+                    if "MEDICAID" in row[identifier_issuer_position]:
+                        code = "MCD"
+                        display = "Practitioner Medicaid number"
+                    
+                    elif "DEA" in row[identifier_issuer_position]:
+                        code = "DEA"
+                        display = "Drug Enforcement Administration registration number"
+    
+                    else:
+                        code = "AN"
+                        display = "Account number"
+                        
+                    identifier['type']=[{"system":"http://hl7.org/fhir/v2/0203",
+                                        "code": code,
+                                        "display": display
+                                        },]
+                    identifier['value'] = row[identifier_position]
+                    identifier['text'] = row[identifier_code_position]
+                    identifier['state'] = row[
+                        identifier_state_position].upper()
+                    identifier['issuer'] = row[identifier_issuer_position]
+                    r['identifier'].append(identifier)
+
+                identifier_position += 4
+                identifier_code_position += 4
+                identifier_state_position += 4
+                identifier_issuer_position += 4
+               
+                # licenses 
+                # starting at row 49
+                license_state_position = 49
+                license_number_position = 48
+
+                for i in range(1, 15):
+                     # License
+                    if row[license_number_position]:
+                        license = OrderedDict()
+                        license["use"] = "official"
+                        license["coding"] = [
+                            {"system": "http://hl7.org/fhir/v2/0203",
+                             "code": "MD",
+                             "display": "Medcial license"},                       ]
+                        license['value'] = row[license_number_position]
+                        license['state'] = row[license_state_position].upper()
+                        license['issuer'] = row[identifier_issuer_position].upper()
+                        if not license['issuer'] and license['state']:
+                            license['issuer'] = license['state']
+                        if not license['issuer']:
+                            license['issuer'] = "UNSPECIFIED" 
+
+                        license['text'] = "%s issued by %s"  % (license['value'], license['issuer'])
+
+                        r['qualification'].append(license)
+                        
+                        #skip to the next
+                        license_state_position += 4
+                        license_number_position += 4    
+
+
             fn = "%s.json" % (row[0])
 
-            if not r['resourceType']:
-                subdir = os.path.join(output_dir, "Deactive",
-                                      str(row[0])[0:4])
-            elif r['resourceType'] == "Practitioner":
-                subdir = os.path.join(output_dir, "Practitioner",
-                                      str(row[0])[0:4])
+            if not row[1]:
+                deactive_count += 1 
+            if r['resourceType'] == "Practitioner":
+                # Write to Practitioner NDJSON File
+                practitioner_writer.writerow(r)
+                practitioner_count +=1 
+                # Write to Organization NDJSON File
             elif r['resourceType'] == "Organization":
-                subdir = os.path.join(output_dir, "Organization",
-                                      str(row[0])[0:4])
+                organization_writer.writerow(r)
+                organization_count += 1 
 
-            try:
-                os.mkdir(subdir)
-            except:
-                pass
 
-            fp = os.path.join(subdir, fn)
-            ofile = open(fp, 'w')
-            ofile.writelines(json.dumps(r, indent=4))
-            ofile.close()
 
-            if row[1] == "1":
-                results = json_schema_check.json_schema_check(
-                    practitioner_path, fp)
-                if results['errors'] != []:
-                    response_dict['errors'] = results['errors']
-            if row[2] == "2":
-                results = json_schema_check.json_schema_check(
-                    organization_path, fp)
-                if results['errors'] != []:
-                    response_dict['errors'] = results['errors']
+            #fp = os.path.join(subdir, fn)
+            #ofile = open(fp, 'w')
+            #ofile.writelines(json.dumps(r, indent=4))
+            #ofile.close()
+            
+            if schema_check:
+                if row[1] == "1":
+                    results = json_schema_check.json_schema_check(
+                        practitioner_path, fp)
+                    if results['errors'] != []:
+                        response_dict['errors'] = results['errors']
+                if row[2] == "2":
+                    results = json_schema_check.json_schema_check(
+                        organization_path, fp)
+                    if results['errors'] != []:
+                        response_dict['errors'] = results['errors']
             po_count += 1
 
             if po_count % 1000 == 0:
                 pdir += 1
-                out = "%s files created. Total time is %s seconds." % (
+                out = "%s objects created. Total time is %s seconds." % (
                     po_count, (time.time() - process_start_time))
                 print((out))
 
             rowindex += 1
 
-        try:
-            response_dict['num_files_created'] = rowindex - 1
-            response_dict['num_csv_rows'] = rowindex - 1
-            response_dict['code'] = 200
-            response_dict['message'] = "Completed without errors."
-        except:
-            response_dict['message'] = "Completed with errors."
+
+    response_dict['total_rows_processed'] = rowindex - 1
+    response_dict['practitioner_count'] = practitioner_count
+    response_dict['organization_count'] = organization_count
+    response_dict['deactive_count'] = deactive_count
+    response_dict['num_csv_rows'] = rowindex - 1
+
+    out_fh1.close()
+    out_fh2.close()
     fh.close()
     csvfile_tax.close()
     return response_dict
@@ -394,7 +483,9 @@ if __name__ == "__main__":
     csv_file = sys.argv[1]
     output_dir = sys.argv[2]
 
-    result = publiccsv2fhir(csv_file, output_dir)
+    result = publiccsv2fhir(csv_file, output_dir, include_state_list=[
+                                        'WV', 'VA', 'OH', 'MD', 'KY'])
+    
 
     # output the JSON transaction summary
     print((json.dumps(result, indent=4)))
