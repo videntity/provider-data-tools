@@ -8,7 +8,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(name="pdt",
-      version="0.8.2.4",
+      version="0.8.2.5",
       description="Provider Data Tools",
       long_description="""A collection of scripts and APIs for working with"""
                        """health care provider data and beyond. Many tools"""
@@ -19,7 +19,7 @@ setup(name="pdt",
       download_url="https://github.com/hhsidealab/provider-data-tools/"
                    "tarball/master",
       install_requires=['validate_email', 'beautifulsoup4', 'luhn', 'jdt',
-                        'jsonschema', 'six'],
+                        'jsonschema', 'six', 'ndjson'],
       packages=['pdt', 'pdt.pjson', 'tests', 'pdt.fhir_json_schema'],
       include_package_data=True,
       package_data={'tests': ['fifty_thousand.csv', 'first10.csv'],
