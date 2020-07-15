@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/home/ubuntu/.virtualenvs/pdt/bin/python3.5
 # -*- coding: utf-8 -*-
 # vim: ai ts=4 sts=4 et sw=4
 # Written by Alan Viars - This software is public domain
@@ -35,6 +35,7 @@ def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
     text = "%s %s %s %s %s" % (npi, prefix, first_name, last_name, suffix)
     ps = OrderedDict()
     ps["resourceType"] = "Practitioner"
+    ps["id"] = npi
     ps["text"] = {"status": "generated",
                   "div": "<div><p>%s</p></div>" % (text)
                   }
@@ -77,6 +78,7 @@ def new_fhir_organization_stub(npi, organization_name):
     text = "%s: NPI= %s (Type 2-Organization/Facility/Pharmacy)" % (organization_name, npi,)
     os = OrderedDict()
     os["resourceType"] = "Organization"
+    os["id"] = npi
     os["text"] = {"status": "generated",
                   "div": "<div><p>%s</p></div>" % (text)
                   }
@@ -149,10 +151,9 @@ def publiccsv2fhir(csvfile, output_dir, schema_check=False,
     tax_display = OrderedDict()
     for row in list_of_rows:
         tax_display[row[0]] = "%s, %s, %s" % (row[1], row[2], row[3],)
-        
         tax_display[row[0]] = tax_display[row[0]].strip().strip(',')
 
-    
+
     practitioner_path = os.path.join(os.path.dirname(__file__),
                                      "fhir_json_schema", "Practitioner.json")
     organization_path = os.path.join(os.path.dirname(__file__),
@@ -229,9 +230,9 @@ def publiccsv2fhir(csvfile, output_dir, schema_check=False,
             a["postalCode"] = row[32].upper()
             a["country"] = row[33].upper()
 
-            r['address'] = [a]
-
+            r['address'].append(a)
             # Mailing address --------------------
+            a = OrderedDict()
             if row[1] == "1":
                 a['use'] = 'home'
                 a['line'] = []
@@ -324,22 +325,20 @@ def publiccsv2fhir(csvfile, output_dir, schema_check=False,
 
                     taxonomy = OrderedDict()
                     taxonomy["code"] = OrderedDict()
-                    # Fill in url
-                    #
+                    taxonomy["value"] = str(row[i - 3])
                     coding = OrderedDict()
                     #extension = OrderedDict()
 
                     coding['system'] = "http://taxonomy.nucc.org/"
                     coding['code'] = str(row[i - 3])
                     coding['display'] = tax_display[coding['code']]
-                    
-                    
+
                     for row_tax in tax_reader:
-                        print(row_tax)
+                        # print(row_tax)
                         if coding['code'] == row_tax[0]:
                             coding['display'] = row_tax[2]
 
-                    taxonomy['code']['coding'] = [coding]
+                    taxonomy['code']['coding'] = [coding, ]
 
                     #extension['url'] = "http://www.nucc.org/"
                     #extension['valueCodeableConcept'] = taxonomy
@@ -425,14 +424,16 @@ def publiccsv2fhir(csvfile, output_dir, schema_check=False,
                 deactive_count += 1 
             if r['resourceType'] == "Practitioner":
                 # Write to Practitioner NDJSON File
-                practitioner_writer.writerow(r)
-                practitioner_count +=1 
+                for a in r['address']:
+                    if a['state'] in include_state_list and a['use']=="work":
+                        practitioner_writer.writerow(r)
+                        practitioner_count +=1 
                 # Write to Organization NDJSON File
             elif r['resourceType'] == "Organization":
-                organization_writer.writerow(r)
-                organization_count += 1 
-
-
+                for a in r['address']:
+                    if a['state'] in include_state_list and a['use']=="work":
+                        organization_writer.writerow(r)
+                        organization_count += 1
 
             #fp = os.path.join(subdir, fn)
             #ofile = open(fp, 'w')
@@ -454,7 +455,7 @@ def publiccsv2fhir(csvfile, output_dir, schema_check=False,
 
             if po_count % 1000 == 0:
                 pdir += 1
-                out = "%s objects created. Total time is %s seconds." % (
+                out = "%s lines processed. Total time is %s seconds." % (
                     po_count, (time.time() - process_start_time))
                 print((out))
 
@@ -484,7 +485,7 @@ if __name__ == "__main__":
     output_dir = sys.argv[2]
 
     result = publiccsv2fhir(csv_file, output_dir, include_state_list=[
-                                        'WV', 'VA', 'OH', 'MD', 'KY'])
+                                        'WV', 'VA', 'SC', 'NC', 'TE', 'GA'])
     
 
     # output the JSON transaction summary
