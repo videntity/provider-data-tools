@@ -8,7 +8,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(name="pdt",
-      version="0.8.2.7",
+      version="0.8.2.8",
       description="Provider Data Tools",
       long_description="""A collection of scripts and APIs for working with"""
                        """health care provider data and beyond. Many tools"""
@@ -49,5 +49,6 @@ setup(name="pdt",
                'pdt/pull_pecos.py',
                'pdt/pull_new_files_ready.py',
                'pdt/vnpi.py',
+               'pdt/split_practitioners_and_organizations.py',
                ]
       )
