@@ -8,7 +8,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(name="pdt",
-      version="0.8.2.7",
+      version="0.8.4",
       description="Provider Data Tools",
       long_description="""A collection of scripts and APIs for working with"""
                        """health care provider data and beyond. Many tools"""
@@ -16,7 +16,7 @@ setup(name="pdt",
       author="Alan Viars",
       author_email="sales@videntity.com",
       url="https://github.com/TransparentHealth/provider-data-tools",
-      download_url="https://github.com/hhsidealab/provider-data-tools/"
+      download_url="https://github.com/TransparentHealth/provider-data-tools/"
                    "tarball/master",
       install_requires=['validate_email', 'beautifulsoup4', 'luhn', 'jdt',
                         'jsonschema', 'six', 'ndjson'],
@@ -25,7 +25,7 @@ setup(name="pdt",
       package_data={'tests': ['fifty_thousand.csv', 'first10.csv'],
                     'pjson': ['taxonomy-license-crosswalk.csv'],
                     'fhir_json_schema': ['Practitioner.json', 'Organization.json']},
-      data_files = [('bin', ['pdt/nucc_taxonomy_201.csv',])],
+      data_files = [('bin', ['pdt/nucc_taxonomy_220.csv',])],
       scripts=['pdt/build-cdn.sh',
                'pdt/chop_nppes_public.py',
                'pdt/combine_nppes_pecos_pract_fhir.py',
@@ -49,5 +49,8 @@ setup(name="pdt",
                'pdt/pull_pecos.py',
                'pdt/pull_new_files_ready.py',
                'pdt/vnpi.py',
+               'pdt/split_practitioners_and_organizations.py',
+               'pdt/build_csv_with_taxonomy.py',
+               'pdt/get_npi_set_from_csv_column.py',
                ]
       )
