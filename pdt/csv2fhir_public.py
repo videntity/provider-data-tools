@@ -24,7 +24,7 @@ def newfhir_deactive_stub():
     return ps
  
 
-def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
+def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix, npis_to_process=[]):
  
     text = "%s %s %s %s %s" % (npi, prefix, first_name, last_name, suffix)
     ps = OrderedDict()
@@ -45,9 +45,7 @@ def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
     ps['name'] = [
         {
             "family": last_name,
-            "given": [
-                first_name
-            ],
+            "given": [first_name],
         }]
  
     if suffix:
@@ -64,7 +62,7 @@ def new_fhir_practitioner_stub(npi, prefix, first_name, last_name, suffix):
     return ps
  
 
-def new_fhir_organization_stub(npi, organization_name):
+def new_fhir_organization_stub(npi, organization_name, npis_to_process=[]):
  
     text = "%s: NPI= %s (Type 2-Organization/Facility/Pharmacy)" % (organization_name, npi,)
     os = OrderedDict()
@@ -91,20 +89,14 @@ def new_fhir_organization_stub(npi, organization_name):
 
 def csv2fhir(csvfile, output_dir="output",
                 include_state_list=[],
-                npi_list_file="npi.txt",
-                schema_check=False):
+                npi_list_file="",
+                include_payer_network=""):
     """Return a response_dict with summary of public csv2fhir transaction."""
  
     process_start_time = time.time()
     pdir = 1
- 
-    # make the output dir
-    try:
-        os.mkdir(output_dir)
-    except:
-        pass
    
-    # Make variable/paths for nucc_taxonomy and schema checker, open file
+    # Make variable/paths for nucc_taxonomy open file
     nucc_tax = os.path.join(os.path.dirname(__file__), "nucc_taxonomy_220.csv")
     # Check which version of Python, and open csv accordingly
     # TODO remove Python2 support
@@ -128,21 +120,38 @@ def csv2fhir(csvfile, output_dir="output",
         tax_display[row[0]] = "%s, %s, %s" % (row[1], row[2], row[3],)
         tax_display[row[0]] = tax_display[row[0]].strip().strip(',')
  
-
-    practitioner_path = os.path.join(os.path.dirname(__file__),
-                                     "fhir_json_schema", "Practitioner.json")
-    organization_path = os.path.join(os.path.dirname(__file__),
-                                     "fhir_json_schema", "Organization.json")
    
-    # npi_fh = open(npi_list_file, 'r')
-    # npis=[]
-    # for line in npi_fh:
-    #    npi = line.strip()
-    #    npis.append(npi)
-    #    # print(npi)
-    # npi_fh.close()
-    # npis = list(set(npis))
- 
+    npis=[]
+    if npi_list_file:
+        print("Reading in files of NPIs to process")
+        npi_fh = open(npi_list_file, 'r')
+        npi_csvhandle_read = csv.reader(npi_fh, delimiter=',')
+        
+        for row in npi_csvhandle_read:
+            if len(row[0]) == 10:
+                npis.append(row[0])
+        npi_fh.close()
+        print("Done reading in %s NPIs", len(npis))
+    npis = set(npis)
+
+   # open the 
+    payer_network = OrderedDict()
+    # If the payer network file is present make sure we can open/parse it and load it into mempory.
+    print("here", include_payer_network)
+    if include_payer_network:
+        print("Reading in files of Payer network file")
+        with open(include_payer_network, 'r', encoding='iso-8859-1') as read_obj:
+            # pass the file object to reader() to get the reader object
+            csv_reader = csv.reader(read_obj)
+            for row in csv_reader:
+                if len(row[0]) == 10:
+                    print(row)
+                else:
+                    print("Not an NPI!")
+        read_obj.close()
+        print("Done reading in Payer network file.")
+
+
 
     # Start of opening of csv file to convert and test
     response_dict = OrderedDict()
@@ -155,6 +164,11 @@ def csv2fhir(csvfile, output_dir="output",
     deactive_count = 0
     error_list = []
  
+    # make the output dir
+    try:
+        os.mkdir(output_dir)
+    except:
+        pass
     # Create the NDJSON writers.
     out_fh1 = open("%s/Organization.ndjson" %(output_dir), 'w')
     organization_writer = ndjson.writer(out_fh1)
@@ -192,8 +206,7 @@ def csv2fhir(csvfile, output_dir="output",
             # start our object off with a stub.
  
             if row[1] == "1":
-                r = new_fhir_practitioner_stub(row[0], row[8],  row[6], row[5],
-                                               row[9])
+                r = new_fhir_practitioner_stub(row[0], row[8],  row[6], row[5], row[9])
  
             elif row[1] == "2":
                 r = new_fhir_organization_stub(row[0], row[4])
@@ -214,12 +227,11 @@ def csv2fhir(csvfile, output_dir="output",
             a["state"] = row[31].upper()
             a["postalCode"] = row[32].upper()
             a["country"] = row[33].upper()
- 
             r['address'].append(a)
             # Mailing address --------------------
             a = OrderedDict()
             if row[1] == "1":
-                a['use'] = 'home'
+                a['use'] = 'billing'
                 a['line'] = []
                 a['line'].append(row[20].upper())
                 if row[21]:
@@ -299,7 +311,7 @@ def csv2fhir(csvfile, output_dir="output",
                     t['system'] = "phone"
                     t['value'] = "%s-%s-%s" % (row[26][0:3], row[26][3:6],
                                                row[26][6:12])
-                    t['use'] = 'home'
+                    t['use'] = 'work'
                     r['telecom'].append(t)
  
                 if row[27]:
@@ -307,7 +319,7 @@ def csv2fhir(csvfile, output_dir="output",
                     t['system'] = "fax"
                     t['value'] = "%s-%s-%s" % (row[27][0:3], row[27][3:6],
                                                row[27][6:12])
-                    t['use'] = 'home'
+                    t['use'] = 'work'
                     r['telecom'].append(t)
  
 
@@ -437,18 +449,19 @@ def csv2fhir(csvfile, output_dir="output",
                 deactive_count += 1
             if r['resourceType'] == "Practitioner":
                 # Write to Practitioner NDJSON File
-                if not include_state_list:
+
+                if not include_state_list and not npis:
                     # Process all in this case.
+                    practitioner_writer.writerow(r)
+                    practitioner_count += 1
+                elif row[0] in npis:
                     practitioner_writer.writerow(r)
                     practitioner_count += 1
                 else:
                     include_this_provider = False
                     # print(r['address'])
                     for a in r['address']:
-                        if a['state'] in include_state_list and a['use']=="work":
-                            include_this_provider = True
-                            # print("Practitioner %s works in %s" % (row[0], a['state']))
-                        elif a['state'] in include_state_list and a['use']!="work":
+                        if a['state'] in include_state_list and a['use'] in ("work", "billing", "home"):
                             include_this_provider = True
                             # print("Non-work address", include_state_list, a['state'])
                             pass
@@ -459,7 +472,7 @@ def csv2fhir(csvfile, output_dir="output",
                         if 'state' in i.keys():
                             if i['state'] in include_state_list:
                                 include_this_provider = True
-                    if include_this_provider:
+                    if include_this_provider == True or row[0] in npis:
                         practitioner_writer.writerow(r)
                         practitioner_count += 1
                     # if i['type']=='MCD':
@@ -467,8 +480,11 @@ def csv2fhir(csvfile, output_dir="output",
             # Write to Organization NDJSON File
             elif r['resourceType'] == "Organization":
                 # Default: do all states and territories
-                if not include_state_list:
+                if not include_state_list and not npis:
                     # Process all in this case.
+                    organization_writer.writerow(r)
+                    organization_count += 1
+                elif row[0] in npis:
                     organization_writer.writerow(r)
                     organization_count += 1
                 else:
@@ -515,25 +531,27 @@ if __name__ == "__main__":
  
     # Parse args
     parser = argparse.ArgumentParser(
-        description="""Output FHIR 4 Organization and Practitioner Resource files using the 
+        description="""Output FHIR 4 Organization and Practitioner Resource NDJSON files using the 
                        CMS NPPESS CSV as input.
-                       Output is JSON files fanned into subdirectories) or a single NDJSON file. Use the Optionlly it will only output certain US states or territories.
-                    """)
+                       """
  
     parser.add_argument('input_csv',
         help='Input the NPPES CSV file. Get the latest file here https://download.cms.gov/nppes/NPI_Files.html')
     parser.add_argument('output_ndjson', default="output.ndjson",  help="Output NDJSON filename.")
-    parser.add_argument('--npis', default="", 
+    parser.add_argument('--npis', default="",  nargs='?',
         help="Include a filepath containing a CSV with NPIs in first column (0),")
+    parser.add_argument('--include_payer_network', default="",  nargs='?',
+        help="Include a filepath containing a CSV with Payer input. See https://github.com/TransparentHealth/provider-data-tools for info.")
     parser.add_argument('--states', nargs='+', default=[],
         help="Include one or more states or teritories in the output. All are processed by default.")
-    parser.add_argument('--npis', nargs='?', default=None,
-        help="Include a filepath containing a list of NPIs.")
+
    
    
     args = parser.parse_args()
+    print()
     result = csv2fhir(args.input_csv,
                       args.output_ndjson,
-                      args.states, args.npis)
+                      args.states, args.npis,
+                      args.include_payer_network)
     # output the JSON transaction summary
     print((json.dumps(result, indent=4)))

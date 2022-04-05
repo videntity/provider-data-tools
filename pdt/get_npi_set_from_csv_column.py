@@ -67,8 +67,6 @@ def get_npi_set_from_csv_column(input_file, output_file, npi_column=0, header_ro
         
 
     
-
-
 if __name__ == "__main__":
  
     # Parse args
@@ -79,7 +77,7 @@ if __name__ == "__main__":
         help='Input a CSV containing NPIs. Program expects the NPI in the first column (column 0) by default')
     parser.add_argument('output_csv', default="npi_set.csv",  help="Output NPI set CSV filename.")
     parser.add_argument('--column', default=0, help="Grab another column besides 0 out of the CSV.")
-    parser.add_argument('--no_header_row', default="", help="Set to true to grab row 0 too.")
+    parser.add_argument('--no_header_row', default="", help="Set to any string to grab row 0 as data.")
     args = parser.parse_args()
     result = get_npi_set_from_csv_column(args.input_csv, 
                                          args.output_csv, 

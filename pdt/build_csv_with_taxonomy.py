@@ -30,89 +30,86 @@ def clean_headers(headers, upper=True):
 
 
 def build_csv_with_taxonomy(input_npi_file, input_taxonomy_file, output_file, 
-                            npi_column=0):
+                            npi_field="NPI/ATYP"):
     
-    #load the entire tazonomy in 
-    
-    
+    #load the entire taxonomy in 
     fh_read_tax = open(input_taxonomy_file, 'r', errors='ignore')
     taxonomy_reader = csv.reader(fh_read_tax, delimiter=',')
     rowindex = 0
-    all_taxonomies = OrderedDict()
+    all_taxonomies = {}
 
     print("Reading taxonomies into memory. This might take a few minutes...")
     for row in taxonomy_reader:       
         if rowindex == 0:
             taxonomy_column_headers = row
-        # otherwise
-        all_taxonomies[row[npi_column]]=row
+        else:
+            # otherwise create a dict. 
+            taxonomy = OrderedDict()
+            taxonomy = list(zip(taxonomy_column_headers, row))
+            all_taxonomies[row[0]] = taxonomy
         rowindex += 1
     fh_read_tax.close()
-    print("Reading taxonomies into memory complete.")
-    fh_read_npi = open(input_npi_file, 'r', errors='ignore')
-    reader_npi = csv.reader(fh_read_npi, delimiter=',')
+    print("Reading %s CMS taxonomies into memory complete." % (rowindex))
 
-
-    fh_write = open(output_file, 'w')
-    csv_writer = csv.writer(fh_write, delimiter=',', quoting=csv.QUOTE_MINIMAL)
-    npis = []
-    rowindex = 0
-    not_npis = []
+    csvfile = open(input_npi_file, 'r', errors='ignore')
+    reader = csv.DictReader(csvfile)
     no_taxonomy_defined_list = []
-    for row in reader_npi:       
-        if rowindex == 0:
-            column_headers =  row +  taxonomy_column_headers [1:]      
-            csv_writer.writerow(clean_headers(column_headers))
-        else: # rowindex >= 1  
-            if len(row[npi_column])==10:
-                try:
-                    new_row = row + all_taxonomies[row[npi_column]][1:]
-                except KeyError:
-                    new_row = row
-                    no_taxonomy_defined_list.append(row[npi_column])
-                    print(row[npi_column], "has no taxonomy!")
-                csv_writer.writerow(new_row)
-            else:
-                csv_writer.writerow(row)
-                not_npis.append(row[npi_column])
-
-
-        rowindex += 1
-    fh_read_npi.close()
-    fh_read_npi.close()
-
-    print("Total NPIs:", rowindex,  "Skipped/not NPIs:",len(not_npis))
+    not_npis = []
+    all_taxonomies_keys =  all_taxonomies.keys()
     
-    return {
-            "total_output_rows": rowindex,
+    # print("ATK",all_taxonomies_keys)
+    print("Opening file for writing.")
+    fh_write = open(output_file, 'w')
+
+
+    rowindex=0
+    for row in reader:
+        # Add the two records together and write the new CSV.
+        # print("NPI", row[npi_field])
+        # print("ATK",all_taxonomies_keys)
+        # print(row[npi_field])
+        if rowindex == 0:
+            header =  list(reader.fieldnames) + list(taxonomy_column_headers)
+            print(header)
+            writer = csv.DictWriter(fh_write, fieldnames=header)
+            writer.writeheader()
+            print("Header written.")
+        else:
+            if row[npi_field] in all_taxonomies_keys:
+                # print("Found: ", row[npi_field])
+                if len(row[npi_field])==10:
+                    combined_row = {**row, **OrderedDict(all_taxonomies[row[npi_field]]) }
+                    writer.writerow(combined_row)
+                else:
+                    not_npis.append(row[npi_field])
+            else:
+                pass
+        rowindex += 1
+    fh_write.close()
+
+    return {"total_output_rows": rowindex,
             "total_not_npis": len(not_npis),
             "not_npis": not_npis,
             "total_missing_taxonomy": len(no_taxonomy_defined_list),
-            "total_output_rows": rowindex
             }
-        
-
-    
-
 
 if __name__ == "__main__":
  
     # Parse args
     parser = argparse.ArgumentParser(
         description="""Input a CSV containing NPIs in the first (or specificed) column.
-        Input also the taxononimies flat csv. This is part of the output from chop_nppes_public.py.
-        Output """)
+        Input also the taxononomies flat csv. This is the _taxonomy.csv output from the chop_nppes_public.py.
+        command line utility.""")
     parser.add_argument('input_npi_csv',
         help='Input a CSV containing NPIs. Program expects the NPI in the first column (column 0) by default')
     parser.add_argument('input_taxonomy_csv',
         help='Input a CSV containing all NPIs and their taxonomies. Output from chop_nppes_public.py.')
 
     parser.add_argument('output_csv', default="csv_with_taxonomy.csv",  help="Output the input file with the taxonomioes appended.")
-    parser.add_argument('--column', default=0, help="Grab another column besides 0, as the NPI, out of the CSV.")
+    parser.add_argument('--npifield', default="NPI-ATYP", help="Grab another field besides 'NPI-ATYP' out of the CSV.")
     args = parser.parse_args()
-    result = build_csv_with_taxonomy(args.input_npi_csv, 
-                                     args.input_taxonomy_csv,
-                                     args.output_csv,
-                                     args.column)
+    result = build_csv_with_taxonomy(args.input_npi_csv, args.input_taxonomy_csv,
+                                     args.output_csv, args.npifield)
     # output the JSON transaction summary
-    print((json.dumps(result, indent=4)))
+    print(result['total_output_rows'])
+    #print((json.dumps(result, indent=4)))
