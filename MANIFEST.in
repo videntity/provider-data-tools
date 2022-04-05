@@ -1,5 +1,5 @@
 include README.rst
 include pdt/fhir_json_schema/Practitioner.json
 include pdt/fhir_json_schema/Organization.json
-include pdt/nucc_taxonomy_201.csv
+include pdt/nucc_taxonomy_220.csv
 include tests/first10.csv
