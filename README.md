@@ -1,8 +1,7 @@
 pdt - Provider Data Tools
 =========================
 
-Version: 0.8.3  
-[![Build Status](https://travis-ci.org/HHSIDEAlab/provider-data-tools.svg?branch=master)](https://travis-ci.org/HHSIDEAlab/provider-data-tools)
+Version: 0.8.4
 
 
 
@@ -13,7 +12,7 @@ parsing, creating, and validating US-based health provider data.  These tools ar
 
 * chop_nppes_public.py   - Parse the npi public data dissemination into flattened files.
 * csv2pjson_public.py - Parse the npi public data dissemination into ProviderJSON files.
-* csv2fhir_public.py  - Parse the npi public data dissemination to FHIR Practitioner and Organization Resources.
+* csv2fhir.py  - Parse the npi public data dissemination to FHIR Practitioner and Organization Resources.
 * validate_pjson      - Parse a Provider JSON document and output errors and warnings as JSON.
 * validate_pjson_dir  - Bulk validation of the output of csv2pjson-public.py.  
 * makepecosdocs.py    - Creates affiliations from initial PECOS data sets within MongoDB.
@@ -52,7 +51,7 @@ and have utility outside health provider data.
 
 Requirements
 ------------
-These scripts require Python >= 2.7 or Python >= 3.3
+These scripts require Python >= 3.3
 
 In order to utilize all of the scripts that Provider Data Tools provides, you will need to have MongoDB Installed and running. See [MongoDB](https://docs.mongodb.com/manual/installation/) Docs for reference on installation.
 
@@ -82,9 +81,9 @@ Get the "Full Replacement Monthly" zip file.  Unzip the file with the unzip tool
 
 To run the utility simply call it on a command line and provide one command line argument, the csv file to parse:
 
-    ~$ chop_nppes_public.py npidata_20050523-20140413.csv
+    ~$ chop_nppes_public.py npidata_20050523-20220404.csv
 
-The file name `npidata_20050523-20140413.csv` will vary depending on the date.
+The file name `npidata_20050523-20220404.csv` will vary depending on the date.
 
 The script make take a few minutes to complete. When it completes you will have more files
 in your current directory. Everything is still indexed by NPI. These files are described below.
@@ -100,7 +99,7 @@ in your current directory. Everything is still indexed by NPI. These files are d
 csv2pjson_public.py
 ------------------
 
-Convert the NPPES Public Data Dissemination  CSV file format to a directory of files in
+Convert the NPPES Public Data Dissemination CSV file format to a directory of files in
 ProviderJSON format.
 
 Usage:
@@ -119,7 +118,7 @@ Output:
   into a directory structure so as not to create millions of files in one directory.
 
 
-csv2fhir_public.py
+csv2fhir.py
 ------------------
 
 Convert the NPPES Public Data Dissemination  CSV file format to a directory of files in
@@ -127,7 +126,7 @@ ProviderJSON format.
 
 Usage:
 
-    csv2fhir_public.py [CSV_FILE] [OUTPUT_DIR]
+    csv2fhir.py [CSV_FILE] [OUTPUT_DIR]
 
 
 Example:
