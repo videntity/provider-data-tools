@@ -6,7 +6,9 @@ Version: 0.8.4
 
 
 This repository contains a number of command-line utilities and related code libraries for
-parsing, creating, and validating US-based health provider data.  These tools are:  
+parsing, creating, and validating US-based health provider data.  
+It requires Python 3 to be installed.
+These tools are:  
 
   __Parsing Scripts__  
 
