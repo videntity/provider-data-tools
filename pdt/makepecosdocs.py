@@ -4,7 +4,7 @@
 # Written by Alan Viars - This software is public domain
 
 import sys
-from datetime import datetime
+import datetime
 
 from pymongo import MongoClient
 import os
@@ -37,7 +37,7 @@ PART_B_CHOICES = ("Y", "N")
 
 
 def makepecosdb(database_name="pecos", collection_name="compiled"):
-
+    start_time = datetime.datetime.now()
     i = 0
     try:
 
@@ -48,20 +48,20 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
             db.drop_collection('compiled_individuals')
             db.drop_collection('compiled_organizations')
             db.drop_collection('compiled')
-        except:
+        except Exception:
             print(sys.exc_info)
         base_collection = db['base']
-        addresses_collection = db['addresses']
+        #addresses_collection = db['addresses']
         reassignments_collection = db['reassignments']
         specialties_collection = db['specialties']
-        compiled_individuals_collection = db['compiled_individuals']
-        compiled_organizations_collection = db['compiled_organizations']
         compiled_collection = db['compiled']
-
-        for bdoc in base_collection.find().batch_size(1000):
+        #doc = base_collection.find_one({})
+        #print("doc", dir(base_collection))
+        cursor = base_collection.find()
+        for bdoc in base_collection.find():
             i += 1
+            # print(i)
             d = OrderedDict()
-
             d['pecos_id'] = bdoc['PECOS_ASCT_CNTL_ID']
             d['enrollment_id'] = bdoc['ENRLMT_ID']
             d['npi'] = bdoc['NPI']
@@ -79,9 +79,9 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
             d['last_name'] = bdoc['LAST_NAME']
             d['organization_name'] = bdoc['ORG_NAME']
 
-            d['apm_program_name'] = random.choice(STATUS_CHOICES)
-            d['apm_entity_name'] = "Some APN Entity Name"
-            d['status'] = random.choice(STATUS_CHOICES)
+            # d['apm_program_name'] = random.choice(STATUS_CHOICES)
+            # d['apm_entity_name'] = "Some APN Entity Name"
+            # d['status'] = random.choice(STATUS_CHOICES)
             # d['number_patiens_seen'] = randint(1, 999)
             # d['part_b_allowed_charges'] = randint(0, 15000)
 
@@ -94,21 +94,15 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
             # d['last_approved_date'] = "2016-11-11"
 
             d['reassignments'] = []
-            d['addresses'] = []
+            #d['addresses'] = []
             base_specialty = OrderedDict()
             base_specialty['code'] = bdoc['PROVIDER_TYPE_CD'][3:]
             base_specialty['decription'] = bdoc["PROVIDER_TYPE_DESC"]
             d['specialties'] = [base_specialty,]
-            
-            
-            d['addresses'] = []
-            d["ad"] = "This API is powered by Djmongo. http://videntity.com"
-
+            #d['addresses'] = []
             if d['entity_type'] == "1":
-
                 for rdoc in reassignments_collection.find(
                         {"REASGN_BNFT_ENRLMT_ID": bdoc['ENRLMT_ID']}):
-
                     ac = base_collection.find(
                         {'ENRLMT_ID': rdoc["RCV_BNFT_ENRLMT_ID"]})
 
@@ -123,7 +117,7 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
                         reassigned_to['pecos_id'] = a['PECOS_ASCT_CNTL_ID']
                         reassigned_to['npi'] = a['NPI']
                         reassigned_to['enrollment_id'] = a['ENRLMT_ID']
-                        reassigned_to['tin'] = "SCRUBBED"
+                        reassigned_to['tin'] = ""
                         reassigned_to['tin_type'] = ""
 
                         if str(a['ENRLMT_ID']).startswith("O"):
@@ -133,7 +127,7 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
                             reassigned_to['entity_type'] = "1"
 
                         d["reassignments"].append(
-                            {"reassigned_to": reassigned_to, "effective_date": "1980-01-01"})
+                            {"reassigned_to": reassigned_to})
 
             elif d['entity_type'] == "2":
                 for rdoc in reassignments_collection.find(
@@ -152,7 +146,7 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
                         assignee['pecos_id'] = a['PECOS_ASCT_CNTL_ID']
                         assignee['npi'] = a['NPI']
                         assignee['enrollment_id'] = a['ENRLMT_ID']
-                        assignee['tin'] = "SCRUBBED"
+                        assignee['tin'] = ""
                         assignee['tin_type'] = ""
                         if str(a['ENRLMT_ID']).startswith("O"):
 
@@ -164,16 +158,16 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
                             {"assignee": assignee, "effective_date": "1980-01-01"})
 
             # Get addresses
-            for a in addresses_collection.find(
-                    {"ENRLMT_ID": bdoc['ENRLMT_ID']}):
-                address = OrderedDict()
-                address['address_type'] = "P"
-                address['line_1'] = "123 Fake Street"
-                address['line_2'] = ""
-                address['city'] = a["CITY_NAME"]
-                address['state'] = a["ZIP_CD"]
-                address['zip_code'] = a["STATE_CD"]
-                d["addresses"].append(address)
+            #for a in addresses_collection.find(
+            #        {"ENRLMT_ID": bdoc['ENRLMT_ID']}):
+            #    address = OrderedDict()
+            #    address['address_type'] = ""
+            #    address['line_1'] = ""
+            #    address['line_2'] = ""
+            #    address['city'] = a["CITY_NAME"]
+            #    address['state'] = a["ZIP_CD"]
+            #    address['zip_code'] = a["STATE_CD"]
+            #    d["addresses"].append(address)
 
             # Get specialties
             for s in specialties_collection.find(
@@ -188,8 +182,7 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
             if i % 1000 == 0:
                 print(i)
             # print json.dumps(d, indent =4)
-            compiled_collection.insert(d)
-
+            compiled_collection.insert_one(d)
         # Walk through base
 
     except:
@@ -197,6 +190,8 @@ def makepecosdb(database_name="pecos", collection_name="compiled"):
         print(json.dumps(d, indent=4))
 
     print(i, "Processed")
+    end_time = datetime.datetime.now()
+    print(end_time - start_time)
 
 
 if __name__ == "__main__":

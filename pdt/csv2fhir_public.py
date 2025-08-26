@@ -9,7 +9,6 @@ import json
 import csv
 import time
 import argparse
-import json_schema_check
 from collections import OrderedDict
 from datetime import datetime
 import ndjson
@@ -89,8 +88,7 @@ def new_fhir_organization_stub(npi, organization_name, npis_to_process=[]):
 
 def csv2fhir(csvfile, output_dir="output",
                 include_state_list=[],
-                npi_list_file="",
-                include_payer_network=""):
+                npi_list_file=""):
     """Return a response_dict with summary of public csv2fhir transaction."""
  
     process_start_time = time.time()
@@ -133,25 +131,6 @@ def csv2fhir(csvfile, output_dir="output",
         npi_fh.close()
         print("Done reading in %s NPIs", len(npis))
     npis = set(npis)
-
-   # open the 
-    payer_network = OrderedDict()
-    # If the payer network file is present make sure we can open/parse it and load it into mempory.
-    print("here", include_payer_network)
-    if include_payer_network:
-        print("Reading in files of Payer network file")
-        with open(include_payer_network, 'r', encoding='iso-8859-1') as read_obj:
-            # pass the file object to reader() to get the reader object
-            csv_reader = csv.reader(read_obj)
-            for row in csv_reader:
-                if len(row[0]) == 10:
-                    print(row)
-                else:
-                    print("Not an NPI!")
-        read_obj.close()
-        print("Done reading in Payer network file.")
-
-
 
     # Start of opening of csv file to convert and test
     response_dict = OrderedDict()
@@ -531,17 +510,15 @@ if __name__ == "__main__":
  
     # Parse args
     parser = argparse.ArgumentParser(
-        description="""Output FHIR 4 Organization and Practitioner Resource NDJSON files using the 
+        description="""Output FHIR 4 Organization and Practitioner Resource NDJSON FHIR files using the 
                        CMS NPPESS CSV as input.
-                       """
+                       """)
  
     parser.add_argument('input_csv',
         help='Input the NPPES CSV file. Get the latest file here https://download.cms.gov/nppes/NPI_Files.html')
     parser.add_argument('output_ndjson', default="output.ndjson",  help="Output NDJSON filename.")
     parser.add_argument('--npis', default="",  nargs='?',
         help="Include a filepath containing a CSV with NPIs in first column (0),")
-    parser.add_argument('--include_payer_network', default="",  nargs='?',
-        help="Include a filepath containing a CSV with Payer input. See https://github.com/TransparentHealth/provider-data-tools for info.")
     parser.add_argument('--states', nargs='+', default=[],
         help="Include one or more states or teritories in the output. All are processed by default.")
 
@@ -549,9 +526,6 @@ if __name__ == "__main__":
    
     args = parser.parse_args()
     print()
-    result = csv2fhir(args.input_csv,
-                      args.output_ndjson,
-                      args.states, args.npis,
-                      args.include_payer_network)
+    result = csv2fhir(args.input_csv,args.output_ndjson, args.states, args.npis)
     # output the JSON transaction summary
     print((json.dumps(result, indent=4)))

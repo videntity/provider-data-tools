@@ -19,7 +19,7 @@ MONGO_HOST = "127.0.0.1"
 MONGO_PORT = 27017
 
 
-def ensure_provider_indexes(database_name, collection1, collection2, host=MONGO_HOST,
+def ensure_provider_indexes(database_name, collection1, host=MONGO_HOST,
                             port=MONGO_PORT, background=True):
     """Apply suiteable indexes to pecos compiled collection."""
     mc = MongoClient(host=host, port=port)
@@ -46,28 +46,6 @@ def ensure_provider_indexes(database_name, collection1, collection2, host=MONGO_
                                 background=background)
         collection.create_index([("works_for.DESCRIPTION", ASCENDING)],
                                 background=background)
-
-        response_dict['collection1'] = collection1
-        response_dict['created_indexes1'] = True
-        response_dict['background1'] = background
-    except:
-        response_dict['collection1'] = collection1
-        response_dict['code1'] = 500
-        response_dict['errors1'] = [str(sys.exc_info()), ]
-        response_dict['message1'] = str(sys.exc_info())
-
-    try:
-
-        collection = db[collection2]
-
-        collection.create_index([("NAME", ASCENDING)],
-                                background=background)
-
-        collection.create_index([("DESCRIPTION", ASCENDING)],
-                                background=background)
-
-        collection.create_index([("NPI", ASCENDING)],
-                                background=background)
         collection.create_index([("has_providers.NAME", ASCENDING)],
                                 background=background)
         collection.create_index([("has_providers.NPI", ASCENDING)],
@@ -76,36 +54,36 @@ def ensure_provider_indexes(database_name, collection1, collection2, host=MONGO_
                                 background=background)
         collection.create_index([("has_providers.DESCRIPTION", ASCENDING)],
                                 background=background)
-
-        response_dict['collection2'] = collection2
-        response_dict['created_indexes2'] = True
-        response_dict['background2'] = background
+        response_dict['collection'] = collection1
+        response_dict['created_indexes'] = True
+        response_dict['background'] = background
     except:
-        response_dict['collection2'] = collection2
-        response_dict['code2'] = 500
-        response_dict['errors2'] = [str(sys.exc_info()), ]
-        response_dict['message2'] = str(sys.exc_info())
+        response_dict['collection'] = collection1
+        response_dict['code'] = 500
+        response_dict['errors'] = [str(sys.exc_info()), ]
+        response_dict['message'] = str(sys.exc_info())
+
+    
 
     return dict(response_dict)
 
 if __name__ == "__main__":
 
-    if len(sys.argv) != 7:
+    if len(sys.argv) != 6:
         print("Usage:")
-        print("create_pecos_compiled_indexes.py [DATABASE] [PECOS COMPILED INDIVIDUALS COLLECTIONS NAME] [PECOS COMPILED ORGANIZATIONS COLLECTIONS NAME] [HOST] [PORT] [BACKGROUND Y/N]")
+        print("create_pecos_compiled_indexes.py [DATABASE] [PECOS COMPILED INDIVIDUALS COLLECTIONS NAME]  [HOST] [PORT] [BACKGROUND Y/N]")
         sys.exit(1)
 
     database = sys.argv[1]
     collection1 = sys.argv[2]
-    collection2 = sys.argv[3]
-    host = sys.argv[4]
-    port = int(sys.argv[5])
+    host = sys.argv[3]
+    port = int(sys.argv[4])
 
-    if sys.argv[6].lower() in ("y", "yes", "t", "true"):
+    if sys.argv[5].lower() in ("y", "yes", "t", "true"):
         background = True
     else:
         background = False
 
     result = ensure_provider_indexes(
-        database, collection1, collection2, host, port, background)
+        database, collection1, host, port, background)
     print(json.dumps(result, indent=4))

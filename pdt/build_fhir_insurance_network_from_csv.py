@@ -9,7 +9,6 @@ import json
 import csv
 import time
 import argparse
-import json_schema_check
 from collections import OrderedDict
 from datetime import datetime
 import ndjson

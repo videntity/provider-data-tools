@@ -4,12 +4,8 @@
 # Written by Alan Viars - This software is public domain
 
 from bs4 import BeautifulSoup
-try:
-    # For Python 3.0 and later
-    from urllib.request import urlopen
-except ImportError:
-    # Fall back to Python 2's urllib2
-    from urllib2 import urlopen
+from urllib.request import urlopen
+
 import re
 import glob
 import sys
@@ -24,8 +20,8 @@ def do_update(process_full=True, download=True, delete=False):
     months = ["January", "Feb", "March", "April", "May", "June",
               "July", "August", "September", "Oct", "November", "December"]
     # Get just the html page
-    html_page = urlopen("http://download.cms.gov/nppes/NPI_Files.html")
-    link_prefix = "http://download.cms.gov/nppes/"
+    html_page = urlopen("https://download.cms.gov/nppes/NPI_Files.html")
+    link_prefix = "https://download.cms.gov/nppes/"
 
     soup = BeautifulSoup(html_page, "html.parser")
     month = ""
@@ -89,8 +85,7 @@ def do_update(process_full=True, download=True, delete=False):
     call(["csv2fhir_public.py", main_file_to_import, fhir_output_dir])
 
     # now upload to mongo
-    call(["jsondir2mongo", json_output_dir, "nppes",
-          "pjson", "T", "127.0.0.1", "27017"])
+    call(["jsondir2mongo", json_output_dir, "nppes","pjson", "T", "127.0.0.1", "27017"])
     call(["jsondir2mongo", fhir_output_dir + "/Practitioner",
           "nppes", "fhir_practitioner", "T", "127.0.0.1", "27017"])
     call(["jsondir2mongo", fhir_output_dir + "/Organization",
